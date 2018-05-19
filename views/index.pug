@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  h1 Hello #{user.username}!
+  p Welcome to the Treasure Hunt You are logged in #[user.username]!
+  br
+  p In order to play, you first need to create an account.  If you don't already have one you can do that #[a(href="/register") here].
+  br
+  p if you do already have an account, then you're all set.  Go ahead and #[a(href="/signin") sign in] to Play.
+
+

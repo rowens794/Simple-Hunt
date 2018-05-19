@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  h1= title
+  form(action="/register", method="post")
+    label name
+    input(type="text" name="name")
+    br
+    label username
+    input(type="text" name="username")
+    br
+    label email
+    input(type="email" name="email")
+    br
+    label password
+    input(type="password" name="password")
+    br
+    label confirm password
+    input(type="password" name="confirmPassword")
+    br
+    <input type="submit" value="Submit">
+
