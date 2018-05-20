@@ -1,8 +1,10 @@
-extends layout
+extends layoutAdmin
 
 block content
   h1 Hello #{user.username}!
   p You are currently working on clue ##{user.currentClue}.
+  br
+  p As an admin, you have some special abilities.  You can create clues and edit the current map here#[a(href="/clues") create clues].
   br
   p If your struggling, head over to the #[a(href="/help") help section] to get some tips on solid hunting.
   br

@@ -1,6 +1,7 @@
 var mongoose = require("mongoose");
 var passport = require("passport");
 var User = require("../models/user");
+var Clue = require("../models/clue");
 
 var userController = {};
 
@@ -8,7 +9,11 @@ var userController = {};
 userController.home = function(req, res) {
     console.log(req.user);
     if (req.user){
-        res.render('index', { user : req.user });
+        if(req.user.admin){
+            res.render('indexAdmin', { user : req.user });
+        }else{
+            res.render('index', { user : req.user });
+        }
     }else{
         res.render('indexNotAuth', { user : req.user });
     }  
@@ -21,8 +26,9 @@ userController.register = function(req, res) {
 
 // Post registration
 userController.doRegister = function(req, res) {
+    //collect and store inputs appropriotely
     x = { username : req.body.username, name: req.body.name, email: req.body.email, currentClue: 1, pointsMarked: [1,1], adViews: [1], admin: false};
-    console.log(x);
+    //store the user in the database and redirect back to home page
     User.register(new User(x), req.body.password, function(err, user) {
         if (err) {
             console.log(err);
@@ -34,12 +40,11 @@ userController.doRegister = function(req, res) {
   });
 };
 
-// Go to login page
+// Login Controller
 userController.login = function(req, res) {
   res.render('login');
 };
 
-// Post login
 userController.doLogin = function(req, res) {
   passport.authenticate('local')(req, res, function () {
     res.redirect('/');
@@ -49,11 +54,60 @@ userController.doLogin = function(req, res) {
 // play screen
 userController.play = function(req, res) {
     if (req.user){
-      res.render('play');
+        res.render('play', { user : req.user });
     }else{
-      res.render('notLogIn')
+        res.render('notLogIn')
     }
-  };
+};
+
+// Manage Clues Controller
+userController.manageClues = function(req, res) {
+    //2 layer if statement: if authenticated then if admin == true, everyone else gets "not authorized"
+    if (req.user){
+        if (req.user.admin){
+            //first collect the clues from the database and store them all to an object named 'clues'
+            Clue.find({}, function(err, clues){
+                if (err){res.send("the database failed to return a list of all clues")}//err out if database call fails
+                else{
+                    console.log(clues);
+                    res.render('manageClues', { user : req.user });
+                }
+            });
+
+        //both of the below else statments are triggered if the user is not logged in or not an admin
+        }else{res.send('you are not authorized to view this page')}
+    }else{res.send('you are not authorized to view this page')}
+};
+
+userController.createClue = function(req, res) {
+    if (req.user){
+        if (req.user.admin){
+            resData = req.body;
+            clue = new Clue;
+            
+            //all of the clue datapoints
+            clue.clueOrder = 1;
+            clue.clueShortName = resData.shortName;
+            clue.clueText = resData.clue;
+            clue.clueText = resData.clue;
+            clue.clueIMG = resData.imageLink;
+            clue.clueLong = resData.xCord;
+            clue.clueLat = resData.yCord;
+            clue.marginOfError = resData.marginOfError;
+
+            //save the clue to the database
+            clue.save(function(err,saveObject){
+                if (err){
+                    res.send("oops something went wrong when trying to save the clue");
+                }else{
+                    res.render('manageClues', { user : req.user });
+                }
+            })
+
+    //both of the below else statments are triggered if the user is not logged in or not an admin        
+        }else{res.send('you are not authorized to view this page')}
+    }else{res.send('you are not authorized to view this page')}
+};
 
 // logout
 userController.logout = function(req, res) {
