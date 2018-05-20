@@ -15,3 +15,9 @@ label{
 input{
   margin: 5px;
 }
+
+.cluebox{
+  border-style: solid;
+  border-width: 2px;
+  background-color: lightgrey;
+}

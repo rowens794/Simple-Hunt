@@ -1,0 +1,10 @@
+mixin clueDisplay(clue = {})
+    
+    div.cluebox 
+        h2 clue ##{clue.clueOrder}
+        p Short Name: #{clue.clueShortName} 
+        p Clue Text: #{clue.clueText}
+        p Lat/Long: #{clue.clueLat} / #{clue.clueLong}
+        p margin of error: #{clue.marginOfError} feet
+        p img link: #{clue.clueIMG}
+    br

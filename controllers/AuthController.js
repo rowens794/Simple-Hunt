@@ -60,7 +60,7 @@ userController.play = function(req, res) {
     }
 };
 
-// Manage Clues Controller
+// Manage Clues Controller -------------------------------------------------------------------------------
 userController.manageClues = function(req, res) {
     //2 layer if statement: if authenticated then if admin == true, everyone else gets "not authorized"
     if (req.user){
@@ -70,7 +70,7 @@ userController.manageClues = function(req, res) {
                 if (err){res.send("the database failed to return a list of all clues")}//err out if database call fails
                 else{
                     console.log(clues);
-                    res.render('manageClues', { user : req.user });
+                    res.render('manageClues', { user : req.user, clues: clues });
                 }
             });
 
@@ -79,28 +79,42 @@ userController.manageClues = function(req, res) {
     }else{res.send('you are not authorized to view this page')}
 };
 
+
 userController.createClue = function(req, res) {
     if (req.user){
         if (req.user.admin){
             resData = req.body;
             clue = new Clue;
             
-            //all of the clue datapoints
-            clue.clueOrder = 1;
-            clue.clueShortName = resData.shortName;
-            clue.clueText = resData.clue;
-            clue.clueText = resData.clue;
-            clue.clueIMG = resData.imageLink;
-            clue.clueLong = resData.xCord;
-            clue.clueLat = resData.yCord;
-            clue.marginOfError = resData.marginOfError;
-
-            //save the clue to the database
-            clue.save(function(err,saveObject){
+            Clue.count({}, function(err, count){
                 if (err){
-                    res.send("oops something went wrong when trying to save the clue");
+                    res.send('something went wrong with the db when attempting to save clue')
                 }else{
-                    res.render('manageClues', { user : req.user });
+                clue.clueOrder = count + 1;
+                clue.clueShortName = resData.shortName;
+                clue.clueText = resData.clue;
+                clue.clueText = resData.clue;
+                clue.clueIMG = resData.imageLink;
+                clue.clueLong = resData.xCord;
+                clue.clueLat = resData.yCord;
+                clue.marginOfError = resData.marginOfError;
+
+                //save the clue to the database
+                clue.save(function(err,saveObject){
+                    if (err){
+                        console.log(err);
+                        res.send("oops something went wrong when trying to save the clue");
+                    }else{
+                        //first collect the clues from the database and store them all to an object named 'clues'
+                        Clue.find({}, function(err, clues){
+                            if (err){res.send("the database failed to return a list of all clues")}//err out if database call fails
+                            else{
+                                console.log(clues);
+                                res.render('manageClues', { user : req.user, clues: clues });
+                            }
+                        });
+                    }
+                })
                 }
             })
 
@@ -108,6 +122,7 @@ userController.createClue = function(req, res) {
         }else{res.send('you are not authorized to view this page')}
     }else{res.send('you are not authorized to view this page')}
 };
+//---------------------------------------------------------------------------------------------------------------
 
 // logout
 userController.logout = function(req, res) {

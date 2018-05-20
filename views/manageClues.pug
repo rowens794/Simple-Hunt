@@ -1,7 +1,9 @@
 extends layoutAdmin
+include mixins/_clueDisplay
 
 block content
-  h1 Manage the Hunt
+  h1 Hello, #{user.username}
+  h2 Manage the Hunt
       form.form-signin(role='form', action='/clues', method='post')
         label(for='shortName') Create a short name:
         textarea(cols="60", rows="1", type='text', name='shortName', id='shortName', placeholder='Short Name for Clue', required)
@@ -20,3 +22,7 @@ block content
         input(type='text', name='imageLink', id='imageLink', placeholder='www.img.com/img')
         br
         button(type='submit') Create Clue
+
+  each val in clues
+    +clueDisplay(val)
+
