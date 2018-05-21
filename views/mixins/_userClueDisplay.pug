@@ -1,0 +1,5 @@
+mixin userClueDisplay(data = {})
+    
+    div.cluebox(style="background: no-repeat fixed bottom url("+data.clueIMG+")") 
+        h2.clueTitle #{data.clueShortName} 
+        p.clueText #{data.clueText}

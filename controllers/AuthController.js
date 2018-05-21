@@ -54,7 +54,16 @@ userController.doLogin = function(req, res) {
 // play screen
 userController.play = function(req, res) {
     if (req.user){
-        res.render('play', { user : req.user });
+        //get the users current clue
+        userClueNum = req.user.currentClue;
+
+        Clue.find({clueOrder: userClueNum}, function(err, clue){
+            if (err){res.send("the database failed find the users current clue")}//err out if database call fails
+            else{
+                //return the corresponding clue
+                res.render('play', { user : req.user, clue: clue[0]});
+            }
+        });
     }else{
         res.render('notLogIn')
     }
