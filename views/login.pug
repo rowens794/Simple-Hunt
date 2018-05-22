@@ -1,13 +1,17 @@
 extends layoutNA
 
 block content
-  .container
-    form.form-signin(role='form', action='/login', method='post')
-      h2.form-signin-heading Please sign in
-      label.sr-only(for='inputEmail')
-      input.form-control(type='text', name='username', id='inputEmail', placeholder='Username', required, autofocus)
-      input.form-control(type='password', name='password', id='inputPassword', placeholder='Password')
-      button.btn.btn-lg.btn-primary.btn-block(type='submit') LOGIN
+  .loginForm
+    form(role='form', action='/login', method='post')
+      h2 Sign In:
+      label(for='username')
+      input.input-field(type='text', name='username', id='username', placeholder='Username', required, autofocus)
+      br
+      br
+      input.input-field(type='password', name='password', id='inputPassword', placeholder='Password')
+      br
+      br
+      button.input-button(type='submit') LOGIN
 
 
 
