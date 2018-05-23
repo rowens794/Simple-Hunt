@@ -1,6 +1,7 @@
 mixin userClueDisplay(data = {})
     
-    div.cluebox(style="background: no-repeat fixed bottom url("+data.clueIMG+")") 
+    div.cluebox
         h2.clueTitle #{data.clueShortName} 
         p.clueText #{data.clueText}
-    div.submitButton Mark Location
+        img.clueimg(src=data.clueIMG alt="Image Title")
+    div.submitButton x

@@ -2,7 +2,7 @@ extends layoutAdmin
 
 block content
   h1 Hello #{user.username}!
-  p You are currently working on clue ##{user.currentClue}.
+  p Get back to the Hunt. You're on #[a(href="/play") clue ##{user.currentClue}].
   br
   p As an admin, you have some special abilities.  You can create clues and edit the current map here #[a(href="/clues") create clues].
   br
