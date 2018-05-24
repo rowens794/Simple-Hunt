@@ -4,4 +4,4 @@ mixin userClueDisplay(data = {})
         h2.clueTitle #{data.clueShortName} 
         p.clueText #{data.clueText}
         img.clueimg(src=data.clueIMG alt="Image Title")
-    div.submitButton x
+    div#submitButton(onclick="getLocation()") x

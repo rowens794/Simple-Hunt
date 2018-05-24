@@ -1380,25 +1380,25 @@ a{
     height: 60vh;
 }
 
-.submitButton{
+#submitButton{
     /* colors & Shape */
     color: red;
     border: 3px solid #999;
     border-radius: 50px;
-    height: 80px;
-    width: 80px;
+    height: 60px;
+    width: 60px;
     background-color: #000;
     color: red;
 
     /* colors & Shape */
     text-align: center;
-    font-size: 34pt;
+    font-size: 24pt;
 
     /* page positioning */
     margin: auto;
     position: absolute;
-    right: 30px;
-    bottom: 30px;
+    right: 15px;
+    bottom: 15px;
 }
 
 .clueimg{

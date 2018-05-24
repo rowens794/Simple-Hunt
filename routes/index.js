@@ -16,6 +16,7 @@ router.post('/login', auth.doLogin);
 
 // route for play action
 router.get('/play', auth.play);
+router.post('/play', auth.playPost);
 
 // route for manage clues
 router.get('/clues', auth.manageClues);

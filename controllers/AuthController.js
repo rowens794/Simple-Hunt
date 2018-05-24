@@ -69,6 +69,53 @@ userController.play = function(req, res) {
     }
 };
 
+userController.playPost = function(req, res){
+    if (req.user){
+        //get the x/y coords
+        userLat = req.body.lat;
+        userLong = req.body.long;
+
+        //get the clues coordinates and margin of error
+        user = req.user;
+        currentClue = req.user.currentClue;
+
+        //make database call to get clue info
+        Clue.find({clueOrder: currentClue}, function(err, clue){
+            if (err){res.send("the database failed find the user's current clue")}//err out if database call fails
+            else{
+                clue = clue[0];
+                clueLat = clue.clueLat;
+                clueLong = clue.clueLong;
+                margin = clue.marginOfError; //in feet
+                convertedMargin = margin * .0000027397; //returns the margin in decimal notation
+                
+                //test the users lat and long against the clues location
+                clueFound = false;
+                console.log(Math.abs(userLat - clueLat));
+                console.log(convertedMargin);
+
+                if (Math.abs(userLat - clueLat) < convertedMargin && Math.abs(userLong - clueLong) < convertedMargin){
+                    clueFound = true;
+                    res.send("You found the clue")
+                }else{
+                    //you didn't find the clue
+                    res.send("You didn't find the clue")
+                }
+
+                //if user found correct location then update database send success page
+
+
+                //else send you didn't find it page
+        
+            }
+        });
+
+        
+    }else{
+        res.render('notLogIn') 
+    }
+}
+
 // Manage Clues Controller -------------------------------------------------------------------------------
 userController.manageClues = function(req, res) {
     //2 layer if statement: if authenticated then if admin == true, everyone else gets "not authorized"
@@ -104,8 +151,8 @@ userController.createClue = function(req, res) {
                 clue.clueText = resData.clue;
                 clue.clueText = resData.clue;
                 clue.clueIMG = resData.imageLink;
-                clue.clueLong = resData.xCord;
-                clue.clueLat = resData.yCord;
+                clue.clueLong = resData.yCord;
+                clue.clueLat = resData.xCord;
                 clue.marginOfError = resData.marginOfError;
 
                 //save the clue to the database
