@@ -171,6 +171,10 @@ textarea{
     font-size:20px;
 
  }
+ label{
+    font-size:20px; 
+ }
+
  .w3-serif{
      font-family:serif 
 }
@@ -1409,4 +1413,11 @@ a{
     height: 75%;
     margin-left: auto;
     margin-right: auto;
+}
+
+textarea{
+    font-size:20px; 
+}
+input{
+    font-size:20px; 
 }

@@ -4,24 +4,25 @@ include mixins/_clueDisplay
 block content
   h1 Hello, #{user.username}
   h2 Manage the Hunt
+    .loginForm
       form.form-signin(role='form', action='/clues', method='post')
         label(for='shortName') Create a short name:
-        textarea(cols="60", rows="1", type='text', name='shortName', id='shortName', placeholder='Short Name for Clue', required)
+        textarea.input-field(cols="60", rows="1", type='text', name='shortName', id='shortName', placeholder='Short Name for Clue', required)
         br
         label(for='textarea') Create the Clue text:
-        textarea(cols="60", rows="1", type='text', name='clue', id='clue', placeholder='full clue text', required)
+        textarea.input-field(cols="60", rows="1", type='text', name='clue', id='clue', placeholder='full clue text', required)
         br
         label(for='xCord') Create the Clue Coordinates:
-        input(type='text', name='xCord', id='xCord', placeholder='X-Coordinates', required)
-        input(type='text', name='yCord', id='yCord', placeholder='Y-Coordinates', required)
+        input.input-field(type='text', name='xCord', id='xCord', placeholder='Latitude', required)
+        input.input-field(type='text', name='yCord', id='yCord', placeholder='Longitude', required)
         br
         label(for='marginOfError') Margin of Error (in feet from x/y coords):
-        input(type='text', name='marginOfError', id='marginOfError', placeholder='25')
+        input.input-field(type='text', name='marginOfError', id='marginOfError', placeholder='25')
         br
         label(for='imageLink') Link to Clue Image:
-        input(type='text', name='imageLink', id='imageLink', placeholder='www.img.com/img')
+        input.input-field(type='text', name='imageLink', id='imageLink', placeholder='www.img.com/img')
         br
-        button(type='submit') Create Clue
+        button.input-button(type='submit') Create Clue
 
   each val in clues
     +clueDisplay(val)

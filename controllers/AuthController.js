@@ -82,31 +82,59 @@ userController.playPost = function(req, res){
         //make database call to get clue info
         Clue.find({clueOrder: currentClue}, function(err, clue){
             if (err){res.send("the database failed find the user's current clue")}//err out if database call fails
-            else{
-                clue = clue[0];
-                clueLat = clue.clueLat;
-                clueLong = clue.clueLong;
-                margin = clue.marginOfError; //in feet
-                convertedMargin = margin * .0000027397; //returns the margin in decimal notation
-                
-                //test the users lat and long against the clues location
-                clueFound = false;
-                console.log(Math.abs(userLat - clueLat));
-                console.log(convertedMargin);
+            
 
-                if (Math.abs(userLat - clueLat) < convertedMargin && Math.abs(userLong - clueLong) < convertedMargin){
-                    clueFound = true;
-                    res.send("You found the clue")
-                }else{
-                    //you didn't find the clue
-                    res.send("You didn't find the clue")
+            else{
+                margin = clue[0].marginOfError;
+                convertedMargin =  margin * .0000027397;
+
+                clueResponseObj = {
+                    clueNum: clue[0].clueOrder,
+                    clueLat: clue[0].clueLat,
+                    clueLong: clue[0].clueLong,
+                    margin: clue[0].marginOfError, //in feet
+                    convertedMargin: convertedMargin, //returns the margin in decimal notation
+                    userLat: userLat,
+                    userLong: userLong,
+                    result: ""
                 }
 
-                //if user found correct location then update database send success page
+                //check if player found correct location
+                if (Math.abs(userLat - clue[0].clueLat) < convertedMargin && Math.abs(userLong - clue[0].clueLong) < convertedMargin){
+                    clueResponseObj.result = "You found the clue"; //set the response variable
+                    
+                    //update the user in the database
+                    console.log("---------------");
+                    console.log(user._id);
+                    console.log("---------------");
+                    User.findById(user._id, function (err, user) {
+                        if (err) res.send("an error occured updating the user");//throw and error if problem
+                        
+                        //update user variables
+                        user.currentClue = clueResponseObj.clueNum + 1;
+                        var pointMarkedTime = Date.now(); //create a date object
+                        user.pointsMarked.push([userLat, userLong, pointMarkedTime]);//add time/loc to user array
+                        user.save(function (err, user) {
+                          if (err) res.send("an error occured updating the user");//throw and error if problem
+                          res.render('xPress', {clueResponseObj: clueResponseObj});
+                        });
+                    });
+                }else{
+                    //you didn't find the clue
+                    clueResponseObj.result = "You didn't find the clue";
 
-
-                //else send you didn't find it page
-        
+                    User.findById(user._id, function (err, user) {
+                        if (err) res.send("an error occured updating the user");//throw and error if problem
+                        
+                        //update user variables
+                        var pointMarkedTime = Date.now(); //create a date object
+                        user.pointsMarked.push([userLat, userLong, pointMarkedTime]);//add time/loc to user array
+                        user.save(function (err, user) {
+                          if (err) res.send("an error occured updating the user");//throw and error if problem
+                          res.render('xPress', {clueResponseObj: clueResponseObj});
+                        });
+                    });
+                }
             }
         });
 
