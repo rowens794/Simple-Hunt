@@ -101,12 +101,10 @@ userController.playPost = function(req, res){
 
                 //check if player found correct location
                 if (Math.abs(userLat - clue[0].clueLat) < convertedMargin && Math.abs(userLong - clue[0].clueLong) < convertedMargin){
-                    clueResponseObj.result = "You found the clue"; //set the response variable
+                    clueResponseObj.resultHeader = "Ahoy Matey";
+                    clueResponseObj.result = "You've marked the location and are one step closer to the prize!";
                     
                     //update the user in the database
-                    console.log("---------------");
-                    console.log(user._id);
-                    console.log("---------------");
                     User.findById(user._id, function (err, user) {
                         if (err) res.send("an error occured updating the user");//throw and error if problem
                         
@@ -121,7 +119,8 @@ userController.playPost = function(req, res){
                     });
                 }else{
                     //you didn't find the clue
-                    clueResponseObj.result = "You didn't find the clue";
+                    clueResponseObj.resultHeader = "Arrrrgh!!";
+                    clueResponseObj.result = "You didn't find the clue. But that's ok, go get back in the hunt!";
 
                     User.findById(user._id, function (err, user) {
                         if (err) res.send("an error occured updating the user");//throw and error if problem

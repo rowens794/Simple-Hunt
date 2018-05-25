@@ -1,12 +1,9 @@
 mixin userSuccessFailNotice(data = {})
     
     div.cluebox
-        h2.clueTitle #{data.result}
-        p clue latitude = #{data.clueLat}
-        p clue longitude = #{data.clueLong}
-        p your latitude = #{data.userLat}
-        p your longitude = #{data.userLong} 
-        p margin of error = #{data.margin} feet or #{data.convertedMargin} decimals
+        h2.w3-centered #{data.resultHeader}
+        p #{data.result}
+
         
         a(href="/play") 
         form(action="/play")
