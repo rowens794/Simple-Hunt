@@ -1355,6 +1355,8 @@ a{
 }
 
 /* Ryan's Custom CSS*/
+/* 247ba0-70c1b3-b2dbbf-f3ffbd-ff1654*/
+/* blue-green-lightgreen -yellow-red*/
 .full-height{
     min-height: 100% !important;
 }
@@ -1381,6 +1383,17 @@ a{
 }
 
 .cluebox{
+    /* 247ba0-70c1b3-b2dbbf-f3ffbd-ff1654*/
+    /* blue-green-lightgreen -yellow-red*/
+        background-color: white;
+        height: 60vh;
+    }
+
+.cluebox{
+/* 247ba0-70c1b3-b2dbbf-f3ffbd-ff1654*/
+/* blue-green-lightgreen -yellow-red*/
+    background-color: #f3ffbd;
+    border: 3px solid #b2dbbf;
     height: 60vh;
 }
 
@@ -1420,4 +1433,32 @@ textarea{
 }
 input{
     font-size:20px; 
+}
+
+/*column creation*/
+
+.clueCreationForm{
+    width: 100%;
+    margin: 10 auto;
+    border: 3px solid #999;
+    background-color: #B2DBBF;
+}
+
+.row {
+    display: flex;
+}
+
+.column {
+    flex: 50%;
+    margin: 20px;
+}
+
+.createClueButton {
+    margin-top: 20px;
+    background-color: #ff1654;
+}
+
+.createClueButton:hover {
+    margin-top: 20px;
+    background-color: #70C1B3;
 }
