@@ -10,9 +10,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
 //import environment variablesnpm
-require('dotenv').config({path: 'variables.env'});
-console.log("---------")
-console.log(process.env);
+require('dotenv').config({path: '.env'});
 
 //connect to mongo db
 var db = process.env.DATABASE;
