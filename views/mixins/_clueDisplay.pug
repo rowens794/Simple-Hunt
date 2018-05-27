@@ -12,7 +12,5 @@ mixin clueDisplay(clue = {})
                 img.w3-center(src=clue.clueIMG)
 
             .column
-                iframe(width='400', height='400', src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDzKVRtxF03WkC8wRDmUdmxlhZwwzD8LKk&q="+clue.clueLat+","+clue.clueLong+"&zoom=19&maptype=satellite")
-
-
+                iframe(width='400', height='400', src="https://www.google.com/maps/embed/v1/place?key="+process.env.MAP_KEY+"&q="+clue.clueLat+","+clue.clueLong+"&zoom=19&maptype=satellite")
     br

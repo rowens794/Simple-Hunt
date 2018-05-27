@@ -10,6 +10,7 @@ userController.home = function(req, res) {
     console.log(req.user);
     if (req.user){
         if(req.user.admin){
+            //get leaderboard
             res.render('indexAdmin', { user : req.user });
         }else{
             res.render('index', { user : req.user });

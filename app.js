@@ -9,8 +9,13 @@ mongoose.Promise = global.Promise;
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
+//import environment variablesnpm
+require('dotenv').config({path: 'variables.env'});
+console.log("---------")
+console.log(process.env);
+
 //connect to mongo db
-var db = "mongodb://rowens794:presario@ds255889.mlab.com:55889/thunt"
+var db = process.env.DATABASE;
 mongoose.connect(db)
   .then(() =>  console.log('connection succesful'))
   .catch((err) => console.error(err));

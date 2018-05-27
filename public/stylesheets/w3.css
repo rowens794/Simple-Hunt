@@ -1462,3 +1462,14 @@ input{
     margin-top: 20px;
     background-color: #70C1B3;
 }
+
+.leaderBoardHeader {
+    font-size: 18px;
+    margin-left: 10px;
+    text-decoration: underline;
+}
+
+.leaderBoardEntry {
+    font-size: 15px;
+    margin-left: 10px;
+}
