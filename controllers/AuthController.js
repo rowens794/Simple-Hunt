@@ -2,18 +2,25 @@ var mongoose = require("mongoose");
 var passport = require("passport");
 var User = require("../models/user");
 var Clue = require("../models/clue");
+var supportFunctions = require("./SupportFunctions");
 
 var userController = {};
 
 // Restrict access to root page
-userController.home = function(req, res) {
-    console.log(req.user);
+userController.home = async function(req, res) {
+    //console.log(req.user);
     if (req.user){
+        //get leader list
+        //leaderList = supportFunctions.getLeaders();
+        list = await supportFunctions.getLeaders();
+        console.log("*****************");
+        console.log(list);
+
         if(req.user.admin){
-            //get leaderboard
-            res.render('indexAdmin', { user : req.user });
+            //render page
+            res.render('indexAdmin', { user : req.user, leaderList: list });
         }else{
-            res.render('index', { user : req.user });
+            res.render('index', { user : req.user, leaderList: list });
         }
     }else{
         res.render('indexNotAuth', { user : req.user });

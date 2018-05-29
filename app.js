@@ -5,11 +5,11 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-mongoose.Promise = global.Promise;
+
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
-//import environment variablesnpm
+//import environment variables
 require('dotenv').config({path: '.env'});
 
 //connect to mongo db
@@ -17,6 +17,7 @@ var db = process.env.DATABASE;
 mongoose.connect(db)
   .then(() =>  console.log('connection succesful'))
   .catch((err) => console.error(err));
+mongoose.Promise = global.Promise;
 
 //import routes
 var indexRouter = require('./routes/index');
