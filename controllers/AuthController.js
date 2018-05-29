@@ -13,8 +13,6 @@ userController.home = async function(req, res) {
         //get leader list
         //leaderList = supportFunctions.getLeaders();
         list = await supportFunctions.getLeaders();
-        console.log("*****************");
-        console.log(list);
 
         if(req.user.admin){
             //render page
