@@ -2,18 +2,31 @@ var mongoose = require("mongoose");
 var passport = require("passport");
 var User = require("../models/user");
 var Clue = require("../models/clue");
+var supportFunctions = require("./SupportFunctions");
 
 var playController = {};
 
 // help screen
-playController.help = function(req, res) {
-      res.render('howToPlay')
+playController.help = async function(req, res) {
+    //get leader list
+    list = await supportFunctions.getLeaders();
+
+    if (req.user){
+        res.render('howToPlay', {leaderList: list})
+    }else{
+        res.render('howToPlayNA', {leaderList: list})
+    }
+      
 };
 
 
 // play screen
-playController.play = function(req, res) {
+playController.play = async function(req, res) {
+    //get leader list
+    list = await supportFunctions.getLeaders();
+
     if (req.user){
+
         //get the users current clue
         userClueNum = req.user.currentClue;
 
@@ -21,16 +34,20 @@ playController.play = function(req, res) {
             if (err){res.send("the database failed find the users current clue")}//err out if database call fails
             else{
                 //return the corresponding clue
-                res.render('play', { user : req.user, clue: clue[0]});
+                res.render('play', { user : req.user, clue: clue[0], leaderList: list});
             }
         });
     }else{
-        res.render('notLogIn')
+        res.render('notLogIn', {leaderList: list})
     }
 };
 
-playController.playPost = function(req, res){
+playController.playPost = async function(req, res){
+    //get leader list
+    list = await supportFunctions.getLeaders();
+
     if (req.user){
+
         //get the x/y coords
         userLat = req.body.lat;
         userLong = req.body.long;
@@ -74,7 +91,7 @@ playController.playPost = function(req, res){
                         user.pointsMarked.push([userLat, userLong, pointMarkedTime]);//add time/loc to user array
                         user.save(function (err, user) {
                           if (err) res.send("an error occured updating the user");//throw and error if problem
-                          res.render('xPress', {clueResponseObj: clueResponseObj});
+                          res.render('xPress', {clueResponseObj: clueResponseObj, leaderList: list});
                         });
                     });
                 }else{
@@ -90,7 +107,7 @@ playController.playPost = function(req, res){
                         user.pointsMarked.push([userLat, userLong, pointMarkedTime]);//add time/loc to user array
                         user.save(function (err, user) {
                           if (err) res.send("an error occured updating the user");//throw and error if problem
-                          res.render('xPress', {clueResponseObj: clueResponseObj});
+                          res.render('xPress', {clueResponseObj: clueResponseObj, leaderList: list});
                         });
                     });
                 }
@@ -99,7 +116,7 @@ playController.playPost = function(req, res){
 
         
     }else{
-        res.render('notLogIn') 
+        res.render('notLogIn', {leaderList: list}) 
     }
 }
 

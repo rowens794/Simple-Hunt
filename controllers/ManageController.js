@@ -9,7 +9,9 @@ var manageController = {};
 manageController.manageClues = function(req, res) {
     //2 layer if statement: if authenticated then if admin == true, everyone else gets "not authorized"
     if (req.user){
+        
         if (req.user.admin){
+
             //first collect the clues from the database and store them all to an object named 'clues'
             Clue.find({}, function(err, clues){
                 if (err){res.send("the database failed to return a list of all clues")}//err out if database call fails
@@ -28,6 +30,7 @@ manageController.manageClues = function(req, res) {
 manageController.createClue = function(req, res) {
     if (req.user){
         if (req.user.admin){
+
             resData = req.body;
             clue = new Clue;
             

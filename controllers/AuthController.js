@@ -8,12 +8,10 @@ var userController = {};
 
 // Restrict access to root page
 userController.home = async function(req, res) {
-    //console.log(req.user);
-    if (req.user){
-        //get leader list
-        //leaderList = supportFunctions.getLeaders();
-        list = await supportFunctions.getLeaders();
+    //get leader list
+    list = await supportFunctions.getLeaders();
 
+    if (req.user){
         if(req.user.admin){
             //render page
             res.render('indexAdmin', { user : req.user, leaderList: list });
@@ -21,24 +19,29 @@ userController.home = async function(req, res) {
             res.render('index', { user : req.user, leaderList: list });
         }
     }else{
-        res.render('indexNotAuth', { user : req.user });
+        res.render('indexNotAuth', { user : req.user, leaderList: list });
     }  
 };
 
 // Go to registration page
-userController.register = function(req, res) {
-  res.render('createAccount');
+userController.register = async function(req, res) {
+    //get leader list
+    list = await supportFunctions.getLeaders();
+    res.render('createAccount',{leaderList: list});
 };
 
 // Post registration
-userController.doRegister = function(req, res) {
+userController.doRegister = async function(req, res) {
+    //get leader list
+    list = await supportFunctions.getLeaders();
+
     //collect and store inputs appropriotely
     x = { username : req.body.username, name: req.body.name, email: req.body.email, currentClue: 1, pointsMarked: [1,1], adViews: [1], admin: false};
     //store the user in the database and redirect back to home page
     User.register(new User(x), req.body.password, function(err, user) {
         if (err) {
             console.log(err);
-            return res.render('createAccount', { user : user });
+            return res.render('createAccount', { user : user, leaderList: list });
         }
         passport.authenticate('local')(req, res, function () {
         res.redirect('/');
@@ -47,8 +50,11 @@ userController.doRegister = function(req, res) {
 };
 
 // Login Controller
-userController.login = function(req, res) {
-  res.render('login');
+userController.login = async function(req, res) {
+    //get leader list
+    list = await supportFunctions.getLeaders();
+
+    res.render('login',{leaderList: list});
 };
 
 userController.doLogin = function(req, res) {

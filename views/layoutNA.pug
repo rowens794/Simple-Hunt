@@ -34,6 +34,15 @@ html
       a.w3-bar-item.w3-button.w3-hover-black(href='/help') How To Play
       a.w3-bar-item.w3-button.w3-hover-black(href='/login') Login
       a.w3-bar-item.w3-button.w3-hover-black(href='/register') Signup
+      br
+      br
+      if (typeof(leaderList) !== 'undefined')
+        p.leaderBoardHeader Leader Board
+        p.leaderBoardEntry 1. #{leaderList[0].username} - clue ##{leaderList[0].currentClue}
+        p.leaderBoardEntry 2. #{leaderList[1].username} - clue ##{leaderList[1].currentClue}
+        p.leaderBoardEntry 3. #{leaderList[2].username} - clue ##{leaderList[2].currentClue}
+        p.leaderBoardEntry 4. #{leaderList[3].username} - clue ##{leaderList[3].currentClue}
+        p.leaderBoardEntry 5. #{leaderList[4].username} - clue ##{leaderList[4].currentClue}
 
     // Overlay effect when opening sidebar on small screens
     #myOverlay.w3-overlay.w3-hide-large(onclick='w3_close()', style='cursor:pointer', title='close side menu')
