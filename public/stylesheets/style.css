@@ -40,3 +40,11 @@ input{
 .clueText{
   font-size: 2.5vh;
 }
+
+.navbar-nav > li > a {
+  padding-top:5px !important; 
+  padding-bottom:5px !important;
+}
+.navbar {
+  min-height:32px !important
+}

@@ -10,16 +10,19 @@ var userController = {};
 userController.home = async function(req, res) {
     //get leader list
     list = await supportFunctions.getLeaders();
+    console.log(req.user);
 
     if (req.user){
         if(req.user.admin){
             //render page
-            res.render('indexAdmin', { user : req.user, leaderList: list });
+            res.render('LayoutD', { user : req.user, leaderList: list });
+            //res.render('indexAdmin', { user : req.user, leaderList: list });
         }else{
-            res.render('index', { user : req.user, leaderList: list });
+            res.render('LayoutD', { user : req.user, leaderList: list });
+            //res.render('index', { user : req.user, leaderList: list });
         }
     }else{
-        res.render('indexNotAuth', { user : req.user, leaderList: list });
+        res.render('LayoutD', { user : req.user, leaderList: list });
     }  
 };
 

@@ -1,0 +1,30 @@
+if user === undefined
+  // // end .section
+  #register.section.bg-gradient
+      .container
+          .call-to-action
+              .box-icon
+                  span.ti-mobile.gradient-fill.ti-3x
+              h2 Register Now
+              form(action="/register", method="post").col-md-4.offset-md-4
+                  .form-group
+                      label(for='formGroupExampleInput') Your Name
+                      input#formGroupExampleInput.form-control(type='text', name="name", placeholder='Joe Smith', required)
+                  .form-group
+                      label(for='formGroupExampleInput') Pick a Username
+                      input#formGroupExampleInput.form-control(type='text', name="username", placeholder='JSmiley')
+                  .form-group
+                      label(for='formGroupExampleInput') Your Email
+                      input#formGroupExampleInput.form-control(type='text', name="email", placeholder='jsmith@gmail.com')
+                  .form-group
+                      label(for='formGroupExampleInput2') Password
+                      input#formGroupExampleInput2.form-control(type='text', name="password", placeholder='supersecure1')
+                  .form-group
+                      label(for='formGroupExampleInput2') Confirm Password
+                      input#formGroupExampleInput2.form-control(type='text', name="confirmPassword", placeholder='supersecure1')
+                  button.btn.btn-primary(type='submit') Submit
+
+
+
+
+

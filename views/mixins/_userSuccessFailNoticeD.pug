@@ -1,0 +1,10 @@
+mixin userSuccessFailNotice(data = {})
+    
+    div.userCluebox
+        h2.w3-centered #{data.resultHeader}
+        p #{data.result}
+
+        
+        a(href="/play") 
+        form(action="/play")
+            input(type="submit" value="back to game")

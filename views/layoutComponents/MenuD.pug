@@ -1,0 +1,98 @@
+if user === undefined
+  // header menu
+  .nav-menu.fixed-top
+    .container
+      .row
+        .col-md-12
+          nav.navbar.navbar-dark.navbar-expand-lg
+            a.navbar-brand(href='index.html')
+              | THE
+              b HUNT
+            button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbar', aria-controls='navbar', aria-expanded='false', aria-label='Toggle navigation')
+              span.navbar-toggler-icon
+            #navbar.collapse.navbar-collapse
+              ul.navbar-nav.ml-auto
+                li.nav-item
+                  a.nav-link.active(href='#home')
+                    | HOME 
+                    span.sr-only (current)
+                li.nav-item
+                  a.nav-link(href='#register') REGISTER
+                li.nav-item
+                  a.btn.btn-outline-light.my-3.my-sm-0.ml-lg-3(href='#', data-toggle='modal', data-target='#modalLoginForm') SIGN IN
+
+else if user.admin === true
+  // header menu
+  .nav-menu.fixed-top
+    .container
+      .row
+        .col-md-12
+          nav.navbar.navbar-dark.navbar-expand-lg
+            a.navbar-brand(href='/')
+              | THE
+              b HUNT
+            button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbar', aria-controls='navbar', aria-expanded='false', aria-label='Toggle navigation')
+              span.navbar-toggler-icon
+            #navbar.collapse.navbar-collapse
+              ul.navbar-nav.ml-auto
+                li.nav-item
+                  a.nav-link.active(href='#home')
+                    | HOME 
+                    span.sr-only (current)
+                li.nav-item
+                  a.nav-link(href='/play') PLAY
+                li.nav-item
+                  a.nav-link(href='/clues') MANAGE CLUES
+                li.nav-item
+                  a.nav-link(href='/logout') LOGOUT
+              
+
+else if user
+  // header menu
+  .nav-menu.fixed-top
+    .container
+      .row
+        .col-md-12
+          nav.navbar.navbar-dark.navbar-expand-lg
+
+            //here
+            a.navbar-brand(href='index.html')
+              | THE
+              b HUNT
+            button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbar', aria-controls='navbar', aria-expanded='false', aria-label='Toggle navigation')
+              span.navbar-toggler-icon
+            #navbar.collapse.navbar-collapse
+              ul.navbar-nav.ml-auto
+                li.nav-item
+                  a.nav-link.active(href='#home')
+                    | HOME 
+                li.nav-item
+                  a.nav-link(href='/play') PLAY
+                li.nav-item
+                  a.nav-link(href='/logout') LOGOUT
+
+
+// Modal Login Form
+form#modalLoginForm.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true', action='/login', method='post')
+  .modal-dialog(role='document')
+    .modal-content
+      .modal-header.text-center
+        h4.modal-title.w-100.font-weight-bold Sign-in
+        button.close(type='button', data-dismiss='modal', aria-label='Close')
+          span(aria-hidden='true') ×
+      
+      .modal-body.mx-3
+        .md-form.mb-4
+          label(data-error='wrong', data-success='right', for='defaultForm-email') Username
+          input.form-control.validate(type='text', name='username', id="username", placeholder='Username', required, autofocus)
+          
+        .md-form.mb-4
+          label(data-error='wrong', data-success='right', for='defaultForm-pass') Password
+          input.form-control.validate(type='password', id='inputPassword', name='password', placeholder='Password')
+          
+      .modal-footer.d-flex.justify-content-center
+          button.btn.btn-primary(type='submit') LOGIN
+
+
+
+

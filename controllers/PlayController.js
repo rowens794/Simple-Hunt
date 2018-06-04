@@ -34,7 +34,7 @@ playController.play = async function(req, res) {
             if (err){res.send("the database failed find the users current clue")}//err out if database call fails
             else{
                 //return the corresponding clue
-                res.render('play', { user : req.user, clue: clue[0], leaderList: list});
+                res.render('PlayD', { user : req.user, clue: clue[0], leaderList: list});
             }
         });
     }else{
@@ -91,7 +91,7 @@ playController.playPost = async function(req, res){
                         user.pointsMarked.push([userLat, userLong, pointMarkedTime]);//add time/loc to user array
                         user.save(function (err, user) {
                           if (err) res.send("an error occured updating the user");//throw and error if problem
-                          res.render('xPress', {clueResponseObj: clueResponseObj, leaderList: list});
+                          res.render('xPressD', {clueResponseObj: clueResponseObj, leaderList: list});
                         });
                     });
                 }else{
@@ -107,7 +107,7 @@ playController.playPost = async function(req, res){
                         user.pointsMarked.push([userLat, userLong, pointMarkedTime]);//add time/loc to user array
                         user.save(function (err, user) {
                           if (err) res.send("an error occured updating the user");//throw and error if problem
-                          res.render('xPress', {clueResponseObj: clueResponseObj, leaderList: list});
+                          res.render('xPressD', {clueResponseObj: clueResponseObj, leaderList: list});
                         });
                     });
                 }
