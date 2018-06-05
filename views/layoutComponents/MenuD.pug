@@ -13,11 +13,12 @@ if user === undefined
             #navbar.collapse.navbar-collapse
               ul.navbar-nav.ml-auto
                 li.nav-item
-                  a.nav-link.active(href='#home')
+                  a.nav-link(href='/#home')
                     | HOME 
                     span.sr-only (current)
                 li.nav-item
-                  a.nav-link(href='#register') REGISTER
+                  a.nav-link(href='/#register') REGISTER
+                  span.sr-only (current)
                 li.nav-item
                   a.btn.btn-outline-light.my-3.my-sm-0.ml-lg-3(href='#', data-toggle='modal', data-target='#modalLoginForm') SIGN IN
 

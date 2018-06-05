@@ -78,7 +78,10 @@ html(lang='en')
                         h2 Play in Your Browser
                         p.mb-4
                             | No worries about downloading an app and cluttering up your phone.  The entire game is played right in your phones browser.
-                        a.btn.btn-primary(href='#register') Sign Up Now
+                        if user === undefined
+                            a.btn.btn-primary(href='#register') SIGN UP
+                        else
+                            a.btn.btn-primary(href='/play') PLAY NOW
                 .perspective-phone
                     img.img-fluid(src='/images/perspective.png', alt='perspective phone')
         // // end .section
@@ -94,8 +97,7 @@ html(lang='en')
                         a.nav-link(data-toggle='tab', href='#schedule') Step Two
                     li.nav-item
                         a.nav-link(data-toggle='tab', href='#messages') Step Three
-                    li.nav-item
-                        a.nav-link(data-toggle='tab', href='#livechat') Step Four
+
                 .tab-content
                     #communication.tab-pane.fade.show.active
                         .d-flex.flex-column.flex-lg-row
@@ -108,9 +110,12 @@ html(lang='en')
                                 p
                                     | We won't share your information with any one and we won't spam you with email.
                                 p
-                                    | If your ready, go ahead and create your account right 
-                                    a(href='#') here
-                                    | . That's all you'll need to do.  Then once the hunt is ready to go live we'll let you know and you'll be off.
+                                    if user
+                                        | That's all you'll need to do.  Then once the hunt is ready to go live we'll let you know and you'll be off.
+                                    else
+                                        | If your ready, go ahead and create your account right 
+                                        a(href='#register') here
+                                        | . That's all you'll need to do.  Then once the hunt is ready to go live we'll let you know and you'll be off.
                     #schedule.tab-pane.fade
                         .d-flex.flex-column.flex-lg-row
                             div
@@ -120,6 +125,9 @@ html(lang='en')
                                     | Once your account is created, all that you need to do is log into your account and click on the play screen.  The entire game is played right there.
                                 p
                                     | From the Play screen you will be presented with 1 clue at a time.  Your objective is to solve each clue in sequence.
+                                p
+                                    | Each treasure hunter will be presented with the same clues in the same order.  They will start out easy and progressively get harder and harder.
+
                             img.img-fluid.rounded.align-self-start.mr-lg-5.mb-5.mb-lg-0(src='/images/graphic.png', alt='graphic')
                     #messages.tab-pane.fade
                         .d-flex.flex-column.flex-lg-row
@@ -128,20 +136,11 @@ html(lang='en')
                                 h2 Turn on Your Thinker
                                 p.lead In a game of wits, it pays to think fast.
                                 p
-                                    | Each treasure hunter will be presented with the same clues in the same order.  They will start out easy and progressively get harder and harder.
-                                p
                                     | The clues will take various forms.  Some will present you with a picture of an object in the city and you will need to locate that object.  Some will describe a location that you need to find.  In each case, you'll need to use the clue to direct you to a location in the city and mark that location on your device. If you mark the correct location, you'll advance to the next clue.
-                    #livechat.tab-pane.fade
-                        .d-flex.flex-column.flex-lg-row
-                            div
-                                h2 The Race Begins
-                                p.lead As with all treasure hunts, there can only be one winner. 
                                 p
                                     | The hunter that makes their way through all of the clues first will be named the winner of The Hunt.  This won't be an easy feat. Unlike last year, we aren't going to even hazard a guess at how long this will take.  It could take the morning, it could take weeks.  Regardless of how long it takes, the prize will be waiting for the winner.
-                                p
-                                    | To add to the excitement of The Hunt, a leader board will be accessible in real time for all hunters.  This will enable hunters to see exactly where they stand relative to the other hunters.  Remember, the clues get harder and harder as the hunt progresses.  So that 5 clue lead that the leader has will be hard to hold on to.
-                            img.img-fluid.rounded.align-self-start.mr-lg-5.mb-5.mb-lg-0(src='/images/graphic.png', alt='graphic')
         // // end .section
+  
         .section
             .container
                 .row
@@ -154,7 +153,10 @@ html(lang='en')
                             h2 Hunting is Easy
                             p.mb-4
                                 | Simply go to the location that each clue directs you to and click the "X" to mark the location.  If you correctly identify the location, you'll be advanced to the next clue.
-                            a.btn.btn-primary(href='#register') Sign Up
+                            if user === undefined
+                                a.btn.btn-primary(href='#register') SIGN UP
+                            else
+                                a.btn.btn-primary(href='/play') PLAY NOW
         // // end .section
         .section.light-bg
             .container

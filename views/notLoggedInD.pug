@@ -1,0 +1,47 @@
+doctype html
+html(lang='en')
+    head
+        title The Hunt - A Charleston Adventure
+        // Required meta tags
+        meta(charset='utf-8')
+        meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+        meta(name='description', content='Mobland - Mobile App Landing Page Template')
+        meta(name='keywords', content='HTML5, bootstrap, mobile, app, landing, ios, android, responsive')
+        // Font
+        link(rel='dns-prefetch', href='//fonts.googleapis.com')
+        link(href='https://fonts.googleapis.com/css?family=Rubik:300,400,500', rel='stylesheet')
+        // Bootstrap CSS
+        link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+        // Themify Icons
+        link(rel='stylesheet', href='/stylesheets/themify-icons.css')
+        // Owl carousel
+        link(rel='stylesheet', href='/stylesheets/owl.carousel.min.css')
+        // Main css
+        link(href='/stylesheets/styleD.css', rel='stylesheet')
+
+    body(data-spy='scroll', data-target='#navbar', data-offset='30')
+        
+        // Nav Menu
+        include ./layoutComponents/MenuD
+        header#home.bg-gradient
+        
+        .container.bg-white.col-md-6.col-md-offset-3.playHeaderMargin
+            br
+            br
+            h2.text-center Whoa There!
+            br
+            p.text-center.tagline 
+                | You're not logged in.  If you already have an account, you should do that 
+                a(href='#', data-toggle='modal', data-target='#modalLoginForm') here
+                | . If you don't have an account, you should get one 
+                a(href="/#register") here
+                | .
+        
+        // jQuery and Bootstrap
+        script(src='/javascripts/jquery-3.2.1.min.js')
+        script(src='/javascripts/bootstrap.bundle.min.js')
+        // Plugins JS
+        script(src='/javascripts/owl.carousel.min.js')
+        // Custom JS
+        script(src='/javascripts/script.js')
+        script(src='/javascripts/hunt.js')

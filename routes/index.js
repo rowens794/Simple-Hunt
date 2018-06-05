@@ -9,7 +9,6 @@ var play = require("../controllers/PlayController.js");
 router.get('/', auth.home);
 
 // route to register page
-router.get('/register', auth.register);
 router.post('/register', auth.doRegister);
 
 // route to login page
@@ -29,5 +28,8 @@ router.post('/clues', manage.createClue);
 
 // route for logout action
 router.get('/logout', auth.logout);
+
+//404 error page --ALWAYS KEEP LAST--
+router.get('*', auth.fourOfour);
 
 module.exports = router;

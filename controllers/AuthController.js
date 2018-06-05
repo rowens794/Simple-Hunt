@@ -26,13 +26,6 @@ userController.home = async function(req, res) {
     }  
 };
 
-// Go to registration page
-userController.register = async function(req, res) {
-    //get leader list
-    list = await supportFunctions.getLeaders();
-    res.render('createAccount',{leaderList: list});
-};
-
 // Post registration
 userController.doRegister = async function(req, res) {
     //get leader list
@@ -44,7 +37,7 @@ userController.doRegister = async function(req, res) {
     User.register(new User(x), req.body.password, function(err, user) {
         if (err) {
             console.log(err);
-            return res.render('createAccount', { user : user, leaderList: list });
+            return res.render('LayoutD', { user : user, leaderList: list });
         }
         passport.authenticate('local')(req, res, function () {
         res.redirect('/');
@@ -71,5 +64,10 @@ userController.logout = function(req, res) {
   req.logout();
   res.redirect('/');
 };
+
+// 404 error
+userController.fourOfour = function(req, res) {
+    res.render('404');
+  };
 
 module.exports = userController;

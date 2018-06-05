@@ -38,7 +38,7 @@ playController.play = async function(req, res) {
             }
         });
     }else{
-        res.render('notLogIn', {leaderList: list})
+        res.render('notLoggedInD', {leaderList: list})
     }
 };
 
@@ -116,7 +116,7 @@ playController.playPost = async function(req, res){
 
         
     }else{
-        res.render('notLogIn', {leaderList: list}) 
+        res.render('notLoggedInD', {leaderList: list}) 
     }
 }
 
