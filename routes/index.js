@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 var auth = require("../controllers/AuthController.js");
 var manage = require("../controllers/ManageController.js");
 var play = require("../controllers/PlayController.js");
+var leaderboard = require("../controllers/LeaderboardController.js");
 
 // restrict index for logged in user only
 router.get('/', auth.home);
@@ -25,6 +26,9 @@ router.post('/play', play.playPost);
 // route for manage clues
 router.get('/clues', manage.manageClues);
 router.post('/clues', manage.createClue);
+
+// route for leaderboard
+router.get('/leaderboard', leaderboard.leaderboard);
 
 // route for logout action
 router.get('/logout', auth.logout);

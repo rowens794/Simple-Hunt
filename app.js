@@ -6,8 +6,10 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
+
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+
 
 //import environment variables
 require('dotenv').config({path: '.env'});
@@ -24,6 +26,9 @@ var indexRouter = require('./routes/index');
 
 
 var app = express();
+
+//include moment library in locals
+app.locals.moment = require('moment');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

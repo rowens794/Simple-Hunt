@@ -67,7 +67,7 @@ userController.logout = function(req, res) {
 
 // 404 error
 userController.fourOfour = function(req, res) {
-    res.render('404');
+    res.render('404',{ user : req.user });
   };
 
 module.exports = userController;

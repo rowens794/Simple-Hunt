@@ -15,4 +15,15 @@ supportFunctions.getLeaders = function(){
     }
 }
 
+supportFunctions.getPlayers = function(){
+    var playerList;
+    try{
+        const playerListQuery = User.find({}).sort({"currentClue": -1});
+        playerList = playerListQuery.then();
+        return playerList;
+    }catch(err){
+        return err;
+    }
+}
+
 module.exports = supportFunctions;

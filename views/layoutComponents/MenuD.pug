@@ -5,7 +5,7 @@ if user === undefined
       .row
         .col-md-12
           nav.navbar.navbar-dark.navbar-expand-lg
-            a.navbar-brand(href='index.html')
+            a.navbar-brand(href='/')
               | THE
               b HUNT
             button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbar', aria-controls='navbar', aria-expanded='false', aria-label='Toggle navigation')
@@ -13,12 +13,12 @@ if user === undefined
             #navbar.collapse.navbar-collapse
               ul.navbar-nav.ml-auto
                 li.nav-item
-                  a.nav-link(href='/#home')
+                  a.nav-link(href='/')
                     | HOME 
-                    span.sr-only (current)
                 li.nav-item
-                  a.nav-link(href='/#register') REGISTER
-                  span.sr-only (current)
+                  a.nav-link(href='/#register') REGISTER #{user}
+                li.nav-item
+                  a.nav-link(href='/leaderboard') LEADERBOARD
                 li.nav-item
                   a.btn.btn-outline-light.my-3.my-sm-0.ml-lg-3(href='#', data-toggle='modal', data-target='#modalLoginForm') SIGN IN
 
@@ -37,11 +37,13 @@ else if user.admin === true
             #navbar.collapse.navbar-collapse
               ul.navbar-nav.ml-auto
                 li.nav-item
-                  a.nav-link.active(href='#home')
+                  a.nav-link(href='/')
                     | HOME 
                     span.sr-only (current)
                 li.nav-item
                   a.nav-link(href='/play') PLAY
+                li.nav-item
+                  a.nav-link(href='/leaderboard') LEADERBOARD
                 li.nav-item
                   a.nav-link(href='/clues') MANAGE CLUES
                 li.nav-item
@@ -57,7 +59,7 @@ else if user
           nav.navbar.navbar-dark.navbar-expand-lg
 
             //here
-            a.navbar-brand(href='index.html')
+            a.navbar-brand(href='/')
               | THE
               b HUNT
             button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbar', aria-controls='navbar', aria-expanded='false', aria-label='Toggle navigation')
@@ -65,10 +67,12 @@ else if user
             #navbar.collapse.navbar-collapse
               ul.navbar-nav.ml-auto
                 li.nav-item
-                  a.nav-link.active(href='#home')
+                  a.nav-link(href='/')
                     | HOME 
                 li.nav-item
                   a.nav-link(href='/play') PLAY
+                li.nav-item
+                  a.nav-link(href='/leaderboard') LEADERBOARD
                 li.nav-item
                   a.nav-link(href='/logout') LOGOUT
 

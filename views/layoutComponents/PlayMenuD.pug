@@ -1,25 +1,83 @@
-// header menu
-.nav-menu.fixed-top.bg-gradient
-  .container
-    .row
-      .col-md-12
-        nav.navbar.navbar-dark.navbar-expand-lg.compressedNav
 
-          //here
-          a.navbar-brand(href='/')
-            | THE
-            b HUNT
-          button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbar', aria-controls='navbar', aria-expanded='false', aria-label='Toggle navigation')
-            span.navbar-toggler-icon
-          #navbar.collapse.navbar-collapse
-            br
-            ul.navbar-nav.ml-auto
-              li.nav-item
-                a.nav-link(href='/') HOME 
-              li.nav-item
-                a.nav-link.active(href='/play') PLAY
-              li.nav-item
-                a.nav-link.active(href='/leaderboard') LEADERBOARD
-              li.nav-item
-                a.nav-link(href='/logout') LOGOUT
+if user === undefined
+  .nav-menu.fixed-top.bg-gradient
+    .container
+      .row
+        .col-md-12
+          nav.navbar.navbar-dark.navbar-expand-lg.compressedNav
+
+            //here
+            a.navbar-brand(href='/')
+              | THE
+              b HUNT
+            button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbar', aria-controls='navbar', aria-expanded='false', aria-label='Toggle navigation')
+              span.navbar-toggler-icon
+            #navbar.collapse.navbar-collapse
+              br
+              ul.navbar-nav.ml-auto
+                li.nav-item
+                  a.nav-link(href='/') HOME 
+                li.nav-item
+                  a.nav-link(href='/play') PLAY
+                li.nav-item
+                  a.nav-link(href='/leaderboard') LEADERBOARD
+                li.nav-item
+                  a.nav-link(href='/logout') LOGOUT
+
+else if user.admin === true
+  // header menu
+  .nav-menu.fixed-top.bg-gradient
+    .container
+      .row
+        .col-md-12
+          nav.navbar.navbar-dark.navbar-expand-lg.compressedNav
+
+            //here
+            a.navbar-brand(href='/')
+              | THE
+              b HUNT
+            button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbar', aria-controls='navbar', aria-expanded='false', aria-label='Toggle navigation')
+              span.navbar-toggler-icon
+            #navbar.collapse.navbar-collapse
+              br
+              ul.navbar-nav.ml-auto
+                li.nav-item
+                  a.nav-link(href='/')
+                    | HOME 
+                    span.sr-only (current)
+                li.nav-item
+                  a.nav-link(href='/play') PLAY
+                li.nav-item
+                  a.nav-link(href='/leaderboard') LEADERBOARD
+                li.nav-item
+                  a.nav-link(href='/clues') MANAGE CLUES
+                li.nav-item
+                  a.nav-link(href='/logout') LOGOUT
+              
+
+else if user
+  // header menu
+  .nav-menu.fixed-top.bg-gradient
+    .container
+      .row
+        .col-md-12
+          nav.navbar.navbar-dark.navbar-expand-lg.compressedNav
+
+            //here
+            a.navbar-brand(href='/')
+              | THE
+              b HUNT
+            button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbar', aria-controls='navbar', aria-expanded='false', aria-label='Toggle navigation')
+              span.navbar-toggler-icon
+            #navbar.collapse.navbar-collapse
+              br
+              ul.navbar-nav.ml-auto
+                li.nav-item
+                  a.nav-link(href='/') HOME 
+                li.nav-item
+                  a.nav-link(href='/play') PLAY
+                li.nav-item
+                  a.nav-link(href='/leaderboard') LEADERBOARD
+                li.nav-item
+                  a.nav-link(href='/logout') LOGOUT
 
