@@ -89,6 +89,7 @@ playController.playPost = async function(req, res){
                         user.currentClue = clueResponseObj.clueNum + 1;
                         var pointMarkedTime = Date.now(); //create a date object
                         user.pointsMarked.push([userLat, userLong, pointMarkedTime]);//add time/loc to user array
+                        user.lastClueFound = pointMarkedTime;
                         user.save(function (err, user) {
                           if (err) res.send("an error occured updating the user");//throw and error if problem
                           res.render('xPressD', {clueResponseObj: clueResponseObj, leaderList: list});

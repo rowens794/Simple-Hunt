@@ -28,6 +28,7 @@ var UserSchema = new Schema({
         required: 'Email address is required',
     },
     currentClue: Number,
+    lastClueFound: Number,
     pointsMarked: [],
     adViews: [],
     admin: Boolean

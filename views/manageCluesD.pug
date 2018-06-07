@@ -1,0 +1,105 @@
+include mixins/_userClueDisplay
+
+html(lang='en')
+    head
+        title The Hunt - A Charleston Adventure
+        // Required meta tags
+        meta(charset='utf-8')
+        meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+        meta(name='description', content='Mobland - Mobile App Landing Page Template')
+        meta(name='keywords', content='HTML5, bootstrap, mobile, app, landing, ios, android, responsive')
+        // Font
+        link(rel='dns-prefetch', href='//fonts.googleapis.com')
+        link(href='https://fonts.googleapis.com/css?family=Rubik:300,400,500', rel='stylesheet')
+        // Bootstrap CSS
+        link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+        // Themify Icons
+        link(rel='stylesheet', href='/stylesheets/themify-icons.css')
+        // Owl carousel
+        link(rel='stylesheet', href='/stylesheets/owl.carousel.min.css')
+        // Main css
+        link(href='/stylesheets/styleD.css', rel='stylesheet')
+
+    body(data-spy='scroll', data-target='#navbar', data-offset='30')
+        
+        // Nav Menu
+        include ./layoutComponents/MenuD
+        
+        // hero image                
+        header#home.bg-gradient
+        
+        //content
+        //a.btn.btn-outline-dark.btn-sm(href='#', data-toggle='modal', data-target='#modalCreateClue') Edit Clue
+        br
+        br
+        .text-center
+            a.btn.btn-outline-dark.btn-lg(href='#', data-toggle='modal', data-target='#modalCreateClue') Create New Clue
+        
+        br
+        br
+        each clue, index in clues
+
+            .container
+                .section-title
+                    h3 Clue ##{clue.clueOrder} 
+                    .text-center
+                    
+                    .card-deck.bg-light.containerMargin.border.border-dark.rounded
+                        .card
+                            .card-body  
+                                +userClueDisplay(clue)
+                        .card
+                            .card-body
+                                .media
+                                    iframe(width='700', height='450', src="https://www.google.com/maps/embed/v1/place?key="+process.env.MAP_KEY+"&q="+clue.clueLat+","+clue.clueLong+"&zoom=19&maptype=satellite")
+
+
+        //modal create clue popup
+        form#modalCreateClue.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true', action='/clues', method='post')
+            .modal-dialog(role='document')
+                .modal-content
+                    .modal-header.text-center
+                        h4.modal-title.w-100.font-weight-bold Create a New Clue
+                        button.close(type='button', data-dismiss='modal', aria-label='Close')
+                        span(aria-hidden='true') ×
+                    
+                    .modal-body.mx-3
+                        .md-form.mb-4
+                        label(for='shortName') Create a short name:
+                        textarea.form-control.validate(cols="60", rows="2", type='text', name='shortName', id='shortName', placeholder='Short Name for Clue', required)
+                        
+                        .md-form.mb-4
+                        label(for='textarea') Create the Clue text:
+                        textarea.form-control.validate(cols="60", rows="2", type='text', name='clue', id='clue', placeholder='full clue text', required)
+                        
+                        .md-form.mb-4
+                        label(for='imageLink') Link to Clue Image:
+                        input.form-control.validate(type='text', name='imageLink', id='imageLink', placeholder='www.img.com/img')
+
+                        .md-form.mb-4
+                        label(for='xCord') Create the Clue Coordinates:
+                        input.form-control.validate(type='text', name='xCord', id='xCord', placeholder='Latitude', required)
+                        input.form-control.validate(type='text', name='yCord', id='yCord', placeholder='Longitude', required)
+
+                        .md-form.mb-4
+                        label(for='marginOfError') Margin of Error (in feet from x/y coords):
+                        input.form-control.validate(type='text', name='marginOfError', id='marginOfError', placeholder='25')
+
+                    .modal-footer.d-flex.justify-content-center
+                        button.btn.btn-primary(type='submit') Create Clue
+
+        // // end .section
+        footer.my-5.text-center
+            // Copyright removal is not prohibited!
+            p.mb-2
+                small COPYRIGHT © 2018. ALL RIGHTS RESERVED. TREASURE HUNT, LLC
+            small
+                a.m-2(href='#') TERMS
+                a.m-2(href='#') PRIVACY
+        // jQuery and Bootstrap
+        script(src='/javascripts/jquery-3.2.1.min.js')
+        script(src='/javascripts/bootstrap.bundle.min.js')
+        // Plugins JS
+        script(src='/javascripts/owl.carousel.min.js')
+        // Custom JS
+        script(src='/javascripts/script.js')

@@ -39,10 +39,10 @@ html(lang='en')
                                     .media-body
                                         h5=player.username
                                         p Currently on Clue ##{player.currentClue}
-                                        if moment(parseInt(player.pointsMarked[player.pointsMarked.length-1][2])).fromNow() == "Invalid date"
+                                        if player.lastClueFound == null
                                             p Just Starting...
                                         else
-                                            p Last Clue identified  #{moment(parseInt(player.pointsMarked[player.pointsMarked.length-1][2])).fromNow()}
+                                            p Last Clue identified  #{moment(player.lastClueFound).fromNow()}
 
 
         // // end .section

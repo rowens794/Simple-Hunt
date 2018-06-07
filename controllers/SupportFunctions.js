@@ -18,7 +18,7 @@ supportFunctions.getLeaders = function(){
 supportFunctions.getPlayers = function(){
     var playerList;
     try{
-        const playerListQuery = User.find({}).sort({"currentClue": -1});
+        const playerListQuery = User.find({}).sort({"currentClue": -1}).limit(100);
         playerList = playerListQuery.then();
         return playerList;
     }catch(err){

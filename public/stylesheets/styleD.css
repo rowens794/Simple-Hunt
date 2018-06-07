@@ -647,6 +647,11 @@ header {
     bottom: 20px; 
     right: 20px; 
 }
+
 .playHeaderMargin {
     margin-top: 80px;
+}
+
+.containerMargin {
+    padding: 25px;
 }

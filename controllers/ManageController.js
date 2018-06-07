@@ -17,7 +17,7 @@ manageController.manageClues = function(req, res) {
                 if (err){res.send("the database failed to return a list of all clues")}//err out if database call fails
                 else{
                     console.log(clues);
-                    res.render('manageClues', { user : req.user, clues: clues });
+                    res.render('manageCluesD', { user : req.user, clues: clues });
                 }
             });
 
@@ -58,7 +58,7 @@ manageController.createClue = function(req, res) {
                             if (err){res.send("the database failed to return a list of all clues")}//err out if database call fails
                             else{
                                 console.log(clues);
-                                res.render('manageClues', { user : req.user, clues: clues });
+                                res.render('manageCluesD', { user : req.user, clues: clues });
                             }
                         });
                     }
