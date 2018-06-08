@@ -648,12 +648,15 @@ header {
     left: 10px;
     width: 40px;
     height: 40px;
-    border: 2px solid #FE008A;
-    border-radius: 100px;
-    background-color: #f6dbea;
-    font-size: 20px;
-    color: #FE008A;
-    padding-left: 7px;
+}
+#toHomeArr {
+    position: absolute;
+    margin: auto;
+    margin-right: 5px;
+    width: 40px;
+    height: 40px;
+    font-size: 30px;
+    text-decoration: none;
 }
 
 #toHomeIcon{
@@ -662,11 +665,10 @@ header {
     position: absolute;
     top:0;
     bottom:0;
-    left: 0;
+    left: 10px;
     right: 0;
     margin:auto;
 }
-
 
 #markLocationButton {
     position: fixed; 
