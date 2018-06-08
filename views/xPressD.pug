@@ -21,10 +21,12 @@ html(lang='en')
 
     body(data-spy='scroll', data-target='#navbar', data-offset='30')
         
-        // Nav Menu
-        include ./layoutComponents/PlayMenuD
-        
-        .container.bg-white.col-md-6.col-md-offset-3.playHeaderMargin
+        .container.bg-white.col-md-6.col-md-offset-3
+            #fixedWrapper
+                #toHomeButton 
+                    a(href='/')#toHomeArr <
+                        img.img-fluid#toHomeIcon(src='/images/homeIcon.png')
+            br
             br
             br
             h2.text-center #{clueResponseObj.resultHeader}
