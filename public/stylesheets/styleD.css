@@ -644,8 +644,8 @@ header {
 /*Custom CSS*/
 #toHomeButton {
     position: absolute;
-    top: 20px;
-    left: 20px;
+    top: 10px;
+    left: 10px;
     width: 60px;
     height: auto;
     border: 2px solid #FE008A;
