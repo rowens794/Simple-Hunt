@@ -22,9 +22,10 @@ html(lang='en')
     body(data-spy='scroll', data-target='#navbar', data-offset='30')
         
         .container.bg-white.col-md-6.col-md-offset-3
-            #toHomeButton 
-                a(href='/')#toHomeArr <
-                    img.img-fluid#toHomeIcon(src='/images/homeIcon.png')
+            #fixedWrapper
+                #toHomeButton 
+                    a(href='/')#toHomeArr <
+                        img.img-fluid#toHomeIcon(src='/images/homeIcon.png')
             br
             h2.text-center #{clue.clueShortName}
             p.text-center.tagline #{clue.clueText}
