@@ -90,13 +90,17 @@ playController.playPost = async function(req, res){
                         var pointMarkedTime = Date.now(); //create a date object
                         user.pointsMarked.push([userLat, userLong, pointMarkedTime]);//add time/loc to user array
                         user.lastClueFound = pointMarkedTime;
-                        user.save(function (err, user) {
-                          if (err) res.send("an error occured updating the user");//throw and error if problem
-                          res.render('xPressD', {clueResponseObj: clueResponseObj, leaderList: list});
+                        user.save(async function (err, user) {
+                            //get leader list
+                            list = await supportFunctions.getLeaders();
+
+                            //render success page
+                            if (err) res.send("an error occured updating the user");//throw and error if problem
+                            res.render('xPressD', {clueResponseObj: clueResponseObj, leaderList: list});
                         });
                     });
                 }else{
-                    //you didn't find the clue
+
                     clueResponseObj.resultHeader = "Arrrrgh!!";
                     clueResponseObj.result = "You didn't find the clue. But that's ok, go get back in the hunt!";
 

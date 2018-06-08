@@ -31,7 +31,7 @@ html(lang='en')
             br
             p.text-center.tagline #{clue.clueText}
             .bg-white.text-center
-                img.img-fluid(src=clue.clueIMG)
+                img.img-fluid(src=clue.clueIMG).clueHeight
             button#markLocationButton.btn.btn-primary(onclick="getLocation()") Mark Location
         
         // jQuery and Bootstrap

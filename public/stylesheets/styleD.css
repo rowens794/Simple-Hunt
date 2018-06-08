@@ -655,3 +655,7 @@ header {
 .containerMargin {
     padding: 25px;
 }
+
+.clueHeight{
+    height: 60vh;
+}
