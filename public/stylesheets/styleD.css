@@ -642,6 +642,35 @@ header {
 }
 
 /*Custom CSS*/
+#toHomeButton {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 60px;
+    height: auto;
+    border: 2px solid #FE008A;
+    border-radius: 100px;
+    background-color: #f6dbea;
+    font-size: 20px;
+    color: #FE008A;
+    padding-left: 7px;
+}
+
+#toHomeButton a:hover {
+    text-decoration: none;
+}
+
+#toHomeIcon{
+    height: 30px;
+    padding: 5px;
+    vertical-align: middle;
+    position: absolute;
+    top:0;
+    bottom:0;
+    margin:auto;
+}
+
+
 #markLocationButton {
     position: fixed; 
     bottom: 20px; 
