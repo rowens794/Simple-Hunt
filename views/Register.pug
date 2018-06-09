@@ -32,23 +32,28 @@ html(lang='en')
         br
 
         .container.col-12.col-md-8.col-lg-4
-            form(action='/login', method='post')
-                .text-center
-                    h4.w-100.font-weight-bold Sign-in
-                    p.alert-danger #{info}
-                
-                .mx-3
-                    .mb-4
-                        label(for='username') Username
-                        input.form-control.validate(type='text', name='username', id="username", placeholder='Username', required, focus)
-                    
-                    .mb-4
-                        label(for='password') Password
-                        input.form-control.validate(type='password', id='inputPassword', name='password', placeholder='Password')
+            .text-center
+                    h4.w-100.font-weight-bold Sign-up for the Hunt
+                    p.alert-danger #{error}
 
-                br    
-                .d-flex.justify-content-center
-                    button.btn.btn-primary(type='submit') LOGIN
+            form(action="/register", method="post").col-md-8.offset-md-2
+                .form-group
+                    label(for='formGroupExampleInput') Your Name
+                    input#formGroupExampleInput.form-control(type='text', name="name", placeholder='Joe Smith', required, value=body.name)
+                .form-group
+                    label(for='formGroupExampleInput') Pick a Username
+                    input#formGroupExampleInput.form-control(type='text', name="username", placeholder='JSmiley', value=body.username)
+                .form-group
+                    label(for='formGroupExampleInput') Your Email
+                    input#formGroupExampleInput.form-control(type='text', name="email", placeholder='jsmith@gmail.com', value=body.email)
+                .form-group
+                    label(for='formGroupExampleInput2') Password
+                    input#formGroupExampleInput2.form-control(type='password', name="password", placeholder='password')
+                .form-group
+                    label(for='formGroupExampleInput2') Confirm Password
+                    input#formGroupExampleInput2.form-control(type='password', name="confirmPassword", placeholder='password')
+                .text-center
+                    button.btn.btn-primary(type='submit') Submit
 
 
 

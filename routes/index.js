@@ -10,6 +10,7 @@ var leaderboard = require("../controllers/LeaderboardController.js");
 router.get('/', auth.home);
 
 // route to register page
+router.get('/register', auth.register);
 router.post('/register', auth.doRegister);
 
 // route to sign in

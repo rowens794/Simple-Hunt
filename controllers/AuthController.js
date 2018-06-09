@@ -51,7 +51,6 @@ userController.doLogin = function(req, res, next) {
         }
 
         if (!user) { 
-            console.log(info.message);
             return res.render("Login", {info: info.message}); 
         }
 
@@ -62,7 +61,9 @@ userController.doLogin = function(req, res, next) {
     })(req, res, next);
 };
 
-
+userController.register = function(req, res, next) {
+    res.render("Register");
+};
 
 // Post registration
 userController.doRegister = async function(req, res) {
@@ -71,16 +72,25 @@ userController.doRegister = async function(req, res) {
 
     //collect and store inputs appropriotely
     x = { username : req.body.username, name: req.body.name, email: req.body.email, currentClue: 1, pointsMarked: [1,1], adViews: [1], admin: false};
-    //store the user in the database and redirect back to home page
-    User.register(new User(x), req.body.password, function(err, user) {
-        if (err) {
-            console.log(err);
-            return res.render('LayoutD', { user : user, leaderList: list });
-        }
-        passport.authenticate('local')(req, res, function () {
-        res.redirect('/');
-    });
-  });
+    
+    // check that passwords match
+
+    if (req.body.password != req.body.confirmPassword){
+        console.log(req.body);
+        res.render("Register", {error: 'Your password does not match', body: req.body});
+    }
+    else{
+        //store the user in the database and redirect back to home page
+        User.register(new User(x), req.body.password, function(err, user) {
+            if (err) {
+                console.log(req.body);
+                res.render("Register", {error: "The username "+ req.body.username + " is already taken", body: req.body});
+            }
+            passport.authenticate('local')(req, res, function () {
+            res.redirect('/');
+            });
+        });
+    }
 };
 
 // rules
