@@ -22,8 +22,8 @@ manageController.manageClues = function(req, res) {
             });
 
         //both of the below else statments are triggered if the user is not logged in or not an admin
-        }else{res.send('you are not authorized to view this page')}
-    }else{res.send('you are not authorized to view this page')}
+        }else{res.render('404')}
+    }else{res.render('404')}
 };
 
 
@@ -67,8 +67,8 @@ manageController.createClue = function(req, res) {
             })
 
     //both of the below else statments are triggered if the user is not logged in or not an admin        
-        }else{res.send('you are not authorized to view this page')}
-    }else{res.send('you are not authorized to view this page')}
+        }else{res.render('404')}
+    }else{res.render('404')}
 };
 //---------------------------------------------------------------------------------------------------------------
 

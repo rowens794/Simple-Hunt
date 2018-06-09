@@ -642,6 +642,14 @@ header {
 }
 
 /*Custom CSS*/
+@import url('https://fonts.googleapis.com/css?family=Homemade+Apple|Permanent+Marker|Rancho|Reenie+Beanie');
+/*
+font-family: 'Permanent Marker', cursive;
+font-family: 'Homemade Apple', cursive;
+font-family: 'Rancho', cursive;
+font-family: 'Reenie Beanie', cursive;
+*/
+
 #fixedWrapper{
     position: fixed;
 }
@@ -691,4 +699,13 @@ header {
 
 .clueHeight{
     height: 60vh;
+}
+
+.headerFont{
+    font-family: 'Permanent Marker', cursive;
+}
+
+.clueFont{
+    font-family: 'Reenie Beanie', cursive;
+    font-size: 30px;
 }

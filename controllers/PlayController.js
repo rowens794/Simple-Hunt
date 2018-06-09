@@ -6,19 +6,6 @@ var supportFunctions = require("./SupportFunctions");
 
 var playController = {};
 
-// help screen
-playController.help = async function(req, res) {
-    //get leader list
-    list = await supportFunctions.getLeaders();
-
-    if (req.user){
-        res.render('howToPlay', {leaderList: list})
-    }else{
-        res.render('howToPlayNA', {leaderList: list})
-    }
-      
-};
-
 
 // play screen
 playController.play = async function(req, res) {

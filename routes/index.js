@@ -12,12 +12,8 @@ router.get('/', auth.home);
 // route to register page
 router.post('/register', auth.doRegister);
 
-// route to login page
-router.get('/login', auth.login);
+// route to sign in
 router.post('/login', auth.doLogin);
-
-// route for help action
-router.get('/help', play.help);
 
 // route for play action
 router.get('/play', play.play);
@@ -32,6 +28,10 @@ router.get('/leaderboard', leaderboard.leaderboard);
 
 // route for logout action
 router.get('/logout', auth.logout);
+
+// rules/privacy
+router.get('/rules', auth.rules);
+router.get('/privacy', auth.privacy);
 
 //404 error page --ALWAYS KEEP LAST--
 router.get('*', auth.fourOfour);

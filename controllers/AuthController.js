@@ -26,6 +26,13 @@ userController.home = async function(req, res) {
     }  
 };
 
+//login
+userController.doLogin = function(req, res) {
+    passport.authenticate('local')(req, res, function () {
+      res.redirect('/');
+    });
+  };
+
 // Post registration
 userController.doRegister = async function(req, res) {
     //get leader list
@@ -45,25 +52,22 @@ userController.doRegister = async function(req, res) {
   });
 };
 
-// Login Controller
-userController.login = async function(req, res) {
-    //get leader list
-    list = await supportFunctions.getLeaders();
-
-    res.render('login',{leaderList: list});
+// rules
+userController.rules = function(req, res) {
+    res.render('rules', { user : req.user });
 };
 
-userController.doLogin = function(req, res) {
-  passport.authenticate('local')(req, res, function () {
-    res.redirect('/');
-  });
+// privacy
+userController.privacy = function(req, res) {
+    res.render('Privacy', { user : req.user });
 };
 
 // logout
 userController.logout = function(req, res) {
-  req.logout();
-  res.redirect('/');
-};
+    req.logout();
+    res.redirect('/');
+  };
+
 
 // 404 error
 userController.fourOfour = function(req, res) {
