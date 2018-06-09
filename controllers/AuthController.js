@@ -33,7 +33,7 @@ userController.login = function(req, res) {
         res.redirect('/');
     }
     else{
-        res.render('login');
+        res.render('Login');
     }
 };
 
@@ -52,7 +52,7 @@ userController.doLogin = function(req, res, next) {
 
         if (!user) { 
             console.log(info.message);
-            return res.render("login", {info: info.message}); 
+            return res.render("Login", {info: info.message}); 
         }
 
         req.logIn(user, function(err) {
@@ -85,7 +85,7 @@ userController.doRegister = async function(req, res) {
 
 // rules
 userController.rules = function(req, res) {
-    res.render('rules', { user : req.user });
+    res.render('Rules', { user : req.user });
 };
 
 // privacy
