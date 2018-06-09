@@ -13,6 +13,7 @@ router.get('/', auth.home);
 router.post('/register', auth.doRegister);
 
 // route to sign in
+router.get('/login', auth.login);
 router.post('/login', auth.doLogin);
 
 // route for play action

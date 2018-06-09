@@ -26,12 +26,43 @@ userController.home = async function(req, res) {
     }  
 };
 
-//login
-userController.doLogin = function(req, res) {
-    passport.authenticate('local')(req, res, function () {
-      res.redirect('/');
-    });
-  };
+
+// login
+userController.login = function(req, res) {
+    if (req.user){
+        res.redirect('/');
+    }
+    else{
+        res.render('login');
+    }
+};
+
+//user login 
+//userController.doLogin = function(req, res) {
+//    passport.authenticate('local')(req, res, function () {
+//      res.redirect('/');
+//    });
+//};
+
+userController.doLogin = function(req, res, next) {
+    passport.authenticate('local', function(err, user, info) {
+        if (err) { 
+            return res.redirect('/'); 
+        }
+
+        if (!user) { 
+            console.log(info.message);
+            return res.render("login", {info: info.message}); 
+        }
+
+        req.logIn(user, function(err) {
+            if (err) { return next(err); }
+            return res.redirect('/');
+        });
+    })(req, res, next);
+};
+
+
 
 // Post registration
 userController.doRegister = async function(req, res) {
