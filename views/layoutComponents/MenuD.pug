@@ -94,9 +94,12 @@ form#modalLoginForm.modal.fade(tabindex='-1', role='dialog', aria-labelledby='my
         .md-form.mb-4
           label(data-error='wrong', data-success='right', for='defaultForm-pass') Password
           input.form-control.validate(type='password', id='inputPassword', name='password', placeholder='Password')
-          
+      
+      .modal-body.d-flex.justify-content-center
+        button.btn.btn-primary(type='submit') LOGIN
+        br
       .modal-footer.d-flex.justify-content-center
-          button.btn.btn-primary(type='submit') LOGIN
+        a(href="/forgotpassword") Forgot Password
 
 
 

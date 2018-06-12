@@ -13,13 +13,19 @@ router.get('/', auth.home);
 router.get('/register', auth.register);
 router.post('/register', auth.doRegister);
 
-// route to register page
+// route to verify pages
 router.get('/verify/:acctHash', auth.verify);
 router.get('/resendverificationemail', auth.reVerify);
 
 // route to sign in
 router.get('/login', auth.login);
 router.post('/login', auth.doLogin);
+
+// forgot password routes
+router.get('/forgotpassword', auth.forgotPassword);
+router.post('/forgotpassword', auth.postForgotPassword);
+router.get('/resetpassword/:passwordHash', auth.resetPassword);
+router.post('/resetpassword/:passwordHash', auth.resetPasswordExecute);
 
 // route for play action
 router.get('/play', play.play);

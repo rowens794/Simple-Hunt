@@ -33,7 +33,8 @@ var UserSchema = new Schema({
     adViews: [],
     admin: Boolean,
     verified: Boolean,
-    urlHash: String
+    urlHash: String,
+    passwordHash: String
 });
 
 UserSchema.plugin(passportLocalMongoose);
