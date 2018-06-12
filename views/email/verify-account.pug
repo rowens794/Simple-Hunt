@@ -1,0 +1,9 @@
+extends email-layout
+
+block content
+  h2 Welcome to TheHunt
+  p Hi #{realName},
+  p You're almost done setting up your account.  Just click the link below and you'll be verified and ready to hunt.
+  +button(resetURL, 'Verify Your Account Now →')
+  p If you can't click the above button please visit #{resetURL}
+

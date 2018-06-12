@@ -14,20 +14,25 @@ const transport = nodemailer.createTransport({
 
 var mailFunctions = {};
 
-let options = {
-    from: '"Fred Foo" <foo@example.com>', // sender address
-    to: 'bar@example.com, baz@example.com', // list of receivers
-    subject: 'Hello ✔', // Subject line
-    text: 'Hello world?', // plain text body
-    html: '<b>Hello world?</b>' // html body
-};
+const generateHTML = function(options = {}){
+    const html = pug.renderFile(`${__dirname}/../views/email/${options.filename}.pug`, options);
+    const inlined = juice(html);
+    return inlined;
+}
 
 mailFunctions.sendEmail = function(options){
+    //generate html and set options variable
+    html = generateHTML(options);
+    text = htmlToText.fromString(html);
+    options.html = html;
+    options.text = text;
+
     transport.sendMail(options, (error, info) => {
+
         if (error) {
             return console.log(error);
         }
-        console.log("HERE?");
+        
         console.log('Message sent: %s', info.messageId);
         // Preview only available when sending through an Ethereal account
         console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));

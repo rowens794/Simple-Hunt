@@ -11,7 +11,6 @@ var userController = {};
 userController.home = async function(req, res) {
     //get leader list
     list = await supportFunctions.getLeaders();
-    console.log(req.user);
 
     if (req.user){
         if(req.user.admin){
@@ -73,16 +72,16 @@ userController.verify = function(req, res, next) {
     User.findOneAndUpdate({urlHash: hashID}, {verified: true, urlHash: ""}, function (err, user) {
         if (err){
             //something else when wrong
-            res.render("404");
+            res.render("404", {user : req.user});
         }
         else{
             if (user == undefined){
                 //if this is triggered then no user with this urlHash has been found
-                res.render("404");
+                res.render("404", {user : req.user});
             }
             else{
                 //TODO Replace with a rendered page
-                res.send("it worked is confirmed!");
+                res.render("AcctVerified", {user : req.user});
             }
         }
     })
@@ -100,7 +99,6 @@ userController.doRegister = async function(req, res) {
     // check that passwords match
 
     if (req.body.password != req.body.confirmPassword){
-        console.log(req.body);
         res.render("Register", {error: 'Your password does not match', body: req.body});
     }
     else{
@@ -112,25 +110,22 @@ userController.doRegister = async function(req, res) {
                     res.render("Register", {error: "The email "+ req.body.email + " is already being used", body: req.body});
                 }
                 else {
-                    console.log(err);
-                    console.log(req.body);
                     res.render("Register", {error: "The username "+ req.body.username + " is already taken", body: req.body});
                 }
             }
 
             //send welcome email
-            userInfo ={
-                realName: req.body.name,
-                username: req.body.username,
-                urlHash: urlHash
-            }
-
             const mailOptions = {
                 from: "TheHunt <welcome@thehunt.com>",
                 to: req.body.email,
-                subject: "You Are In",
-                html: "You are registered for the hunt and signed up as " + req.body.username +" click this link to verify account:" + urlHash + " .",
-                text: "You are registered for the hunt - you text only tool."
+                subject: "You Are In - Verify Account",
+                html: "",
+                text: "",
+                filename: "verify-account",
+                realName: req.body.name,
+                username: req.body.username,
+                urlHash: urlHash,
+                resetURL: `http://${req.headers.host}/verify/${urlHash}`
             }
 
             mail.sendEmail(mailOptions);
@@ -142,6 +137,37 @@ userController.doRegister = async function(req, res) {
         });
     }
 };
+
+userController.reVerify = function (req, res){
+    //if user logged in and account not verified then resend email
+    console.log("------Here-------1");
+    console.log(req.user);
+
+    if (req.user.verified === false){
+        //send welcome email
+        const mailOptions = {
+            from: "TheHunt <welcome@thehunt.com>",
+            to: req.user.email,
+            subject: "You Are In - Verify Account",
+            html: "",
+            text: "",
+            filename: "verify-account",
+            realName: req.user.name,
+            username: req.user.username,
+            urlHash: req.user.urlHash,
+            resetURL: `http://${req.headers.host}/verify/${req.user.urlHash}`
+        }
+        console.log("------Here-------");
+        console.log(mailOptions);
+
+        mail.sendEmail(mailOptions);
+
+        res.render("NewVerificationEmailSent", {user : req.user} );
+    }
+
+    //else redirect to play screen
+    res.render("PlayD", {user : req.user});
+}
 
 // rules
 userController.rules = function(req, res) {

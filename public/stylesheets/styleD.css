@@ -709,3 +709,11 @@ font-family: 'Reenie Beanie', cursive;
     font-family: 'Reenie Beanie', cursive;
     font-size: 30px;
 }
+
+.fontWhite{
+    color: whitesmoke;
+}
+
+.fontGrey{
+    color: lightgray;
+}

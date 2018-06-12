@@ -14,16 +14,25 @@ playController.play = async function(req, res) {
 
     if (req.user){
 
-        //get the users current clue
-        userClueNum = req.user.currentClue;
+        //check if account is veriified
+        if (req.user.verified){
 
-        Clue.find({clueOrder: userClueNum}, function(err, clue){
-            if (err){res.send("the database failed find the users current clue")}//err out if database call fails
-            else{
-                //return the corresponding clue
-                res.render('PlayD', { user : req.user, clue: clue[0], leaderList: list});
-            }
-        });
+            //get the users current clue
+            userClueNum = req.user.currentClue;
+
+            Clue.find({clueOrder: userClueNum}, function(err, clue){
+                if (err){res.send("the database failed find the users current clue")}//err out if database call fails
+                else{
+                    //return the corresponding clue
+                    res.render('PlayD', { user : req.user, clue: clue[0], leaderList: list});
+                }
+            });
+        }
+        //if user is not verified let them know to do it
+        else{
+            res.render("NotVerified", { user : req.user });
+        }
+
     }else{
         res.render('notLoggedInD', {leaderList: list})
     }
