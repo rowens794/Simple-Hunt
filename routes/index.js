@@ -13,6 +13,9 @@ router.get('/', auth.home);
 router.get('/register', auth.register);
 router.post('/register', auth.doRegister);
 
+// route to register page
+router.get('/verify/:acctHash', auth.verify);
+
 // route to sign in
 router.get('/login', auth.login);
 router.post('/login', auth.doLogin);

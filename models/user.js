@@ -31,7 +31,9 @@ var UserSchema = new Schema({
     lastClueFound: Number,
     pointsMarked: [],
     adViews: [],
-    admin: Boolean
+    admin: Boolean,
+    verified: Boolean,
+    urlHash: String
 });
 
 UserSchema.plugin(passportLocalMongoose);

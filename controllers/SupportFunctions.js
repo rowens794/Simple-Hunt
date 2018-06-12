@@ -26,4 +26,14 @@ supportFunctions.getPlayers = function(){
     }
 }
 
+supportFunctions.getHash = function () {
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  
+    for (var i = 0; i < 55; i++)
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+  
+    return text;
+  }
+
 module.exports = supportFunctions;

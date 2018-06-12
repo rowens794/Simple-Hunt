@@ -6,7 +6,6 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
-
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
@@ -49,6 +48,8 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+//test mailserver
+require('./handlers/mail');
 
 //setup bodyparser
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
