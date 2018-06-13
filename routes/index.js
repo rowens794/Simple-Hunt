@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 var auth = require("../controllers/AuthController.js");
 var manage = require("../controllers/ManageController.js");
 var play = require("../controllers/PlayController.js");
+var resetPass = require("../controllers/PasswordResetController.js");
 var leaderboard = require("../controllers/LeaderboardController.js");
 
 // restrict index for logged in user only
@@ -22,10 +23,10 @@ router.get('/login', auth.login);
 router.post('/login', auth.doLogin);
 
 // forgot password routes
-router.get('/forgotpassword', auth.forgotPassword);
-router.post('/forgotpassword', auth.postForgotPassword);
-router.get('/resetpassword/:passwordHash', auth.resetPassword);
-router.post('/resetpassword/:passwordHash', auth.resetPasswordExecute);
+router.get('/forgotpassword', resetPass.forgotPassword);
+router.post('/forgotpassword', resetPass.postForgotPassword);
+router.get('/resetpassword/:passwordHash', resetPass.resetPassword);
+router.post('/resetpassword/:passwordHash', resetPass.resetPasswordExecute);
 
 // route for play action
 router.get('/play', play.play);

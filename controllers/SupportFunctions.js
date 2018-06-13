@@ -1,5 +1,6 @@
 var mongoose = require("mongoose");
 var User = require("../models/user");
+var Clue = require("../models/clue");
 
 
 var supportFunctions = {};
@@ -10,6 +11,17 @@ supportFunctions.getLeaders = function(){
         const leaderListQuery = User.find({}).sort({"currentClue": -1}).limit(5);
         leaderList = leaderListQuery.then();
         return leaderList;
+    }catch(err){
+        return err;
+    }
+}
+
+supportFunctions.getNumberOfClues = async function(){
+    var NumberOfClues;
+    try{
+        const NumberOfCluesQuery = Clue.find({});
+        NumberOfClues = NumberOfCluesQuery.then();
+        return NumberOfClues;
     }catch(err){
         return err;
     }

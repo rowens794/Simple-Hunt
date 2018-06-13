@@ -11,6 +11,8 @@ var playController = {};
 playController.play = async function(req, res) {
     //get leader list
     list = await supportFunctions.getLeaders();
+    totalClues = await supportFunctions.getNumberOfClues();
+    console.log(totalClues.length);
 
     if (req.user){
 
@@ -96,7 +98,8 @@ playController.playPost = async function(req, res){
                         });
                     });
                 }else{
-
+                    
+                    //User didn't find the clue
                     clueResponseObj.resultHeader = "Arrrrgh!!";
                     clueResponseObj.result = "You didn't find the clue. But that's ok, go get back in the hunt!";
 
