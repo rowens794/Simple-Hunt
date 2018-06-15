@@ -70,21 +70,25 @@ html(lang='en')
                                         p.card-text
                                             | All you need to play is a GPS enabled phone, it's completely free to signup and completely free to play.
         // // end .section
+
         .section
             .container
                 .row
-                    .col-lg-6.offset-lg-6.whiteBackground
-                        .box-icon
-                            span.ti-mobile.gradient-fill.ti-3x
-                        h2 Play in Your Browser
-                        p.mb-4
-                            | No worries about downloading an app and cluttering up your phone.  The entire game is played right in your phones browser.
-                        if user === undefined
-                            a.btn.btn-primary(href='#register') SIGN UP
-                        else
-                            a.btn.btn-primary(href='/play') PLAY NOW
-                .perspective-phone.d-none.d-sm-block
-                    img.img-fluid(src='/images/perspective.png', alt='perspective phone')
+                    .col-md-6.d-flex.align-items-center
+                        div
+                            .box-icon
+                                span.ti-mobile.gradient-fill.ti-3x
+                            h2 Play in Your Browser
+                            p.mb-4
+                                | No worries about downloading an app and cluttering up your phone.  The entire game is played right in your phones browser.
+                            if user === undefined
+                                a.btn.btn-primary(href='#register') SIGN UP
+                            else
+                                a.btn.btn-primary(href='/play') PLAY NOW
+                    .col-md-6
+                        img.img-fluid(src='/images/perspective.png', alt='perspective phone')
+
+                    
         // // end .section
         .section.light-bg
             .container
