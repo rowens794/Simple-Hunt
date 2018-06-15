@@ -44,7 +44,7 @@ passResetController.postForgotPassword = function(req, res) {
                     
                         //send email with link to user
                         const mailOptions = {
-                            from: "TheHunt <welcome@thehunt.com>",
+                            from: "TheHunt <welcome@charlestontreasurehunt.com>",
                             to: user.email,
                             subject: "TheHunt: Password Reset",
                             html: "Password Reset",

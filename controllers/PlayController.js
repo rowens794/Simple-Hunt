@@ -2,6 +2,7 @@ var mongoose = require("mongoose");
 var passport = require("passport");
 var User = require("../models/user");
 var Clue = require("../models/clue");
+var Game = require("../models/clue");
 var supportFunctions = require("./SupportFunctions");
 
 var playController = {};
@@ -12,7 +13,7 @@ playController.play = async function(req, res) {
     //get leader list
     list = await supportFunctions.getLeaders();
     totalClues = await supportFunctions.getNumberOfClues();
-    console.log(totalClues.length);
+    totalClues = totalClues.length
 
     if (req.user){
 
@@ -22,13 +23,20 @@ playController.play = async function(req, res) {
             //get the users current clue
             userClueNum = req.user.currentClue;
 
-            Clue.find({clueOrder: userClueNum}, function(err, clue){
-                if (err){res.send("the database failed find the users current clue")}//err out if database call fails
-                else{
-                    //return the corresponding clue
-                    res.render('PlayD', { user : req.user, clue: clue[0], leaderList: list});
-                }
-            });
+            //check if user has won the hunt
+            if (userClueNum > totalClues){
+                res.render("HuntComplete", { user : req.user, leaderList: list, totalClues: totalClues});
+            }
+
+            else{
+                Clue.find({clueOrder: userClueNum}, function(err, clue){
+                    if (err){res.send("the database failed find the users current clue")}//err out if database call fails
+                    else{
+                        //return the corresponding clue
+                        res.render('PlayD', { user : req.user, clue: clue[0], leaderList: list});
+                    }
+                });
+            }
         }
         //if user is not verified let them know to do it
         else{

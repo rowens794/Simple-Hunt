@@ -116,7 +116,7 @@ userController.doRegister = async function(req, res) {
 
             //send welcome email
             const mailOptions = {
-                from: "TheHunt <welcome@thehunt.com>",
+                from: "TheHunt <welcome@charlestontreasurehunt.com>",
                 to: req.body.email,
                 subject: "You Are In - Verify Account",
                 html: "",
@@ -146,7 +146,7 @@ userController.reVerify = function (req, res){
     if (req.user.verified === false){
         //send welcome email
         const mailOptions = {
-            from: "TheHunt <welcome@thehunt.com>",
+            from: "TheHunt <welcome@charlestontreasurehunt.com>",
             to: req.user.email,
             subject: "You Are In - Verify Account",
             html: "",
@@ -223,7 +223,7 @@ userController.postForgotPassword = function(req, res) {
                     
                         //send email with link to user
                         const mailOptions = {
-                            from: "TheHunt <welcome@thehunt.com>",
+                            from: "TheHunt <welcome@charlestontreasurehunt.com>",
                             to: user.email,
                             subject: "TheHunt: Password Reset",
                             html: "Password Reset",

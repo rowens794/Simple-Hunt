@@ -382,12 +382,14 @@ header {
 
 .perspective-phone {
     position: relative;
+    max-width: 600px;
     z-index: -1;
 }
 
 @media (min-width:992px) {
     .perspective-phone {
-        margin-top: -150px;
+        margin-top: -250px;
+        margin-bottom: -50px;
     }
 }
 
@@ -716,4 +718,8 @@ font-family: 'Reenie Beanie', cursive;
 
 .fontGrey{
     color: lightgray;
+}
+
+.whiteBackground{
+    background-color: rgba(255, 255, 255, 0.75);
 }
