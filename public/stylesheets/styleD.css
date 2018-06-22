@@ -723,3 +723,59 @@ font-family: 'Reenie Beanie', cursive;
 .whiteBackground{
     background-color: rgba(255, 255, 255, 0.75);
 }
+
+.userCluebox{
+    height: 100%; 
+    max-height: 300px;
+}
+
+.clueImg{
+    max-width: 90%;
+    max-height: 100%;
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.footerBar{
+    background-color: #e7deea ;
+    padding-bottom: 5px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #6D2192;
+    position: relative;
+}
+
+.footerimg{
+    height: 7vh;
+    min-height: 4vh;
+    padding: 5px;
+    min-width: 4vh;
+}
+.markLocButton{
+    background-color: transparent;
+    border: none;
+}
+
+.clueHeaderBackground{
+    margin-top: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #6D2192;
+}
+
+.clueImgBox{
+    position:relative
+    margin-top: -15px;
+    margin-bottom: -15px;
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #6D2192;
+    z-index: 100;
+}

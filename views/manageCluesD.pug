@@ -47,12 +47,12 @@ html(lang='en')
                     
                     .card-deck.bg-light.containerMargin.border.border-dark.rounded
                         .card
-                            .card-body  
+                            .card-body.whiteBackground  
                                 +userClueDisplay(clue)
                         .card
                             .card-body
                                 .media
-                                    iframe(width='700', height='450', src="https://www.google.com/maps/embed/v1/place?key="+process.env.MAP_KEY+"&q="+clue.clueLat+","+clue.clueLong+"&zoom=19&maptype=satellite")
+                                    iframe(width='100%', height='50%', src="https://www.google.com/maps/embed/v1/place?key="+process.env.MAP_KEY+"&q="+clue.clueLat+","+clue.clueLong+"&zoom=19&maptype=satellite")
 
 
         //modal create clue popup
