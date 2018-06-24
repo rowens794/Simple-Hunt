@@ -779,3 +779,12 @@ font-family: 'Reenie Beanie', cursive;
     border-color: #6D2192;
     z-index: 100;
 }
+
+.clue_Select_button {
+    min-width: 75%;
+    max-width: 99%;
+}
+
+.margin_adjustment {
+    margin-top: -70px;
+}

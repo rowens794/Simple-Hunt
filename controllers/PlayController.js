@@ -33,7 +33,8 @@ playController.play = async function(req, res) {
                     if (err){res.send("the database failed find the users current clue")}//err out if database call fails
                     else{
                         //return the corresponding clue
-                        res.render('PlayD', { user : req.user, clue: clue[0], leaderList: list});
+                        console.log(clue[0]);
+                        res.render(clue[0].clueType, { user : req.user, clue: clue[0], leaderList: list});
                     }
                 });
             }
