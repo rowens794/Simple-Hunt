@@ -20,6 +20,18 @@ var clueSchema = new Schema({
         trim: true,
         lowercase: true
     },
+    clueType: {
+        type: String,
+        trim: true,
+        required: 'Clue type is required'
+    },
+    clueOptions: {
+        imgs: [],
+        maxColdDistance: Number,
+        videoURL: String,
+        controller: String,
+        function: String
+    },
     clueLong: Number,
     clueLat: Number,
     marginOfError: Number,
