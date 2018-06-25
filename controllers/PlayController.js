@@ -204,7 +204,9 @@ hotColdClueCheck = function(req, res, clue) {
         }
 
         height = temperatureDegrees / 100 * 29;
-        margin = 29 - temperatureDegrees + .5;
+        margin = 29 - height + .5;
+
+        console.log("margin: "+ margin + " height: " + height);
 
         //Determine the hotness of the user
         if (temperatureDegrees > 90){
