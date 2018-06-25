@@ -770,7 +770,7 @@ font-family: 'Reenie Beanie', cursive;
 }
 
 .clueImgBox{
-    position:relative
+    position:relative;
     margin-top: -15px;
     margin-bottom: -15px;
     border-radius: 5px;
@@ -787,4 +787,63 @@ font-family: 'Reenie Beanie', cursive;
 
 .margin_adjustment {
     margin-top: -70px;
+}
+
+
+/*
+For the thermometer I need to override:
+mercuryTop background-color
+mercuryTop box-shadow
+mercuryBottom box-shadow
+mercuryBottom background-color
+ThermometerTop Height
+ThermometerTop margin-top
+*/
+
+.thermometerTop {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5vh;
+    width: 3vw;
+    min-width: 25px;
+    height: 30vh;
+    border: #19647E;
+    border-style: solid solid none solid ;
+    border-width: 1px;
+    border-radius: 10px 10px 7px 7px;
+    background-color: #C9F1FF;
+}
+
+.thermometerBottom {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0vh;
+    width: 6vw;
+    min-width: 40px;
+    height: 7vh;
+    border: #19647E;
+    border-style: none solid solid solid ;
+    border-width: 1px;
+    border-radius: 30px 30px 30px 30px;
+    background-color: #C9F1FF;
+}
+
+.mercuryTop{
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 7px 7px 7px 7px;
+    width: 2.6vw;
+    min-width: 20px;
+    margin-top: 0.5vh;
+    height: 29vh;
+    padding-top: 3vh;
+}
+
+.mercuryBottom{
+    margin-left: auto;
+    margin-right: auto;
+    width: 5.5vw;
+    min-width: 35px;
+    height: 6.7vh;
+    border-radius: 30px 30px 30px 30px;
 }

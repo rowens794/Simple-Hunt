@@ -27,6 +27,7 @@ var clueSchema = new Schema({
     },
     clueOptions: {
         imgs: [],
+        maxColdDistance: Number,
         videoURL: String,
         controller: String,
         function: String
