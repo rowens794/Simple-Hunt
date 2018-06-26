@@ -53,6 +53,9 @@ playController.playPost = async function(req, res){
     list = await supportFunctions.getLeaders();
 
     if (req.user){
+        console.log("---------------------------");
+        console.log(req.body);
+        console.log("---------------------------");
 
         //get the x/y coords
         userLat = req.body.lat;
@@ -64,13 +67,9 @@ playController.playPost = async function(req, res){
 
         //make database call to get clue info based on type of clue
         Clue.find({clueOrder: currentClue}, function(err, clue){
-            console.log("-------Checking this 123-------");
-            console.log(clue[0].clueType);
 
             if (err){res.send("the database failed find the user's current clue")}//err out if database call fails
             else{
-                console.log("Check 2****************")
-                console.log(clue[0].clueType);
                 if (clue[0].clueType == "HotColdClue"){
                     hotColdClueCheck(req, res, clue);
                 }else{
@@ -97,8 +96,8 @@ standardClueCheck = function(req, res, clue) {
         clueLong: clue[0].clueLong,
         margin: clue[0].marginOfError, //in feet
         convertedMargin: convertedMargin, //returns the margin in decimal notation
-        userLat: userLat,
-        userLong: userLong,
+        userLat: req.body.lat,
+        userLong: req.body.long,
         result: ""
     }
 
@@ -146,7 +145,6 @@ standardClueCheck = function(req, res, clue) {
 }
 
 hotColdClueCheck = function(req, res, clue) {
-    console.log("hotColdCheck");
 
     margin = clue[0].marginOfError;
     convertedMargin =  margin * .0000027397;
@@ -159,10 +157,12 @@ hotColdClueCheck = function(req, res, clue) {
         margin: clue[0].marginOfError, //in feet
         convertedMargin: convertedMargin, //returns the margin in decimal notation
         maxColdDistance: maxColdDistance, //returns the distance for max cold
-        userLat: userLat,
-        userLong: userLong,
+        userLat: req.body.lat,
+        userLong: req.body.long,
         result: ""
     }
+
+    console.log("lat: " + userLat + " long: " + userLong);
 
     //check if player found correct location
     if (Math.abs(userLat - clue[0].clueLat) < convertedMargin && Math.abs(userLong - clue[0].clueLong) < convertedMargin){
