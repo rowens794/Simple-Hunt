@@ -6,6 +6,7 @@ var manage = require("../controllers/ManageController.js");
 var play = require("../controllers/PlayController.js");
 var resetPass = require("../controllers/PasswordResetController.js");
 var leaderboard = require("../controllers/LeaderboardController.js");
+var maps = require("../controllers/mapController.js");
 
 // restrict index for logged in user only
 router.get('/', auth.home);
@@ -38,6 +39,9 @@ router.post('/clues', manage.createClue);
 
 // route for leaderboard
 router.get('/leaderboard', leaderboard.leaderboard);
+
+// route for maps
+router.get('/maps', maps.showMap);
 
 // route for logout action
 router.get('/logout', auth.logout);

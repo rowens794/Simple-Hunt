@@ -847,3 +847,11 @@ ThermometerTop margin-top
     height: 6.7vh;
     border-radius: 30px 30px 30px 30px;
 }
+
+.map-marker-icon {
+    width: 5px;
+    height: 5px;
+    background-color:rgba(255, 0, 119, 0.39);
+    border-radius: 10px;
+
+    }
