@@ -1,4 +1,5 @@
-L.mapbox.accessToken = 'pk.eyJ1Ijoicm93ZW5zNzk0IiwiYSI6ImNqaXdpYWpmNzFtZmIzd212aDFkNTNmYTQifQ.fh-c8Th3fFbnoV9-mE3DCA';
+
+L.mapbox.accessToken = "pk.eyJ1Ijoicm93ZW5zNzk0IiwiYSI6ImNqaXdpYWpmNzFtZmIzd212aDFkNTNmYTQifQ.fh-c8Th3fFbnoV9-mE3DCA";
 
 // Replace 'mapbox.streets' with your map id.
 var mapboxTiles = L.tileLayer('https://api.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=' + L.mapbox.accessToken, {
