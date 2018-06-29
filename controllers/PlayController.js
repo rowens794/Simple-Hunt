@@ -4,6 +4,7 @@ var User = require("../models/user");
 var Clue = require("../models/clue");
 var Game = require("../models/clue");
 var supportFunctions = require("./SupportFunctions");
+var moment = require('moment');
 
 var playController = {};
 
@@ -72,6 +73,8 @@ playController.playPost = async function(req, res){
             else{
                 if (clue[0].clueType == "HotColdClue"){
                     hotColdClueCheck(req, res, clue);
+                }else if(clue[0].clueType == "ClockClue"){
+                    clockClueCheck(req, res, clue);
                 }else{
                     standardClueCheck(req, res, clue);
                 }
@@ -248,6 +251,114 @@ hotColdClueCheck = function(req, res, clue) {
             user.save(function (err, user) {
                 if (err) res.send("an error occured updating the user");//throw and error if problem
                 res.render('HotColdClue', {clueResponseObj: clueResponseObj, leaderList: list, clue: clue[0]});
+            });
+        });
+    }
+}
+
+clockClueCheck = function(req, res, clue) {
+
+    margin = clue[0].marginOfError;
+    convertedMargin =  margin * .0000027397;
+
+    //process time and select applicable clue lat and long
+    hour = Number(moment().format("h"));
+    	
+    switch (hour) {
+        case 1: //1c
+            lat = 38.364665;
+            long = -81.690812;
+            break;
+        case 2: // 2e
+            lat = 38.363575;
+            long = -81.695508;
+            break;
+        case 3: //3d
+            lat = 38.365294;
+            long = -81.694101;
+            break;
+        case 4: //4c
+            lat = 38.367064;
+            long = -81.692628;
+            break;
+        case 5: //5e
+            lat = 38.365653;
+            long = -81.697062;
+            break;
+        case 6: //6f
+            lat = 38.365929;
+            long = -81.699996;
+            break;
+        case 7: //7e
+            lat = 38.367673;
+            long = -81.698555;
+        case 8: //4c
+            lat = 38.367119;
+            long = -81.692660;
+        case 9: //3b
+            lat = 38.367161;
+            long = -81.689387;
+        case 10: //5d
+            var lat = 38.366986;
+            var long = -81.695308;
+        case 11: //6c
+            lat = 38.368730;
+            long = -81.693863;
+        case 0: //3f
+            lat = 38.363432;
+            long = -81.698117;
+    }
+
+    //set clueResponseObj
+    clueResponseObj = {
+        clueNum: clue[0].clueOrder,
+        clueLat: lat,
+        clueLong: long,
+        margin: clue[0].marginOfError, //in feet
+        convertedMargin: convertedMargin, //returns the margin in decimal notation
+        userLat: req.body.lat,
+        userLong: req.body.long,
+        result: ""
+    }
+
+    //check if player found correct location
+    if (Math.abs(userLat - clue[0].clueLat) < convertedMargin && Math.abs(userLong - clue[0].clueLong) < convertedMargin){
+        clueResponseObj.resultHeader = "Ahoy Matey";
+        clueResponseObj.result = "You've marked the location and are one step closer to the prize!";
+        
+        //update the user in the database
+        User.findById(user._id, function (err, user) {
+            if (err) res.send("an error occured updating the user");//throw and error if problem
+            
+            //update user variables
+            user.currentClue = clueResponseObj.clueNum + 1;
+            var pointMarkedTime = Date.now(); //create a date object
+            user.pointsMarked.push([userLat, userLong, pointMarkedTime]);//add time/loc to user array
+            user.lastClueFound = pointMarkedTime;
+            user.save(async function (err, user) {
+                //get leader list
+                list = await supportFunctions.getLeaders();
+
+                //render success page
+                if (err) res.send("an error occured updating the user");//throw and error if problem
+                res.render('xPressD', {clueResponseObj: clueResponseObj, leaderList: list});
+            });
+        });
+    }else{
+        
+        //User didn't find the clue
+        clueResponseObj.resultHeader = "Arrrrgh!!";
+        clueResponseObj.result = "You didn't find the clue. But that's ok, go get back in the hunt!";
+
+        User.findById(user._id, function (err, user) {
+            if (err) res.send("an error occured updating the user");//throw and error if problem
+            
+            //update user variables
+            var pointMarkedTime = Date.now(); //create a date object
+            user.pointsMarked.push([userLat, userLong, pointMarkedTime]);//add time/loc to user array
+            user.save(function (err, user) {
+                if (err) res.send("an error occured updating the user");//throw and error if problem
+                res.render('xPressD', {clueResponseObj: clueResponseObj, leaderList: list});
             });
         });
     }
