@@ -194,6 +194,7 @@ html(lang='en')
         form#videoClue.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true', action='/clues', method='post')
             .modal-dialog(role='document')
                 .modal-content
+                    input(type="hidden" id="clueType" name="clueType" value="VideoClue")
                     .modal-header.text-center
                         h4.modal-title.w-100.font-weight-bold Create a Video Clue
                         button.close(type='button', data-dismiss='modal', aria-label='Close')
@@ -205,11 +206,7 @@ html(lang='en')
                         textarea.form-control.validate(cols="60", rows="2", type='text', name='shortName', id='shortName', placeholder='Short Name for Clue', required)
                         
                         .md-form.mb-4
-                        label(for='textarea') Create the Clue text:
-                        textarea.form-control.validate(cols="60", rows="2", type='text', name='clue', id='clue', placeholder='full clue text', required)
-                        
-                        .md-form.mb-4
-                        label(for='imageLink') Link to Clue Image:
+                        label(for='imageLink') Link to Clue Video:
                         input.form-control.validate(type='text', name='imageLink', id='imageLink', placeholder='www.img.com/img')
 
                         .md-form.mb-4
