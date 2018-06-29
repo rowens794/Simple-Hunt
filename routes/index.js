@@ -6,7 +6,7 @@ var manage = require("../controllers/ManageController.js");
 var play = require("../controllers/PlayController.js");
 var resetPass = require("../controllers/PasswordResetController.js");
 var leaderboard = require("../controllers/LeaderboardController.js");
-var maps = require("../controllers/mapController.js");
+var maps = require("../controllers/MapController.js");
 
 // restrict index for logged in user only
 router.get('/', auth.home);
