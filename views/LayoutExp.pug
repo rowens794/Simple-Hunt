@@ -1,0 +1,257 @@
+doctype html
+html(lang='en')
+    head
+        title The Hunt - A Charleston Adventure
+        // Required meta tags
+        meta(charset='utf-8')
+        meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+        meta(name='description', content='Mobland - Mobile App Landing Page Template')
+        meta(name='keywords', content='HTML5, bootstrap, mobile, app, landing, ios, android, responsive')
+        // Font
+        link(rel='dns-prefetch', href='//fonts.googleapis.com')
+        link(href='https://fonts.googleapis.com/css?family=Rubik:300,400,500', rel='stylesheet')
+        // Bootstrap CSS
+        link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+        // Themify Icons
+        link(rel='stylesheet', href='/stylesheets/themify-icons.css')
+        // Owl carousel
+        link(rel='stylesheet', href='/stylesheets/owl.carousel.min.css')
+        // Main css
+        link(href='/stylesheets/styleD.css', rel='stylesheet')
+        link(rel='shortcut icon', type='image/ico', href='/images/fav.ico')
+
+        
+    body(data-spy='scroll', data-target='#navbar', data-offset='30')
+        
+        // Nav Menu
+        include ./layoutComponents/MenuD
+        
+        // hero image                
+        header#home.bg-gradient
+            .container.mt-5
+                h1 THE HUNT
+                h2 A Charleston Adventure
+                br
+                p.tagline A city-wide treasure hunt, brought in to the digital age.
+            .img-holder.mt-3
+                img.img-fluid(src='/images/HeaderImage.png', alt='phone')
+
+        #features.section.light-bg
+            .container
+                .section-title
+                    small GET READY
+                    h3 Join a Hunt
+
+                //creates a 3 card wide table of hunt cards
+                - for ( i = 0; i < hunts.length; i += 3)
+                    .row
+                        .card-deck.m-4
+                            - for ( j = i; j < 3 + i && j < hunts.length; j++)  
+                                .col-lg-4
+                                    .card.m-2.hunt-card
+                                        a(href="/hunt/" + hunts[j]._id)
+                                            img.card-img-top(src=hunts[j].cardPicture)
+
+                                            .card-body
+                                                .media
+                                                    .media-body
+                                                        h3.card-title=hunts[j].huntName
+                                                        p Difficulty: #{hunts[j].difficulty}
+                                                        p Avg Time to Finish: #{hunts[j].averageTimeToComplete || "Not Available"}
+                                                        p Start Date: #{hunts[j].startDate || "Always Available"}
+                                                        br
+                                                .HuntNowButton Join Hunt
+                    
+        // // end .section
+
+        .section
+            .container
+                .row
+                    .col-md-6.d-flex.align-items-center
+                        div
+                            h2 Play in Your Browser
+                            p.mb-4
+                                | No worries about downloading an app and cluttering up your phone.  The entire game is played right in your phones browser.
+                            if user === undefined
+                                a.btn.btn-primary(href='#register') SIGN UP
+                            else
+                                a.btn.btn-primary(href='/play') PLAY NOW
+                    .col-md-6
+                        img.img-fluid(src='/images/perspective.png', alt='perspective phone')
+
+                    
+        // // end .section
+        .section.light-bg
+            .container
+                .section-title
+                    small HOW YOU PLAY
+                    h3 Get Ready for the Fun
+                ul.nav.nav-tabs.nav-justified(role='tablist')
+                    li.nav-item
+                        a.nav-link.active(data-toggle='tab', href='#communication') Step One
+                    li.nav-item
+                        a.nav-link(data-toggle='tab', href='#schedule') Step Two
+                    li.nav-item
+                        a.nav-link(data-toggle='tab', href='#messages') Step Three
+
+                .tab-content
+                    #communication.tab-pane.fade.show.active
+                        .d-flex.flex-column.flex-lg-row
+                            img.img-fluid.rounded.align-self-start.mr-lg-5.mb-5.mb-lg-0(src='/images/graphic.png', alt='graphic')
+                            div
+                                h2 Register Yourself
+                                p.lead We can't keep track of your progress if we don't know who you are. 
+                                p
+                                    | Before you play we, you need to let us know who you are.  This is how we keep track of your progress - and if you're good, how we know who to award the prizes to.
+                                p
+                                    | We won't share your information with any one and we won't spam you with email.
+                                p
+                                    if user
+                                        | That's all you'll need to do.  Then once the hunt is ready to go live we'll let you know and you'll be off.
+                                    else
+                                        | If your ready, go ahead and create your account right 
+                                        a(href='#register') here
+                                        | . That's all you'll need to do.  Then once the hunt is ready to go live we'll let you know and you'll be off.
+                    #schedule.tab-pane.fade
+                        .d-flex.flex-column.flex-lg-row
+                            div
+                                h2 Get In the Game
+                                p.lead Once you've signed up, log in to play. 
+                                p
+                                    | Once your account is created, all that you need to do is log into your account and click on the play screen.  The entire game is played right there.
+                                p
+                                    | From the Play screen you will be presented with 1 clue at a time.  Your objective is to solve each clue in sequence.
+                                p
+                                    | Each treasure hunter will be presented with the same clues in the same order.  They will start out easy and progressively get harder and harder.
+
+                            img.img-fluid.rounded.align-self-start.mr-lg-5.mb-5.mb-lg-0(src='/images/graphic.png', alt='graphic')
+                    #messages.tab-pane.fade
+                        .d-flex.flex-column.flex-lg-row
+                            img.img-fluid.rounded.align-self-start.mr-lg-5.mb-5.mb-lg-0(src='/images/graphic.png', alt='graphic')
+                            div
+                                h2 Turn on Your Thinker
+                                p.lead In a game of wits, it pays to think fast.
+                                p
+                                    | The clues will take various forms.  Some will present you with a picture of an object in the city and you will need to locate that object.  Some will describe a location that you need to find.  In each case, you'll need to use the clue to direct you to a location in the city and mark that location on your device. If you mark the correct location, you'll advance to the next clue.
+                                p
+                                    | The hunter that makes their way through all of the clues first will be named the winner of The Hunt.  This won't be an easy feat. Unlike last year, we aren't going to even hazard a guess at how long this will take.  It could take the morning, it could take weeks.  Regardless of how long it takes, the prize will be waiting for the winner.
+        // // end .section
+  
+        .section
+            .container
+                .row
+                    .col-md-6
+                        img.img-fluid(src='/images/GameScreenOverlay.png', alt='dual phone')
+                    .col-md-6.d-flex.align-items-center
+                        div
+                            h2 Hunting is Easy
+                            p.mb-4
+                                | Simply go to the location that each clue directs you to and mark it.  If you correctly identify the location, you'll be advanced to the next clue.
+                            if user === undefined
+                                a.btn.btn-primary(href='#register') SIGN UP
+                            else
+                                a.btn.btn-primary(href='/play') PLAY NOW
+        // // end .section
+        .section.light-bg
+            .container
+                .section-title
+                    small THE KEYS FOR
+                    h3 A Successful Hunt
+                .row
+                    .col-md-8.d-flex.align-items-center
+                        ul.list-unstyled.ui-steps
+                            li.media
+                                .circle-icon.mr-4 1
+                                .media-body
+                                    h5 Think Out of the Box
+                                    p
+                                        | The clues get progressively difficult, to the point where solving a single clue may require some additional research.  Don't ignore google.
+                            li.media.my-4
+                                .circle-icon.mr-4 2
+                                .media-body
+                                    h5 Mark Locations Liberally
+                                    p
+                                        | There's no penalty for incorrectly marking a location.  Feel free to take a dozens of stabs at difficult clues.  Keep in mind that some clues may require you to be at very specific locations.  A couple of feet can make the difference between sucess and failure.
+                            li.media
+                                .circle-icon.mr-4 3
+                                .media-body
+                                    h5 Play with Friends
+                                    p
+                                        | Talking through clues with friends can be a great way of deciphering the most difficult riddles.  It also adds to the fun of the hunt.  Just remember, there can only be one winner.
+                    .col-md-4
+                        img.img-fluid(src='/images/IphoneLeaderBoard.png', alt='iphone')
+        // // end .section
+        .section
+            .container
+                .section-title
+                    small TALES FROM 2017
+                    h3 What Last Year's Players Said
+                .testimonials.owl-carousel
+                    .testimonials-single
+                        blockquote.blockquote
+                            | The treasure hunt was a rush.  I could feel the 2nd place team right on our back through the entire race. I can't wait to play again next year.
+                        h5.mt-4.mb-2 Daniel Shuler
+                        p.text-primary Winner of Charleston Treasure Hunt 2017
+                    .testimonials-single
+                        blockquote.blockquote
+                            | Well my daughter and I had a blast!! Even though I have lived in Charleston my most of my life, I learned several new things about Charleston. I hope to do this again next year!!
+                        h5.mt-4.mb-2 Kellie Thomas
+                        p.text-primary Charleston Native
+                    .testimonials-single
+                        blockquote.blockquote
+                            | It was fun trying to make sense out of the map. Next time I will have to think out of the box. Thank you for doing this.
+                        h5.mt-4.mb-2 Anonymous
+                        p.text-primary Charleston Treasure Hunter 2017
+        // // end .section
+        #gallery.section.light-bg
+            .container
+                .section-title
+                    small GALLERY
+                    h3 App Screenshots
+                .img-gallery.owl-carousel.owl-theme
+                    img(src='/images/screen1.jpg', alt='image')
+                    img(src='/images/screen2.jpg', alt='image')
+                    img(src='/images/screen3.jpg', alt='image')
+                    img(src='/images/screen1.jpg', alt='image')
+        // // end .section
+        .section.pt-0
+            .container
+                .section-title
+                    br
+                    small THE QUESTIONS WE GET
+                    h3 Frequently Asked Questions
+                .row.pt-4
+                    .col-md-6
+                        h4.mb-3 Is it free to play?
+                        p.light-font.mb-5
+                            | It is 100% free to play. We were disappointed last year that we had to charge an entry fee to finance the project, This year we are correcting that and self funding the entire game.
+                        h4.mb-3 Can I play with friends?
+                        p.light-font.mb-5
+                            | It is actively encouraged.  The treasure hunt is about more than just winning, it's about getting out in our great city and exploring with people you care about.
+                    .col-md-6
+                        h4.mb-3 What do I need to play?
+                        p.light-font.mb-5
+                            | Just a reasonably recent smartphone, we tested the app on an iphone 4, which dates back to 2010.  So pretty much any phone that is still around today will work.
+                        h4.mb-3 Why does your app ask to view my location?
+                        p.light-font.mb-5
+                            | The premise behind the digital version of the treasure hunt is that participants must have a way to verify they solved each clue.  We need location data from the phones of registered participants in order to do that.  That being said, we won't share you data with anyone and we only see location data that is send when you click the verify location button.
+        // // end .section
+
+        // Nav Menu
+        include ./layoutComponents/RegisterD
+
+        // // end .section
+        footer.my-5.text-center
+            // Copyright removal is not prohibited!
+            p.mb-2
+                small COPYRIGHT © 2018. ALL RIGHTS RESERVED. TREASURE HUNT, LLC
+            small
+                a.m-2(href='/rules') RULES
+                a.m-2(href='/privacy') PRIVACY
+        // jQuery and Bootstrap
+        script(src='/javascripts/jquery-3.2.1.min.js')
+        script(src='/javascripts/bootstrap.bundle.min.js')
+        // Plugins JS
+        script(src='/javascripts/owl.carousel.min.js')
+        // Custom JS
+        script(src='/javascripts/script.js')

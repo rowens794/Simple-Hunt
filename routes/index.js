@@ -6,6 +6,7 @@ var manage = require("../controllers/ManageController.js");
 var play = require("../controllers/PlayController.js");
 var resetPass = require("../controllers/PasswordResetController.js");
 var leaderboard = require("../controllers/LeaderboardController.js");
+var expiramental = require("../controllers/ExpController.js");
 var maps = require("../controllers/MapController.js");
 
 // restrict index for logged in user only
@@ -49,6 +50,18 @@ router.get('/logout', auth.logout);
 // rules/privacy
 router.get('/rules', auth.rules);
 router.get('/privacy', auth.privacy);
+
+// expiramental
+router.get('/exp-home', expiramental.home); //generates a new home page whether logged in or not
+router.get('/manageHunts', expiramental.manageHunts);  //generates a page for admin to create/edit hunts **DONE
+router.get('/editHunt', expiramental.editNewHunt); //generates a page for admin to edit individual hunt **DONE
+router.get('/editHunt/:huntID', expiramental.editExistingHunt); //generates a page for admin to edit individual hunt **DONE
+router.post('/editHunt', expiramental.saveNewHunt);  //url to post to save changes to a new individual hunt **DONE
+router.post('/editHunt/:huntID', expiramental.updateHunt);  //url to post to save changes to and existing individual hunt **DONE
+router.post('/createClue/:huntID', expiramental.createClue);  //url to post to save changes to and existing individual hunt **DONE
+router.get('/editHunt/:huntID/deletehunt/',expiramental.deleteExistingHunt);//url to delete a hunt
+router.get('/hunt/:huntID', expiramental.huntPage);  //???
+router.get('/play/:username', expiramental.userPage);  // generates individual userdashboard
 
 //404 error page --ALWAYS KEEP LAST--
 router.get('*', auth.fourOfour);

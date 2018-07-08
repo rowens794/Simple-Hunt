@@ -1,0 +1,135 @@
+doctype html
+html(lang='en')
+    head
+        title The Hunt - A Charleston Adventure
+        // Required meta tags
+        meta(charset='utf-8')
+        meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+        meta(name='description', content='Mobland - Mobile App Landing Page Template')
+        meta(name='keywords', content='HTML5, bootstrap, mobile, app, landing, ios, android, responsive')
+        // Font
+        link(rel='dns-prefetch', href='//fonts.googleapis.com')
+        link(href='https://fonts.googleapis.com/css?family=Rubik:300,400,500', rel='stylesheet')
+        // Bootstrap CSS
+        link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+        // Themify Icons
+        link(rel='stylesheet', href='/stylesheets/themify-icons.css')
+        // Owl carousel
+        link(rel='stylesheet', href='/stylesheets/owl.carousel.min.css')
+        // Main css
+        link(href='/stylesheets/styleD.css', rel='stylesheet')
+        link(rel='shortcut icon', type='image/ico', href='/images/fav.ico')
+
+        
+    body(data-spy='scroll', data-target='#navbar', data-offset='30')
+        
+        // Nav Menu
+        include ./layoutComponents/MenuD
+        
+        // hero image                
+        header#home.bg-gradient
+
+                    
+        // // end .section
+  
+        .section.light-bg
+            .container
+                .section-title
+                    h2 Welcome to The Hunt, #{user.username}
+                .row
+                    .col-lg-12
+                        h4 Select A Hunt to Play
+
+                        .container
+                            .card-deck
+                                .card.hunt-card
+                                    a(href="/hunt/test")
+                                        img.card-img-top(src='/images/expiramental/SCHunt.png')
+
+                                        .card-body
+                                            .media
+                                                .media-body
+                                                    h3.card-title South Charleston
+                                                    p Difficulty: Hard
+                                                    p Your Current Clue: #2
+                                                    p Your Current Time: About 1 hour
+                                                    p Avg Time to Finish: 2.5 hours
+                                                    p Start Date/Time: Always Available
+                                            .HuntNowButton Play Now
+                                                
+                                .card.hunt-card(href="/hunt/test")
+                                    a(href="/hunt/test")
+                                        img.card-img-top(src='/images/expiramental/Coonskin.png')
+
+                                        .card-body
+                                            .media
+                                                .media-body
+                                                    h3.card-title Coonskin Park
+                                                    p Difficulty: Easy
+                                                    p Your Current Clue: #5
+                                                    p Your Current Time: About 4 hour
+                                                    p Avg Time to Finish: 2.5 hours
+                                                    p Start Date/Time: Always Available
+                                            .HuntNowButton Play Now
+
+                                .card.hunt-card
+                                    div
+                                        img.card-img-top(src='/images/expiramental/Charleston.png')
+
+                                        .card-body
+                                            .media
+                                                .media-body
+                                                    h3.card-title Charleston
+                                                    p Difficulty: Hard
+                                                    p Your Current Clue: Not Yet Started
+                                                    p Your Current Time: Not Yet Started
+                                                    p Avg Time to Finish: ?
+                                                    p Start Date/Time: 8/21/18 @ 9am
+                                            .HuntNowButton Not Yet Available
+                        
+        // // end .section
+        .section.light-bg
+            .container
+                .row
+                    .col-lg-6
+                        form(action='#', method='post')
+                            h4.w-100.font-weight-bold Feedback
+                            
+                            .mx-3
+                                .mb-4
+                                    .md-form.mb-4
+                                        label(for='feedback') Let us know what you think.
+                                        textarea.form-control.validate(cols="60", rows="7", type='text', name='feedback', id='feedback', placeholder='Let us know what you think.', required)
+                                    .d-flex
+                                        button.btn.btn-primary(type='submit') Send
+
+                    .col-lg-6
+                        form(action='#', method='post')
+                            h4.w-100.font-weight-bold Reset Password
+                            .mx-3
+                                .mb-4
+                                    .md-form.mb-4
+                                        label(for='Current') Current Password
+                                        input.form-control.validate(type='text', name='Current', id='Current', placeholder='', required)
+                                        label(for='New') New Password
+                                        input.form-control.validate(type='text', name='New', id='New', placeholder='', required)
+                                        label(for='Confirm') Confirm New Password
+                                        input.form-control.validate(type='text', name='Confirm', id='Confirm', placeholder='', required)
+                                    .d-flex
+                                        button.btn.btn-primary(type='submit') Reset
+        
+        // // end .section
+        footer.my-5.text-center
+            // Copyright removal is not prohibited!
+            p.mb-2
+                small COPYRIGHT © 2018. ALL RIGHTS RESERVED. TREASURE HUNT, LLC
+            small
+                a.m-2(href='/rules') RULES
+                a.m-2(href='/privacy') PRIVACY
+        // jQuery and Bootstrap
+        script(src='/javascripts/jquery-3.2.1.min.js')
+        script(src='/javascripts/bootstrap.bundle.min.js')
+        // Plugins JS
+        script(src='/javascripts/owl.carousel.min.js')
+        // Custom JS
+        script(src='/javascripts/script.js')
