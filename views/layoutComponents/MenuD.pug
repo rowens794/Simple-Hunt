@@ -18,8 +18,6 @@ if user === undefined
                 li.nav-item
                   a.nav-link(href='/#register') REGISTER #{user}
                 li.nav-item
-                  a.nav-link(href='/leaderboard') LEADERBOARD
-                li.nav-item
                   a.btn.btn-outline-light.my-3.my-sm-0.ml-lg-3(href='#', data-toggle='modal', data-target='#modalLoginForm') SIGN IN
 
 else if user.admin === true
@@ -41,11 +39,9 @@ else if user.admin === true
                     | HOME 
                     span.sr-only (current)
                 li.nav-item
-                  a.nav-link(href='/play') PLAY
+                  a.nav-link(href='/play/'+user.username) PLAY
                 li.nav-item
-                  a.nav-link(href='/leaderboard') LEADERBOARD
-                li.nav-item
-                  a.nav-link(href='/clues') MANAGE CLUES
+                  a.nav-link(href='/manageHunts') MANAGE HUNTS
                 li.nav-item
                   a.nav-link(href='/maps') MAP
                 li.nav-item
@@ -72,9 +68,7 @@ else if user
                   a.nav-link(href='/')
                     | HOME 
                 li.nav-item
-                  a.nav-link(href='/play') PLAY
-                li.nav-item
-                  a.nav-link(href='/leaderboard') LEADERBOARD
+                  a.nav-link(href='/play/'+user.username) PLAY
                 li.nav-item
                   a.nav-link(href='/logout') LOGOUT
 

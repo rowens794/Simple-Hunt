@@ -20,9 +20,7 @@ expController.home = async function(req, res) {
 expController.huntPage = async function(req, res) {
     //get leader list
     huntID = req.params;
-    console.log(huntID);
     hunt = await getHuntsByID(huntID);
-    console.log(hunt);
 
     res.render('HuntPage', { user : req.user, hunt : hunt[0] });
 };
@@ -42,178 +40,170 @@ expController.userPage = async function(req, res) {
 
 
 expController.manageHunts = async function(req, res) {
-
-    hunts = await getHunts();
-    res.render('ManageHunts', { user : req.user, hunts });
-
-    /*
+    //confirm admin is logged in
     if (req.user){
         if(req.user.admin){
             //render page
-            res.render('ManageHunts', { user : req.user });
+            hunts = await getHunts();
+            res.render('ManageHunts', { user : req.user, hunts });
+
         }else{
             res.render('404', { user : req.user });
         }
     }else{
         res.render('404', { user : req.user });
-    }  
-    */
+    } 
 };
 
 //post to createhunts
 expController.saveNewHunt = async function(req, res) {
-    hunt = new Hunt(req.body);
 
-    //Send new hunt data to database
-    hunt.save(function(err, huntDetails){
-        if (err){ //something went wrong with the database save
-            res.render('error', {user : req.user})
-        }else{ //everything worked correctl
-            res.render('EditHunt', { user : req.user , huntDetails });
+    //confirm admin is logged in
+    if (req.user){
+        if(req.user.admin){
+            hunt = new Hunt(req.body);
+
+            //Send new hunt data to database
+            hunt.save(function(err, huntDetails){
+                if (err){ //something went wrong with the database save
+                    res.render('error', {user : req.user})
+                }else{ //everything worked correctl
+                    res.render('EditHunt', { user : req.user , huntDetails });
+                }
+            })  
+        }else{
+            res.render('404', { user : req.user });
         }
-    })  
+    }else{
+        res.render('404', { user : req.user });
+    } 
+
 };
 
 expController.updateHunt = async function(req, res) {
-    huntID = req.params.huntID;
-    huntDetails = req.body;
 
-    Hunt.findById(huntID, function (err, hunt) {
-        if (err) res.send("an error occured finding hunt ID: " + huntID);//throw and error if problem
-        //update user variables
-        hunt.huntName = huntDetails.huntName;
-        hunt.difficulty = huntDetails.difficulty;
-        hunt.startDate = huntDetails.startDate;
-        hunt.cardPicture = huntDetails.cardPicture;
-        hunt.headerPicture = huntDetails.headerPicture;
-        hunt.mapAreaPicture = huntDetails.mapAreaPicture;
-        hunt.huntDescription = huntDetails.huntDescription;
-        hunt.huntStory = huntDetails.huntStory;
+    //confirm admin is logged in
+    if (req.user){
+        if(req.user.admin){
+            //render page
+            huntID = req.params.huntID;
+            huntDetails = req.body;
 
-        hunt.save(async function (err, hunt) {
-            //render success page
-            if (err) res.send("an error occured updating the hunt");//throw and error if problem
-            res.render('EditHunt', { user : req.user, huntDetails: hunt });
-        });
-    });
+            Hunt.findById(huntID, function (err, hunt) {
+                if (err) res.send("an error occured finding hunt ID: " + huntID);//throw and error if problem
+                //update user variables
+                hunt.huntName = huntDetails.huntName;
+                hunt.difficulty = huntDetails.difficulty;
+                hunt.startDate = huntDetails.startDate;
+                hunt.cardPicture = huntDetails.cardPicture;
+                hunt.headerPicture = huntDetails.headerPicture;
+                hunt.mapAreaPicture = huntDetails.mapAreaPicture;
+                hunt.huntDescription = huntDetails.huntDescription;
+                hunt.huntStory = huntDetails.huntStory;
+
+                hunt.save(async function (err, hunt) {
+                    //render success page
+                    if (err) res.send("an error occured updating the hunt");//throw and error if problem
+                    res.render('EditHunt', { user : req.user, huntDetails: hunt });
+                });
+            });
+
+        }else{
+            res.render('404', { user : req.user });
+        }
+    }else{
+        res.render('404', { user : req.user });
+    } 
+
+
 };
 
 expController.editNewHunt = async function(req, res) {
-    res.render('EditNewHunt', { user : req.user });
-
-    /* Don't require login during development
     if (req.user){
         if(req.user.admin){
             //render page
-            res.render('EditHunt', { user : req.user });
+            res.render('EditNewHunt', { user : req.user });
         }else{
             res.render('404', { user : req.user });
         }
     }else{
         res.render('404', { user : req.user });
     }
-    */
 };
 
 expController.editExistingHunt = async function(req, res) {
-    huntID = req.params;
-    huntDetails = await getHuntsByID(huntID);
-    res.render('EditHunt', { user : req.user, huntDetails: huntDetails[0] });
-
-    /* Don't require login during development
     if (req.user){
         if(req.user.admin){
             //render page
-            res.render('EditHunt', { user : req.user });
+            huntID = req.params;
+            huntDetails = await getHuntsByID(huntID);
+            res.render('EditHunt', { user : req.user, huntDetails: huntDetails[0] });
         }else{
             res.render('404', { user : req.user });
         }
     }else{
         res.render('404', { user : req.user });
     }
-    */
 };
 
 
 expController.createClue = async function(req, res) {
-    huntID = req.params;
-    resData = req.body;
-
-    //get the hunt
-    huntDetails = await getHuntsByID(huntID);
-    huntDetails = huntDetails[0];
-
-    console.log(resData);
-
-    //update the clue object
-    if(resData.clueType == "BasicClue"){
-        newClue = basicClue(resData, huntDetails);
-    }else if(resData.clueType == "MultiImgClue"){
-        newClue = multiImgClue(resData, huntDetails);
-    }else if(resData.clueType == "HotColdClue"){
-        newClue = hotColdClue(resData, huntDetails);
-    }
-
-    console.log("----------------------------------------------------------");
-    console.log("----------------------------------------------------------");
-    console.log(newClue);
-
-    //add clue to clues array
-    console.log("----------------------------------------------------------");
-    console.log("----------------------------------------------------------");
-    console.log(huntDetails.clues);
-    huntDetails.clues.push(newClue);
     
-
-    console.log("----------------------------------------------------------");
-    console.log("----------------------------------------------------------");
-    console.log(huntDetails);
-    console.log("----------------------------------------------------------");
-    console.log("----------------------------------------------------------");
-
-    //save the clue object back to the hunt
-    huntDetails.save();
-
-    //redirect back to the edit hunt page
-    res.redirect('/editHunt/'+huntID.huntID);
-
-    /* Don't require login during development
     if (req.user){
         if(req.user.admin){
-            //render page
-            res.render('EditHunt', { user : req.user });
+            //process data and redirect to page
+            huntID = req.params;
+            resData = req.body;
+
+            //get the hunt
+            huntDetails = await getHuntsByID(huntID);
+            huntDetails = huntDetails[0];
+
+            //update the clue object
+            if(resData.clueType == "BasicClue"){
+                newClue = basicClue(resData, huntDetails);
+            }else if(resData.clueType == "MultiImgClue"){
+                newClue = multiImgClue(resData, huntDetails);
+            }else if(resData.clueType == "HotColdClue"){
+                newClue = hotColdClue(resData, huntDetails);
+            }
+
+            //add clue to clues array
+            huntDetails.clues.push(newClue);
+
+            //save the clue object back to the hunt
+            huntDetails.save();
+
+            //redirect back to the edit hunt page
+            res.redirect('/editHunt/'+huntID.huntID);
+
         }else{
             res.render('404', { user : req.user });
         }
     }else{
         res.render('404', { user : req.user });
     }
-    */
 };
 
 expController.deleteExistingHunt = async function(req, res) {
-    huntID = req.params.huntID;
-    resVar = await deleteHuntByID(huntID);
-    res.redirect('/ManageHunts');
-
-    /* Don't require login during development
     if (req.user){
         if(req.user.admin){
-            //render page
-            res.render('EditHunt', { user : req.user });
+            //process and render page
+                huntID = req.params.huntID;
+                resVar = await deleteHuntByID(huntID);
+                res.redirect('/ManageHunts');
         }else{
             res.render('404', { user : req.user });
         }
     }else{
         res.render('404', { user : req.user });
     }
-    */
 };
 
 module.exports = expController;
 
 //gets all hunts and returns an object of hunts
-getHunts = function(huntID){
+getHunts = function(){
     var huntList;
     try{
         const huntListQuery = Hunt.find({});

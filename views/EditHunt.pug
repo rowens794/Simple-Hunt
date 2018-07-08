@@ -79,7 +79,7 @@ html(lang='en')
 
                     .col-lg-4
                         h4 Card Picture
-                            input.form-control.validate(type='text', name='cardPicture', id="cardPicture", value=aa || "")
+                            input.form-control.validate(type='text', name='cardPicture', id="cardPicture", value=huntDetails.cardPicture || "")
                         if (huntDetails.cardPicture)
                             img.card-img-top(src=huntDetails.cardPicture)
                         else
