@@ -18,7 +18,6 @@ html(lang='en')
         link(rel='stylesheet', href='/stylesheets/owl.carousel.min.css')
         // Main css
         link(href='/stylesheets/styleD.css', rel='stylesheet')
-        link(href="https://fonts.googleapis.com/css?family=Homemade+Apple|Permanent+Marker|Rancho|Reenie+Beanie" rel="stylesheet")
         link(rel='shortcut icon', type='image/ico', href='/images/fav.ico')
 
     body(data-spy='scroll', data-target='#navbar', data-offset='30')
@@ -26,24 +25,25 @@ html(lang='en')
         .container.bg-white.col-md-6.col-md-offset-3
             #fixedWrapper
                 #toHomeButton 
-                    a(href='/play/'+user.username)#toHomeArr <
+                    a(href=clueResponseObj.userUrl)#toHomeArr <
                         img.img-fluid#toHomeIcon(src='/images/homeIcon.png')
             br
-            h2.text-center.headerFont #{clue.clueShortName}
-            .container.bg-white.col-md-8.col-md-offset-2
-                p.text-center.tagline.clueFont #{clue.clueText}
-            .bg-white.text-center.margin_adjustment
-                .section
-                    .container
-                        .testimonials.owl-carousel
-                            each image in clue.imgs
-                                .testimonials-single
-                                    img.img-fluid(src=image).clueHeight
+            h2.text-center #{clueResponseObj.resultHeader}
+            br
+            p.text-center.tagline #{clueResponseObj.result}
+            br
+            .col-md-4.text-center
+              a.btn.btn-primary(href=clueResponseObj.huntUrl) Get Back to The Hunt
+            br
+            br
+            h4 Leaderboard
+  
+            for player, index in leaderList
+              span.font-weight-bold #{index+1}. 
+              span.font-weight-bold #{player[0]} 
+              | on clue ##{player[1]} 
+              br
 
-
-
-            .container.bg-white.col-md-8.col-md-offset-2
-                button#markLocationButton.btn.btn-primary(onclick="getLocation()") Mark Location
         
         // jQuery and Bootstrap
         script(src='/javascripts/jquery-3.2.1.min.js')
@@ -53,3 +53,7 @@ html(lang='en')
         // Custom JS
         script(src='/javascripts/script.js')
         script(src='/javascripts/huntExp.js')
+
+
+
+

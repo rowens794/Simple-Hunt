@@ -8,7 +8,7 @@ var huntsSchema = new Schema({
     },
     huntStory: String,
     huntDescription: String,
-    registeredPlayers: {},
+    registeredPlayers: Schema.Types.Mixed,
     finishedPlayers: [],
     clues: [],
     difficulty: String,

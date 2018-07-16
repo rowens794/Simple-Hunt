@@ -28,17 +28,38 @@ html(lang='en')
         
         // hero image                
         header#home.bg-gradient
-            .container.mt-5
-                h1 THE HUNT
-                h2.fontGrey Your Account has Been Verified
-                br
-                a.btn.btn-primary(href='/') Hunt Now!
-                br
-                br
+            .container-fluid.divider-bar
+                img.hunt-page-header(src=hunt.headerPicture)
+                    
+        // // end .section
+  
+        .section.light-bg
+            .container
+                .section-title
+                    h2=hunt.huntName 
+                    h3 The hunt begins on #{hunt.startDate || "a date not yet determined."}
+                .row
+                    .col-lg-7
+                        h3 The Story
+                        p=hunt.huntStory
+                        br
+                        h3 The Game
+                        p=hunt.huntDescription 
 
-            .img-holder.mt-3
-                img.img-fluid(src='/images/iphonex.png', alt='phone')
-    
+                    .col-lg-5
+                        .card.hunt-card
+                            img.card-img-top(src=hunt.mapAreaPicture)
+
+                            .card-body
+                                .media
+                                    .media-body
+                                        h3.card-title=hunt.huntName
+                                        p Difficulty: #{hunt.difficulty}
+                                        p Est. Time to Finish: #{hunt.averageTimeToComplete || "?"}
+                                        p Start Date: #{hunt.startDate || "Always Available"}
+
+        // // end .section
+        
 
         // // end .section
         footer.my-5.text-center

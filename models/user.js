@@ -26,6 +26,7 @@ var UserSchema = new Schema({
         unique: true,
         required: 'Email address is required',
     },
+    huntsData: Schema.Types.Mixed,
     currentClue: Number,
     lastClueFound: Number,
     pointsMarked: [],

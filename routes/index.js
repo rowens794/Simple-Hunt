@@ -54,14 +54,19 @@ router.get('/privacy', auth.privacy);
 // expiramental
 //router.get('/exp-home', expiramental.home); //generates a new home page whether logged in or not **IN USE
 router.get('/manageHunts', expiramental.manageHunts);  //generates a page for admin to create/edit hunts
+
 router.get('/editHunt', expiramental.editNewHunt); //generates a page for admin to edit individual hunt 
 router.get('/editHunt/:huntID', expiramental.editExistingHunt); //generates a page for admin to edit individual hunt 
 router.post('/editHunt', expiramental.saveNewHunt);  //url to post to save changes to a new individual hunt 
 router.post('/editHunt/:huntID', expiramental.updateHunt);  //url to post to save changes to and existing individual hunt 
 router.post('/createClue/:huntID', expiramental.createClue);  //url to post to save changes to and existing individual hunt 
 router.get('/editHunt/:huntID/deletehunt/',expiramental.deleteExistingHunt);//url to delete a hunt
-router.get('/hunt/:huntID', expiramental.huntPage);  //???
-router.get('/play/:username', expiramental.userPage);  // generates individual userdashboard
+
+router.get('/hunt/:huntID', expiramental.huntPage);  //display information about an individual hunt
+
+router.get('/play/:username', expiramental.userPage);  // generates individual user dashboard of hunts and user info
+router.get('/play2/:huntID', expiramental.play);  // play page for individual hunt
+router.post('/play2/:huntID', expiramental.playSubmit);  // post response to clue
 
 //404 error page --ALWAYS KEEP LAST--
 router.get('*', auth.fourOfour);

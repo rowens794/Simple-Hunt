@@ -35,58 +35,36 @@ html(lang='en')
         .section.light-bg
             .container
                 .section-title
-                    h2 Welcome to The Hunt, #{user.username}
+                    h2 Welcome to The Hunt, #{user.name}
                 .row
                     .col-lg-12
                         h4 Select A Hunt to Play
 
-                        .container
-                            .card-deck
-                                .card.hunt-card
-                                    a(href="/hunt/test")
-                                        img.card-img-top(src='/images/expiramental/SCHunt.png')
 
-                                        .card-body
-                                            .media
-                                                .media-body
-                                                    h3.card-title South Charleston
-                                                    p Difficulty: Hard
-                                                    p Your Current Clue: #2
-                                                    p Your Current Time: About 1 hour
-                                                    p Avg Time to Finish: 2.5 hours
-                                                    p Start Date/Time: Always Available
-                                            .HuntNowButton Play Now
+                        - for ( i = 0; i < hunts.length; i += 3)
+                            .row
+                                .card-deck.m-4
+                                    - for ( j = i; j < 3 + i && j < hunts.length; j++)  
+                                        .col-lg-4
+                                            .card.m-2.hunt-card
+                                                a(href="/play2/" + hunts[j]._id)
+                                                    img.card-img-top(src=hunts[j].cardPicture)
+
+                                                    .card-body
+                                                        .media
+                                                            .media-body
+                                                                h3.card-title=hunts[j].huntName
+                                                                p Difficulty: #{hunts[j].difficulty}
+                                                                p Your Current Clue: ???
+                                                                p Your Current Time: ???
+                                                                p Avg Time to Finish: #{hunts[j].averageTimeToComplete || "Not Available"}
+                                                                p Start Date: #{hunts[j].startDate || "Always Available"}
+                                                                br
+                                                        
+                                                        a(href="/play2/" + hunts[j]._id)
+                                                            .HuntNowButton 
+                                                                | Play Now
                                                 
-                                .card.hunt-card(href="/hunt/test")
-                                    a(href="/hunt/test")
-                                        img.card-img-top(src='/images/expiramental/Coonskin.png')
-
-                                        .card-body
-                                            .media
-                                                .media-body
-                                                    h3.card-title Coonskin Park
-                                                    p Difficulty: Easy
-                                                    p Your Current Clue: #5
-                                                    p Your Current Time: About 4 hour
-                                                    p Avg Time to Finish: 2.5 hours
-                                                    p Start Date/Time: Always Available
-                                            .HuntNowButton Play Now
-
-                                .card.hunt-card
-                                    div
-                                        img.card-img-top(src='/images/expiramental/Charleston.png')
-
-                                        .card-body
-                                            .media
-                                                .media-body
-                                                    h3.card-title Charleston
-                                                    p Difficulty: Hard
-                                                    p Your Current Clue: Not Yet Started
-                                                    p Your Current Time: Not Yet Started
-                                                    p Avg Time to Finish: ?
-                                                    p Start Date/Time: 8/21/18 @ 9am
-                                            .HuntNowButton Not Yet Available
-                        
         // // end .section
         .section.light-bg
             .container

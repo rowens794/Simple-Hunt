@@ -96,7 +96,7 @@ userController.doRegister = async function(req, res) {
 
     //collect and store inputs appropriotely
     urlHash = supportFunctions.getHash();
-    x = { username : req.body.username, name: req.body.name, email: req.body.email, currentClue: 1, pointsMarked: [1,1], adViews: [1], admin: false, verified: false, urlHash: urlHash};
+    x = { username : req.body.username, name: req.body.name, email: req.body.email, huntsData: {}, currentClue: 1, pointsMarked: [1,1], adViews: [1], admin: false, verified: false, urlHash: urlHash};
     
     // check that passwords match
 

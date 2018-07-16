@@ -36,5 +36,5 @@ function showPosition(position) {
 }
 
 function errorGettingGPS(){
-    window.location.href = "/play";
+    window.location.href = "/play2/"+huntID;
 }

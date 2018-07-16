@@ -57,11 +57,15 @@ html(lang='en')
                                         p Est. Time to Finish: #{hunt.averageTimeToComplete || "?"}
                                         p Start Date: #{hunt.startDate || "Always Available"}
                                         p Current Hunters: #{hunt.registeredPlayers || "0"}
-                                .HuntNowButton 
-                                    if user
-                                        | Sign Up
-                                    else 
-                                        | Sign In to Register 
+
+                                        if user
+                                            a(href="/play2/" + hunt._id)
+                                                .HuntNowButton 
+                                                    | Play Now
+                                        else
+                                            a(href="/login")
+                                                .HuntNowButton  
+                                                    | Sign In to Play 
 
         // // end .section
         
