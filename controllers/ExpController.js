@@ -100,6 +100,11 @@ expController.play = async function(req, res) {
         //hunt is already in users library -- just render it
         userClueNumber = req.user.huntsData[huntID.huntID].userClueNumber;
         clueData = hunt.clues[userClueNumber - 1] //collect clue data
+
+        if (!clueType in clueData){ //if clueType doesn't exist then insert a dummy variable to prevent crash
+            clueData.clueType = "BasicClue";
+        }
+
         console.log(clueData.clueType);
         res.render(clueData.clueType, { user : req.user, clue: clueData});
     }
