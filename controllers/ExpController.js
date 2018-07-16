@@ -44,7 +44,10 @@ expController.play = async function(req, res) {
     huntID = {};
     huntID.huntID = req.params.huntID; //need to convert the id string into a pseudo huntID object for the function to work.
     hunt = await getHuntsByID(huntID);
-    hunt = hunt[0];    
+    hunt = hunt[0];   
+    
+    console.log("***********************");
+    console.log(hunt);
     
     //Check number 1 - verify that the user has verified their email address
     if (req.user.verified == false){
@@ -100,12 +103,8 @@ expController.play = async function(req, res) {
         //hunt is already in users library -- just render it
         userClueNumber = req.user.huntsData[huntID.huntID].userClueNumber;
         clueData = hunt.clues[userClueNumber - 1] //collect clue data
-
-        if (!clueType in clueData){ //if clueType doesn't exist then insert a dummy variable to prevent crash
-            clueData.clueType = "BasicClue";
-        }
-
-        console.log(clueData.clueType);
+        console.log("------------------------");
+        console.log(clueData);
         res.render(clueData.clueType, { user : req.user, clue: clueData});
     }
 };
