@@ -45,9 +45,9 @@ expController.play = async function(req, res) {
     huntID.huntID = req.params.huntID; //need to convert the id string into a pseudo huntID object for the function to work.
     hunt = await getHuntsByID(huntID);
     hunt = hunt[0];   
-    
-    console.log("***********************");
-    console.log(hunt);
+    currentTime = new Date().getTime();
+    huntTime = new Date(hunt.startDate).valueOf()
+    huntLength = hunt.clues.length + 1;
     
     //Check number 1 - verify that the user has verified their email address
     if (req.user.verified == false){
@@ -55,15 +55,12 @@ expController.play = async function(req, res) {
     }
 
     //Check number 2 - verify that hunt has started
-    currentTime = new Date().getTime();
-    huntTime = new Date(hunt.startDate).valueOf()
-    if (huntTime > currentTime){
+    else if (huntTime > currentTime){
         res.render("HuntNotLive", { user : req.user, hunt : hunt});
     }
 
     //check number 3 - verify that hunter has not already completed the hunt
-    huntLength = hunt.clues.length + 1;
-    if(!("huntsData" in req.user)){ //verify that it's not the users first time accessing any hunts to prevent "undefined" error
+    else if(!("huntsData" in req.user)){ //verify that it's not the users first time accessing any hunts to prevent "undefined" error
         if(!(huntID.huntID in req.user.huntsData) ){ //verify that it's not the users first time accessing this hunt to prevent "undefined" error
             if(req.user.huntsData[huntID.huntID].userClueNumber > huntLength){
                 res.send("You have completed the hunt");
@@ -72,7 +69,7 @@ expController.play = async function(req, res) {
     }
 
     //get user clue number
-    if (req.user.huntsData == undefined || req.user.huntsData[huntID.huntID] == undefined ) { //if hunt doesn't exit in user account then create an object
+    else if (req.user.huntsData == undefined || req.user.huntsData[huntID.huntID] == undefined ) { //if hunt doesn't exit in user account then create an object
         huntsData = {
             userClueNumber: 1,
             startTime: new Date().getTime(),

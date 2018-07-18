@@ -47,23 +47,42 @@ html(lang='en')
                                     - for ( j = i; j < 3 + i && j < hunts.length; j++)  
                                         .col-lg-4
                                             .card.m-2.hunt-card
-                                                a(href="/play2/" + hunts[j]._id)
+                                                a(href="/hunt/" + hunts[j]._id)
                                                     img.card-img-top(src=hunts[j].cardPicture)
+                                                    -var today = moment(new Date()).format("L")
+                                                    if hunts[j].startDate > today
+                                                        .card-img-overlay
+                                                            .card-title 
+                                                                h3.huntNotStarted Hunt Begins #{hunts[j].startDate || "Always Available"}
 
                                                     .card-body
                                                         .media
                                                             .media-body
                                                                 h3.card-title=hunts[j].huntName
                                                                 p Difficulty: #{hunts[j].difficulty}
-                                                                p Your Current Clue: ???
-                                                                p Your Current Time: ???
+
+                                                                // Check if time exists
+                                                                if user.huntsData[hunts[j]._id]
+                                                                    p Hunt Started: #{moment(user.huntsData[hunts[j]._id].startTime).fromNow()}
+                                                                else
+                                                                    p Hunt Started: Not Yet Begun
+
+                                                                // check if clue number exists
+                                                                if user.huntsData[hunts[j]._id]
+                                                                    p Current Clue: #{user.huntsData[hunts[j]._id].userClueNumber}
+                                                                else
+                                                                    p Current Clue: Not Yet Started
+
                                                                 p Avg Time to Finish: #{hunts[j].averageTimeToComplete || "Not Available"}
                                                                 p Start Date: #{hunts[j].startDate || "Always Available"}
                                                                 br
                                                         
                                                         a(href="/play2/" + hunts[j]._id)
                                                             .HuntNowButton 
-                                                                | Play Now
+                                                                if hunts[j].startDate > today
+                                                                    | Hunt Info
+                                                                else    
+                                                                    | Play Now
                                                 
         // // end .section
         .section.light-bg

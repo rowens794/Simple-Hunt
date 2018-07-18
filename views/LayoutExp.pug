@@ -51,6 +51,11 @@ html(lang='en')
                                     .card.m-2.hunt-card
                                         a(href="/hunt/" + hunts[j]._id)
                                             img.card-img-top(src=hunts[j].cardPicture)
+                                            -var today = moment(new Date()).format("L")
+                                                    if hunts[j].startDate > today
+                                                        .card-img-overlay
+                                                            .card-title 
+                                                                h3.huntNotStarted Hunt Begins #{hunts[j].startDate || "Always Available"}
 
                                             .card-body
                                                 .media

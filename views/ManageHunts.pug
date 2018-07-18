@@ -55,7 +55,7 @@ html(lang='en')
                                                 p Difficulty: #{hunts[j].difficulty}
                                                 p Avg Time to Finish: #{hunts[j].averageTimeToComplete || "Not Available"}
                                                 p Start Date: #{hunts[j].startDate || "Always Available"}
-                                                p Registered Players: #{hunts[j].registeredPlayers || 0}
+                                                p Participating Players: #{Object.keys(hunts[j].registeredPlayers).length || 0}
                                         .HuntNowButton Edit Hunt
 
             

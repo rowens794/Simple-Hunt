@@ -56,7 +56,7 @@ html(lang='en')
                                         p Difficulty: #{hunt.difficulty}
                                         p Est. Time to Finish: #{hunt.averageTimeToComplete || "?"}
                                         p Start Date: #{hunt.startDate || "Always Available"}
-                                        p Current Hunters: #{hunt.registeredPlayers || "0"}
+                                        p Current Hunters: #{Object.keys(hunt.registeredPlayers).length || 0}
 
                                         if user
                                             a(href="/play2/" + hunt._id)

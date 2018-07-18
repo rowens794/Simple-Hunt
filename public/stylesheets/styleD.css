@@ -917,3 +917,9 @@ Expiramental
 .buttonHolder{ 
     text-align: center; 
 }
+
+.huntNotStarted{
+    color: White;
+    margin-top: 1.5em;
+    opacity: 0.8;
+}
