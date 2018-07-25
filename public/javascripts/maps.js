@@ -8,7 +8,7 @@ var mapboxTiles = L.tileLayer('https://api.mapbox.com/v4/mapbox.streets/{z}/{x}/
 
 var map = L.map('map')
     .addLayer(mapboxTiles)
-    .setView([38.365861, -81.695232], 16);
+    .setView([38.352515, -81.640284], 12);
 
 var cssIcon = L.divIcon({
     // Specify a class name we can refer to in CSS.

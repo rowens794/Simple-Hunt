@@ -165,7 +165,7 @@ html(lang='en')
 
         //modal create basic clue
         form#basicClue.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true', action='/createClue/'+huntDetails._id, method='post')
-            .modal-dialog(role='document')
+            .modal-dialog.modal-lg(role='document')
                 .modal-content
                     input(type="hidden" id="clueType" name="clueType" value="BasicClue")
 
@@ -204,7 +204,7 @@ html(lang='en')
 
         //modal create Multi-Img Clue
         form#multiImgClue.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true', action='/createClue/'+huntDetails._id, method='post')
-            .modal-dialog(role='document')
+            .modal-dialog.modal-lg(role='document')
                 .modal-content
                     input(type="hidden" id="clueType" name="clueType" value="MultiImgClue")
                     .modal-header.text-center
@@ -218,27 +218,38 @@ html(lang='en')
                             textarea.form-control.validate(cols="60", rows="1", type='text', name='shortName', id='shortName', placeholder='Short Name for Clue', required)
                         
                         .md-form.mb-4
-                            label(for='textarea') Create the Clue text:
-                            textarea.form-control.validate(cols="60", rows="1", type='text', name='clue', id='clue', placeholder='full clue text', required)
-                        
-                        .md-form.mb-4
                             label(for='imageLink') Include up to 4 images
-                            input.form-control.validate(type='text', name='imageLink', id='imageLink1', placeholder='www.img.com/img')
-                            input.form-control.validate(type='text', name='imageLink', id='imageLink2', placeholder='www.img.com/img')
-                            input.form-control.validate(type='text', name='imageLink', id='imageLink3', placeholder='www.img.com/img')
-                            input.form-control.validate(type='text', name='imageLink', id='imageLink3', placeholder='www.img.com/img')
+                            .row
+                                .col-lg-8
+                                    textarea.form-control.validate(cols="60", rows="1", type='text', name='clue', id='clue1', placeholder='Image 1 Text')
+                                .col-lg-4
+                                    input.form-control.validate(type='text', name='imageLink', id='imageLink1', placeholder='www.img.com/img')
+                            .row
+                                .col-lg-8
+                                    textarea.form-control.validate(cols="60", rows="1", type='text', name='clue', id='clue2', placeholder='Image 2 Text')
+                                .col-lg-4
+                                    input.form-control.validate(type='text', name='imageLink', id='imageLink2', placeholder='www.img.com/img')
+                            .row
+                                .col-lg-8
+                                    textarea.form-control.validate(cols="60", rows="1", type='text', name='clue', id='clue3', placeholder='Image 3 Text')
+                                .col-lg-4
+                                    input.form-control.validate(type='text', name='imageLink', id='imageLink3', placeholder='www.img.com/img')
+                            .row
+                                .col-lg-8
+                                    textarea.form-control.validate(cols="60", rows="1", type='text', name='clue', id='clue4', placeholder='Image 4 Text')
+                                .col-lg-4
+                                    input.form-control.validate(type='text', name='imageLink', id='imageLink4', placeholder='www.img.com/img')
 
                         .md-form.mb-4
                             label(for='xCord') Create the Clue Coordinates:
                             .row
-                                .col-lg-6
+                                .col-lg-4
                                     input.form-control.validate(type='text', name='xCord', id='xCord', placeholder='Latitude', required)
-                                .col-lg-6
+                                .col-lg-4
                                     input.form-control.validate(type='text', name='yCord', id='yCord', placeholder='Longitude', required)
-
-                        .md-form.mb-4
-                            label(for='marginOfError') Margin of Error (in feet from x/y coords):
-                            input.form-control.validate(type='text', name='marginOfError', id='marginOfError', placeholder='25')
+                                .col-lg-4
+                                    input.form-control.validate(type='text', name='marginOfError', id='marginOfError', placeholder='Margin of Error (ft)', required)
+                            
 
                     .modal-footer.d-flex.justify-content-center
                         button.btn.btn-primary(type='submit') Create Clue

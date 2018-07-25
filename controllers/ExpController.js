@@ -376,6 +376,70 @@ expController.deleteExistingHunt = async function(req, res) {
     }
 };
 
+expController.feedback = async function(req, res) {
+    if (req.user){
+        message = req.body.feedback;
+        messageResponse = "Thanks for the feedback!";
+        redirectURL = '/play/'+ req.user.username;
+        console.log(message);
+
+        const mailOptions = {
+            from: "TheHunt <feedback@charlestontreasurehunt.com>",
+            to: "Ryan <ryan@charlestontreasurehunt.com>",
+            subject: "User Feedback",
+            name: req.user.name,
+            username: req.user.username,
+            message: "FEEDBACK: " + message,
+            filename: "user-feedback",
+            html: message,
+            text: message
+        }
+
+        mail.sendEmail(mailOptions);
+
+        res.render("UserDash", { user : req.user , message: messageResponse})
+    }else{
+        res.render('404', { user : req.user });
+    }
+};
+
+expController.updatePassword = async function(req, res) {
+    if (req.user){
+        message = req.body.feedback;
+        currentpassword = req.body.Current;
+        newpassword = req.body.New;
+        confirmpassword = req.body.Confirm;
+        console.log(currentpassword);
+        console.log(newpassword);
+        console.log(confirmpassword);
+
+        if (newpassword === confirmpassword){
+            User.findByUsername(req.user.username).then(function(sanitizedUser){
+                if (sanitizedUser){
+                    sanitizedUser.setPassword(newpassword, function(){
+                        sanitizedUser.save();
+                        messageResponse = "Password Updated Sucessfully";
+                        res.render("UserDash", { user : req.user , message: messageResponse})
+                    });
+                } else {
+                    messageResponse = "There was an error updatng your password";
+                    res.render("UserDash", { user : req.user , message: messageResponse})
+                }
+            },function(err){
+                messageResponse = "There was an error updatng your password";
+                res.render("UserDash", { user : req.user , message: messageResponse})
+            })
+        }else{
+            messageResponse = "There was an error updatng your password";
+            res.render("UserDash", { user : req.user , message: messageResponse})
+        }
+
+        res.render("UserDash", { user : req.user , message: messageResponse})
+    }else{
+        res.render('404', { user : req.user });
+    }
+};
+
 module.exports = expController;
 
 //gets all hunts and returns an object of hunts
@@ -521,6 +585,8 @@ multiImgClue = function(resData, huntDetails){
         clue.clueOrder = 1;
     }
 
+    console.log(resData);
+    
     //save info to the clue object
     clue.clueShortName = resData.shortName;
     clue.clueText = resData.clue;

@@ -30,14 +30,15 @@ html(lang='en')
                         img.img-fluid#toHomeIcon(src='/images/homeIcon.png')
             br
             h2.text-center.headerFont #{clue.clueShortName}
-            .container.bg-white.col-md-8.col-md-offset-2
-                p.text-center.tagline.clueFont #{clue.clueText}
+            
             .bg-white.text-center.margin_adjustment
                 .section
                     .container
                         .testimonials.owl-carousel
-                            each image in clue.imgs
+                            each image, index in clue.imgs
                                 .testimonials-single
+                                    .container.bg-white.col-md-8.col-md-offset-2
+                                        p.text-center.tagline.clueFont #{clue.clueText[index]}
                                     img.img-fluid(src=image).clueHeight
 
 

@@ -56,7 +56,11 @@ html(lang='en')
                                                 p Avg Time to Finish: #{hunts[j].averageTimeToComplete || "Not Available"}
                                                 p Start Date: #{hunts[j].startDate || "Always Available"}
                                                 p Participating Players: #{Object.keys(hunts[j].registeredPlayers).length || 0}
-                                        .HuntNowButton Edit Hunt
+                                        a(href="/edithunt/" + hunts[j]._id)
+                                            .HuntNowButton Edit Hunt
+                                        br
+                                        a(href="/manageHunts/map/" + hunts[j]._id)    
+                                            .HuntNowButton View Map
 
             
 

@@ -36,6 +36,7 @@ html(lang='en')
             .container
                 .section-title
                     h2 Welcome to The Hunt, #{user.name}
+                    h4.thanks_for_input #{message}
                 .row
                     .col-lg-12
                         h4 Select A Hunt to Play
@@ -89,29 +90,27 @@ html(lang='en')
             .container
                 .row
                     .col-lg-6
-                        form(action='#', method='post')
+                        form(action='/play/'+user.username, method='post')
                             h4.w-100.font-weight-bold Feedback
                             
                             .mx-3
                                 .mb-4
                                     .md-form.mb-4
                                         label(for='feedback') Let us know what you think.
-                                        textarea.form-control.validate(cols="60", rows="7", type='text', name='feedback', id='feedback', placeholder='Let us know what you think.', required)
+                                        textarea.form-control.validate(cols="60", rows="4", type='text', name='feedback', id='feedback', placeholder='Let us know what you think.', required)
                                     .d-flex
                                         button.btn.btn-primary(type='submit') Send
 
                     .col-lg-6
-                        form(action='#', method='post')
+                        form(action='/resetpassword', method='post')
                             h4.w-100.font-weight-bold Reset Password
                             .mx-3
                                 .mb-4
                                     .md-form.mb-4
-                                        label(for='Current') Current Password
-                                        input.form-control.validate(type='text', name='Current', id='Current', placeholder='', required)
                                         label(for='New') New Password
-                                        input.form-control.validate(type='text', name='New', id='New', placeholder='', required)
+                                        input.form-control.validate(type='password', name='New', id='New', placeholder='', required)
                                         label(for='Confirm') Confirm New Password
-                                        input.form-control.validate(type='text', name='Confirm', id='Confirm', placeholder='', required)
+                                        input.form-control.validate(type='password', name='Confirm', id='Confirm', placeholder='', required)
                                     .d-flex
                                         button.btn.btn-primary(type='submit') Reset
         
