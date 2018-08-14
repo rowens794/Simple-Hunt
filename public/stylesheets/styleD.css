@@ -700,7 +700,7 @@ font-family: 'Reenie Beanie', cursive;
 }
 
 .clueHeight{
-    height: 60vh;
+    height: 40vh;
 }
 
 .headerFont{
@@ -710,6 +710,11 @@ font-family: 'Reenie Beanie', cursive;
 .clueFont{
     font-family: 'Reenie Beanie', cursive;
     font-size: 20px;
+}
+
+.clue-holder{
+    position: relative;
+    text-align: center;
 }
 
 .fontWhite{
