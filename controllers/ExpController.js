@@ -166,7 +166,8 @@ expController.playSubmit = async function(req, res){
                     const clueResponseObj = {};
                     clueResponseObj.resultHeader = "You Did It!";
                     clueResponseObj.result = "You've marked the location and are one step closer to the prize!";
-                    clueResponseObj.url = "/play2/" + huntID;
+                    clueResponseObj.huntUrl = "/play2/" + huntID;
+                    clueResponseObj.userUrl = "/play/" + user.username;
 
                     //render success page
                     if (err) res.send("an error occured updating the user");//throw and error if problem
