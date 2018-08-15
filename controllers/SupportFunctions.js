@@ -66,33 +66,48 @@ supportFunctions.hotColdClueCheck = async function(req, res, clue, pointMarkedTi
         result: ""
     }
 
-    console.log("lat: " + userLat + " long: " + userLong);
-
     //check if player found correct location
     if (Math.abs(userLat - clue.clueLat) < convertedMargin && Math.abs(userLong - clue.clueLong) < convertedMargin){
-        clueResponseObj.resultHeader = "You Did It!";
-        clueResponseObj.result = "You've marked the location and are one step closer to the prize!";
+        console.log("user Found clue");
+
+        //set response object
+        clueResponseObj = responseGenerator('positive');
+
+        //update hunt info with user
+        timeFound = new Date().getTime(),
+        await huntUpdateClueFound(huntID, user.username, currentClue + 1, timeFound);
+        list = await getLeaders(huntID);
+
         
         //update the user in the database
         User.findById(user._id, function (err, user) {
             if (err) res.send("an error occured updating the user");//throw and error if problem
             
-            //update user variables
-            user.currentClue = clueResponseObj.clueNum + 1;
-            var pointMarkedTime = Date.now(); //create a date object
-            user.pointsMarked.push([userLat, userLong, pointMarkedTime]);//add time/loc to user array
-            user.lastClueFound = pointMarkedTime;
-            user.save(async function (err, user) {
-                //get leader list
-                list = await supportFunctions.getLeaders();
+            //update the huntsData entry
+            updatedHuntsData = user.huntsData;
+            updatedHuntsData[req.params.huntID].markedLocations.push([userLat, userLong, pointMarkedTime]);
+            updatedHuntsData[req.params.huntID].foundLocations.push([userLat, userLong, pointMarkedTime]);
+            updatedHuntsData[req.params.huntID].userClueNumber = updatedHuntsData[req.params.huntID].userClueNumber + 1;
 
-                //render success page
-                if (err) res.send("an error occured updating the user");//throw and error if problem
-                res.render('xPressD', {clueResponseObj: clueResponseObj, leaderList: list});
-            });
+            //set the changes to the user
+            user.markModified('huntsData');//must inform mongoose that huntsData has been modified
+            user.set({ huntsData: updatedHuntsData });
+            user.save();
+
+            //set response object
+            const clueResponseObj = {};
+            clueResponseObj.resultHeader = "You Did It!";
+            clueResponseObj.result = "You've marked the location and are one step closer to the prize!";
+            clueResponseObj.huntUrl = "/play2/" + huntID;
+            clueResponseObj.userUrl = "/play/" + user.username;
+
+            //render success page
+            if (err) res.send("an error occured updating the user");//throw and error if problem
+            res.render('xPressExp', {user: user, clueResponseObj: clueResponseObj, leaderList: list});  //else it worked fine
         });
-    }else{
-
+    }
+    
+    else{
         //THIS IS WHERE THE CODE NEEDS TO OCCUR
         //User didn't find the clue
         //calculate distance in feet from clue
@@ -142,6 +157,10 @@ supportFunctions.hotColdClueCheck = async function(req, res, clue, pointMarkedTi
         clueResponseObj.temperature = temperatureDegrees;
         clueResponseObj.mercuryTop = mercuryTop;
         clueResponseObj.mercuryBottom = mercuryBottom;
+        clueResponseObj.huntUrl = "/play2/" + huntID;
+        clueResponseObj.userUrl = "/play/" + user.username;
+
+        console.log(clueResponseObj);
 
         //user did not find the clue
         console.log("User did not find the clue");
@@ -165,12 +184,6 @@ supportFunctions.hotColdClueCheck = async function(req, res, clue, pointMarkedTi
             
             user.save(async function (err, user) {
                 if (err) res.send("an error occured updating the user");//throw and error if problem
-
-                //set message to user
-                clueResponseObj = responseGenerator('negative');
-                clueResponseObj.huntUrl = "/play2/" + huntID;
-                clueResponseObj.userUrl = "/play/" + user.username;
-                console.log(clueResponseObj);
 
                 //rerender HotColdClue 
                 res.render('HotColdClue', {user: user, clueResponseObj: clueResponseObj, leaderList: list, clue: clue});
