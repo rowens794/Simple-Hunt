@@ -47,29 +47,42 @@ expController.play = async function(req, res) {
     hunt = hunt[0];   
     currentTime = new Date().getTime();
     huntTime = new Date(hunt.startDate).valueOf()
-    huntLength = hunt.clues.length + 1;
+    huntLength = hunt.clues.length;
+
+    console.log(req.user);
     
     //Check number 1 - verify that the user has verified their email address
     if (req.user.verified == false){
+        console.log("Failed Check 1");
         res.render("NotVerified", { user : req.user});
     }
 
     //Check number 2 - verify that hunt has started
     else if (huntTime > currentTime){
+        console.log("Failed Check 2");
         res.render("HuntNotLive", { user : req.user, hunt : hunt});
     }
 
     //check number 3 - verify that hunter has not already completed the hunt
-    else if(!("huntsData" in req.user)){ //verify that it's not the users first time accessing any hunts to prevent "undefined" error
-        if(!(huntID.huntID in req.user.huntsData) ){ //verify that it's not the users first time accessing this hunt to prevent "undefined" error
-            if(req.user.huntsData[huntID.huntID].userClueNumber > huntLength){
-                res.send("You have completed the hunt");
-            }
-        }
+    else if(("huntsData" in req.user && huntID.huntID in req.user.huntsData && req.user.huntsData[huntID.huntID].userClueNumber > huntLength)){ //verify that it's not the users first time accessing any hunts to prevent "undefined" error
+        console.log("Failed Check 3");
+        //set response object
+        const clueResponseObj = {};
+        clueResponseObj.resultHeader = "You've Finished the Hunt!";
+        clueResponseObj.result = "Way to go! You've finished the entire hunt.  We hope you had a blast";
+        clueResponseObj.huntUrl = "/";
+        clueResponseObj.userUrl = "/play/" + req.user.username;
+        
+        //get leaders
+        list = await getLeaders(huntID.huntID);
+
+        //render success page
+        res.render('xPressFinished', {user: req.user, clueResponseObj: clueResponseObj, leaderList: list});  //else it worked fine
     }
 
     //get user clue number
     else if (req.user.huntsData == undefined || req.user.huntsData[huntID.huntID] == undefined ) { //if hunt doesn't exit in user account then create an object
+        console.log("get user clue number");
         huntsData = {
             userClueNumber: 1,
             startTime: new Date().getTime(),
@@ -95,9 +108,11 @@ expController.play = async function(req, res) {
             });
         });
 
-    }else{
-
+    }
+    else{
+        console.log("render clue");
         //hunt is already in users library -- just render it
+
         userClueNumber = req.user.huntsData[huntID.huntID].userClueNumber;
         clueData = hunt.clues[userClueNumber - 1] //collect clue data
         console.log("------------------------");
@@ -125,90 +140,97 @@ expController.playSubmit = async function(req, res){
         //current clue
         clueDetails = await getHuntsByID(req.params);
         currentClueDetails = clueDetails[0].clues[currentClue-1]; //pull out the users current clue from the appropriote hunt
+        console.log("Clue Details");
         console.log(currentClueDetails);
 
-        //compare the actual clue location to user submitted location
-        //use pythagorean theorm to determine distance of user from clue location
-        latDist = Math.abs(userLat - currentClueDetails.clueLat);
-        longDist = Math.abs(userLong - currentClueDetails.clueLong);
-        feetInDegree = 308000; //google says true number is 364,000
-        distanceInFeet = Math.round((latDist**2 + longDist**2)**(1/2) * feetInDegree);
+        if (currentClueDetails.clueType == "HotColdClue"){
+            console.log("hot cold clue selected");
+            supportFunctions.hotColdClueCheck(req,res,currentClueDetails,pointMarkedTime);
+        }else{
+            console.log("regular clue selected");
+            //compare the actual clue location to user submitted location
+            //use pythagorean theorm to determine distance of user from clue location
+            latDist = Math.abs(userLat - currentClueDetails.clueLat);
+            longDist = Math.abs(userLong - currentClueDetails.clueLong);
+            feetInDegree = 308000; //google says true number is 364,000
+            distanceInFeet = Math.round((latDist**2 + longDist**2)**(1/2) * feetInDegree);
 
-        //if user is within margin of error -> success
-        if (distanceInFeet < currentClueDetails.marginOfError){
-            console.log("user Found clue");
+            //if user is within margin of error -> success
+            if (distanceInFeet < currentClueDetails.marginOfError){
+                console.log("user Found clue");
 
-            //set response object
-            clueResponseObj = responseGenerator('positive');
+                //set response object
+                clueResponseObj = responseGenerator('positive');
 
-            //update hunt info with user
-            timeFound = new Date().getTime(),
-            await huntUpdateClueFound(huntID, user.username, currentClue + 1, timeFound);
-            list = await getLeaders(huntID);
+                //update hunt info with user
+                timeFound = new Date().getTime(),
+                await huntUpdateClueFound(huntID, user.username, currentClue + 1, timeFound);
+                list = await getLeaders(huntID);
 
-            
-            //update the user in the database
-            User.findById(user._id, function (err, user) {
-                if (err) res.send("an error occured updating the user");//throw and error if problem
                 
-                    //update the huntsData entry
+                //update the user in the database
+                User.findById(user._id, function (err, user) {
+                    if (err) res.send("an error occured updating the user");//throw and error if problem
+                    
+                        //update the huntsData entry
+                        updatedHuntsData = user.huntsData;
+                        updatedHuntsData[req.params.huntID].markedLocations.push([userLat, userLong, pointMarkedTime]);
+                        updatedHuntsData[req.params.huntID].foundLocations.push([userLat, userLong, pointMarkedTime]);
+                        updatedHuntsData[req.params.huntID].userClueNumber = updatedHuntsData[req.params.huntID].userClueNumber + 1;
+
+                        //set the changes to the user
+                        user.markModified('huntsData');//must inform mongoose that huntsData has been modified
+                        user.set({ huntsData: updatedHuntsData });
+                        user.save();
+
+                        //set response object
+                        const clueResponseObj = {};
+                        clueResponseObj.resultHeader = "You Did It!";
+                        clueResponseObj.result = "You've marked the location and are one step closer to the prize!";
+                        clueResponseObj.huntUrl = "/play2/" + huntID;
+                        clueResponseObj.userUrl = "/play/" + user.username;
+
+                        //render success page
+                        if (err) res.send("an error occured updating the user");//throw and error if problem
+                        res.render('xPressExp', {user: user, clueResponseObj: clueResponseObj, leaderList: list});  //else it worked fine
+                    });
+
+            }else{
+                //user did not find the clue
+                console.log("User did not find the clue");
+                
+                //get leaderlist
+                list = await getLeaders(huntID);
+                console.log(list);
+                
+                //update the user in the database
+                User.findById(user._id, function (err, user) {
+                    if (err) res.send("an error occured updating the user");//throw and error if problem
+
+                    //update the entire huntsData entry
                     updatedHuntsData = user.huntsData;
                     updatedHuntsData[req.params.huntID].markedLocations.push([userLat, userLong, pointMarkedTime]);
-                    updatedHuntsData[req.params.huntID].foundLocations.push([userLat, userLong, pointMarkedTime]);
-                    updatedHuntsData[req.params.huntID].userClueNumber = updatedHuntsData[req.params.huntID].userClueNumber + 1;
-
+                    
                     //set the changes to the user
                     user.markModified('huntsData');//must inform mongoose that huntsData has been modified
                     user.set({ huntsData: updatedHuntsData });
-                    user.save();
+                    
+                    user.save(async function (err, user) {
+                        if (err) res.send("an error occured updating the user");//throw and error if problem
 
-                    //set response object
-                    const clueResponseObj = {};
-                    clueResponseObj.resultHeader = "You Did It!";
-                    clueResponseObj.result = "You've marked the location and are one step closer to the prize!";
-                    clueResponseObj.huntUrl = "/play2/" + huntID;
-                    clueResponseObj.userUrl = "/play/" + user.username;
+                        //set message to user
+                        clueResponseObj = responseGenerator('negative');
+                        clueResponseObj.huntUrl = "/play2/" + huntID;
+                        clueResponseObj.userUrl = "/play/" + user.username;
+                        console.log(clueResponseObj);
 
-                    //render success page
-                    if (err) res.send("an error occured updating the user");//throw and error if problem
-                    res.render('xPressExp', {user: user, clueResponseObj: clueResponseObj, leaderList: list});  //else it worked fine
+                        //render success page
+                        res.render('xPressExp', {user: user, clueResponseObj: clueResponseObj, leaderList: list});  //else it worked fine
+                    });
                 });
+            }
 
-        }else{
-            //user did not find the clue
-            console.log("User did not find the clue");
-            
-            //get leaderlist
-            list = await getLeaders(huntID);
-            console.log(list);
-            
-            //update the user in the database
-            User.findById(user._id, function (err, user) {
-                if (err) res.send("an error occured updating the user");//throw and error if problem
-
-                //update the entire huntsData entry
-                updatedHuntsData = user.huntsData;
-                updatedHuntsData[req.params.huntID].markedLocations.push([userLat, userLong, pointMarkedTime]);
-                
-                //set the changes to the user
-                user.markModified('huntsData');//must inform mongoose that huntsData has been modified
-                user.set({ huntsData: updatedHuntsData });
-                
-                user.save(async function (err, user) {
-                    if (err) res.send("an error occured updating the user");//throw and error if problem
-
-                    //set message to user
-                    clueResponseObj = responseGenerator('negative');
-                    clueResponseObj.huntUrl = "/play2/" + huntID;
-                    clueResponseObj.userUrl = "/play/" + user.username;
-                    console.log(clueResponseObj);
-
-                    //render success page
-                    res.render('xPressExp', {user: user, clueResponseObj: clueResponseObj, leaderList: list});  //else it worked fine
-                });
-            });
         }
-
     }else{
         //user is not logged in
         list = await supportFunctions.getLeaders(); //this is not working yet
