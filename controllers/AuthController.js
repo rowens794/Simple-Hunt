@@ -111,31 +111,39 @@ userController.doRegister = async function(req, res) {
                 if (err.code == 11000){
                     res.render("Register", {error: "The email "+ req.body.email + " is already being used", body: req.body});
                 }
-                else {
+                else if(err.name = "UserExistsError"){
                     res.render("Register", {error: "The username "+ req.body.username + " is already taken", body: req.body});
+                }
+                else if(err){
+                    console.log(err);
+                    res.render("Register", {error: "The username "+ req.body.username + " is already taken", body: req.body});
+                }
+
+                else {
+                    //send welcome email
+                    const mailOptions = {
+                        from: "TheHunt <welcome@charlestontreasurehunt.com>",
+                        to: req.body.email,
+                        subject: "You Are In - Verify Account",
+                        html: "",
+                        text: "",
+                        filename: "verify-account",
+                        realName: req.body.name,
+                        username: req.body.username,
+                        urlHash: urlHash,
+                        resetURL: `http://${req.headers.host}/verify/${urlHash}`
+                    }
+
+                    mail.sendEmail(mailOptions);
+
+                    //authenticate new user with passport
+                    passport.authenticate('local')(req, res, function () {
+                        res.redirect('/');
+                    });
                 }
             }
 
-            //send welcome email
-            const mailOptions = {
-                from: "TheHunt <welcome@charlestontreasurehunt.com>",
-                to: req.body.email,
-                subject: "You Are In - Verify Account",
-                html: "",
-                text: "",
-                filename: "verify-account",
-                realName: req.body.name,
-                username: req.body.username,
-                urlHash: urlHash,
-                resetURL: `http://${req.headers.host}/verify/${urlHash}`
-            }
-
-            mail.sendEmail(mailOptions);
-
-            //authenticate new user with passport
-            passport.authenticate('local')(req, res, function () {
-                res.redirect('/');
-            });
+            
         });
     }
 };
