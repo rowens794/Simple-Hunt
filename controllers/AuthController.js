@@ -103,11 +103,12 @@ userController.doRegister = async function(req, res) {
     if (req.body.password != req.body.confirmPassword){
         res.render("Register", {error: 'Your password does not match', body: req.body});
     }
+
     else{
         //store the user in the database and redirect back to home page
         User.register(new User(x), req.body.password, function(err, user) {
             //check for the two possible errors (email in use & username taken)
-            if (err) {
+            if (err) { //user entry is not valid
                 if (err.code == 11000){
                     res.render("Register", {error: "The email "+ req.body.email + " is already being used", body: req.body});
                 }
@@ -118,32 +119,30 @@ userController.doRegister = async function(req, res) {
                     console.log(err);
                     res.render("Register", {error: "The username "+ req.body.username + " is already taken", body: req.body});
                 }
-
-                else {
-                    //send welcome email
-                    const mailOptions = {
-                        from: "TheHunt <welcome@charlestontreasurehunt.com>",
-                        to: req.body.email,
-                        subject: "You Are In - Verify Account",
-                        html: "",
-                        text: "",
-                        filename: "verify-account",
-                        realName: req.body.name,
-                        username: req.body.username,
-                        urlHash: urlHash,
-                        resetURL: `http://${req.headers.host}/verify/${urlHash}`
-                    }
-
-                    mail.sendEmail(mailOptions);
-
-                    //authenticate new user with passport
-                    passport.authenticate('local')(req, res, function () {
-                        res.redirect('/');
-                    });
-                }
             }
-
             
+            else { //user entry is valid
+                //send welcome email
+                const mailOptions = {
+                    from: "TheHunt <welcome@charlestontreasurehunt.com>",
+                    to: req.body.email,
+                    subject: "You Are In - Verify Account",
+                    html: "",
+                    text: "",
+                    filename: "verify-account",
+                    realName: req.body.name,
+                    username: req.body.username,
+                    urlHash: urlHash,
+                    resetURL: `http://${req.headers.host}/verify/${urlHash}`
+                }
+
+                mail.sendEmail(mailOptions);
+
+                //authenticate new user with passport
+                passport.authenticate('local')(req, res, function () {
+                    res.redirect('/');
+                });
+            }
         });
     }
 };
