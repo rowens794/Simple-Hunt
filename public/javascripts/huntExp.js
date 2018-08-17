@@ -1,5 +1,9 @@
 //function that is called in html
 function getLocation() {
+    //let user know click worked
+    $("#markLocationButton").text("Finding Location...").toggleClass('btn-primary').toggleClass('btn-success');
+
+
     //The working next statement.
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition, errorGettingGPS, {maximumAge: 0, enableHighAccuracy: true});
@@ -14,6 +18,8 @@ function showPosition(position) {
     url = window.location.href; //gets the current url
     huntID = url.split('/');
     huntID = huntID[huntID.length-1];
+
+    
 
     var form = document.createElement("form");
     form.setAttribute("method", "post");
