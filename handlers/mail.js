@@ -4,11 +4,11 @@ const juice = require("juice");
 const htmlToText = require("html-to-text"); 
 
 const transport = nodemailer.createTransport({
-    host: process.env.MAIL_HOST,
-    port: process.env.MAIL_PORT,
+    host: process.env.MAILGUN_SMTP_SERVER,
+    port: process.env.MAILGUN_SMTP_PORT,
     auth: {
-        user: process.env.MAIL_USERNAME,
-        pass: process.env.MAIL_PASSWORD
+        user: process.env.MAILGUN_SMTP_LOGIN,
+        pass: process.env.MAILGUN_SMTP_PASSWORD
     }
 })
 
