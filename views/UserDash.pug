@@ -28,6 +28,12 @@ html(lang='en')
         
         // hero image                
         header#home.bg-gradient
+        - console.log("-----------------------------------------")
+        - console.log("-----------------------------------------")
+        - console.log(hunts)
+        - console.log("-----------------------------------------")
+        - console.log("-----------------------------------------")
+        - console.log(user)
 
                     
         // // end .section
@@ -54,7 +60,7 @@ html(lang='en')
                                                     if hunts[j].startDate > today
                                                         .card-img-overlay
                                                             .card-title 
-                                                                h3.huntNotStarted Hunt Begins #{hunts[j].startDate || "Always Available"}
+                                                                h3.huntNotStarted #{hunts[j].startDate + " Coming Soon" || "Always Available"}
 
                                                     .card-body
                                                         .media
@@ -63,16 +69,22 @@ html(lang='en')
                                                                 p Difficulty: #{hunts[j].difficulty}
 
                                                                 // Check if time exists
-                                                                if user.huntsData[hunts[j]._id]
-                                                                    p Hunt Started: #{moment(user.huntsData[hunts[j]._id].startTime).fromNow()}
+                                                                if user.huntsData
+                                                                    if user.huntsData[hunts[j]._id]
+                                                                        p Hunt Started: #{moment(user.huntsData[hunts[j]._id].startTime).fromNow()}
+                                                                    else
+                                                                        p Hunt Started: Not Yet Begun
                                                                 else
-                                                                    p Hunt Started: Not Yet Begun
+                                                                        p Hunt Started: Not Yet Begun
 
                                                                 // check if clue number exists
-                                                                if user.huntsData[hunts[j]._id]
-                                                                    p Current Clue: #{user.huntsData[hunts[j]._id].userClueNumber}
+                                                                if user.huntsData
+                                                                    if user.huntsData[hunts[j]._id]
+                                                                        p Current Clue: #{user.huntsData[hunts[j]._id].userClueNumber}
+                                                                    else
+                                                                        p Current Clue: Not Yet Started
                                                                 else
-                                                                    p Current Clue: Not Yet Started
+                                                                        p Current Clue: Not Yet Started
 
                                                                 p Avg Time to Finish: #{hunts[j].averageTimeToComplete || "Not Available"}
                                                                 p Start Date: #{hunts[j].startDate || "Always Available"}

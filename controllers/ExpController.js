@@ -48,7 +48,6 @@ expController.play = async function(req, res) {
     currentTime = new Date().getTime();
     huntTime = new Date(hunt.startDate).valueOf()
     huntLength = hunt.clues.length;
-
     console.log(req.user);
     
     //Check number 1 - verify that the user has verified their email address
@@ -64,20 +63,36 @@ expController.play = async function(req, res) {
     }
 
     //check number 3 - verify that hunter has not already completed the hunt
-    else if(("huntsData" in req.user && huntID.huntID in req.user.huntsData && req.user.huntsData[huntID.huntID].userClueNumber > huntLength)){ //verify that it's not the users first time accessing any hunts to prevent "undefined" error
-        console.log("Failed Check 3");
-        //set response object
-        const clueResponseObj = {};
-        clueResponseObj.resultHeader = "You've Finished the Hunt!";
-        clueResponseObj.result = "Way to go! You've finished the entire hunt.  We hope you had a blast";
-        clueResponseObj.huntUrl = "/";
-        clueResponseObj.userUrl = "/play/" + req.user.username;
-        
-        //get leaders
-        list = await getLeaders(huntID.huntID);
+    else if(!!req.user.huntsData){
+        console.log("1-------------------------");
+        if (!!req.user.huntsData[huntID.huntID]){
+            console.log("2-------------------------");
+            if (req.user.huntsData[huntID.huntID].userClueNumber > huntLength){ //verify that it's not the users first time accessing any hunts to prevent "undefined" error
+                console.log("Failed Check 3");
+                //set response object
+                const clueResponseObj = {};
+                clueResponseObj.resultHeader = "You've Finished the Hunt!";
+                clueResponseObj.result = "Way to go! You've finished the entire hunt.  We hope you had a blast";
+                clueResponseObj.huntUrl = "/";
+                clueResponseObj.userUrl = "/play/" + req.user.username;
+                
+                //get leaders
+                list = await getLeaders(huntID.huntID);
 
-        //render success page
-        res.render('xPressFinished', {user: req.user, clueResponseObj: clueResponseObj, leaderList: list});  //else it worked fine
+                //render success page
+                res.render('xPressFinished', {user: req.user, clueResponseObj: clueResponseObj, leaderList: list});  //else it worked fine
+            }
+            else{
+                console.log("duplicate final if statement");
+                //hunt is already in users library -- just render it
+
+                userClueNumber = req.user.huntsData[huntID.huntID].userClueNumber;
+                clueData = hunt.clues[userClueNumber - 1] //collect clue data
+                console.log("------------------------");
+                console.log(clueData);
+                res.render(clueData.clueType, { user : req.user, clue: clueData});
+            }
+        }
     }
 
     //get user clue number
@@ -110,7 +125,7 @@ expController.play = async function(req, res) {
 
     }
     else{
-        console.log("render clue");
+        console.log("maybe never reached");
         //hunt is already in users library -- just render it
 
         userClueNumber = req.user.huntsData[huntID.huntID].userClueNumber;
