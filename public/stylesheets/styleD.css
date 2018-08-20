@@ -1,4 +1,5 @@
 @charset "UTF-8";
+@import url('https://fonts.googleapis.com/css?family=Homemade+Apple|Permanent+Marker|Rancho|Reenie+Beanie|Oswald|Roboto+Condensed');
 
 /*
 
@@ -644,7 +645,8 @@ header {
 }
 
 /*Custom CSS*/
-@import url('https://fonts.googleapis.com/css?family=Homemade+Apple|Permanent+Marker|Rancho|Reenie+Beanie');
+@import url('https://fonts.googleapis.com/css?family=Homemade+Apple|Permanent+Marker|Rancho|Reenie+Beanie|Oswald|Roboto+Condensed');
+
 /*
 font-family: 'Permanent Marker', cursive;
 font-family: 'Homemade Apple', cursive;
@@ -705,11 +707,12 @@ font-family: 'Reenie Beanie', cursive;
 }
 
 .headerFont{
-    font-family: 'Permanent Marker', cursive;
+    font-family: 'Oswald';
 }
 
 .clueFont{
-    font-family: 'Reenie Beanie', cursive;
+    font-family: 'Oswald';
+    color: rgb(74, 13, 143) !important;
     font-size: 20px;
 }
 

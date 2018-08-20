@@ -18,15 +18,14 @@ expController.home = async function(req, res) {
 
 // hunt specific info page
 expController.huntPage = async function(req, res) {
-    //get leader list
     huntID = req.params;
     hunt = await getHuntsByID(huntID);
-
     res.render('HuntPage', { user : req.user, hunt : hunt[0] });
 };
 
 // user specific play page
 expController.userPage = async function(req, res) {
+
     if (req.user){  //check if user is signed in
         if (req.params.username == req.user.username){  //check if user is attempting to access their own page
             res.render('UserDash', { user : req.user });
@@ -49,20 +48,26 @@ expController.play = async function(req, res) {
     huntTime = new Date(hunt.startDate).valueOf()
     huntLength = hunt.clues.length;
     console.log(req.user);
+
+    //Check number 1 - make sure user is logged in
+    if (!req.user){
+        console.log("Failed Check 1");
+        res.render("404", { user : req.user});
+    }
     
-    //Check number 1 - verify that the user has verified their email address
-    if (req.user.verified == false){
+    //Check number 2 - verify that the user has verified their email address
+    else if (req.user.verified == false){
         console.log("Failed Check 1");
         res.render("NotVerified", { user : req.user});
     }
 
-    //Check number 2 - verify that hunt has started
+    //Check number 3 - verify that hunt has started
     else if (huntTime > currentTime){
         console.log("Failed Check 2");
         res.render("HuntNotLive", { user : req.user, hunt : hunt});
     }
 
-    //check number 3 - verify that hunter has not already completed the hunt
+    //check number 4 - verify that hunter has not already completed the hunt
     else if(!!req.user.huntsData){
         console.log("1-------------------------");
         if (!!req.user.huntsData[huntID.huntID]){
@@ -180,11 +185,11 @@ expController.playSubmit = async function(req, res){
                 //update hunt info with user
                 timeFound = new Date().getTime(),
                 await huntUpdateClueFound(huntID, user.username, currentClue + 1, timeFound);
-                list = await getLeaders(huntID);
+                
 
                 
                 //update the user in the database
-                User.findById(user._id, function (err, user) {
+                User.findById(user._id, async function (err, user) {
                     if (err) res.send("an error occured updating the user");//throw and error if problem
                     
                         //update the huntsData entry
@@ -204,6 +209,8 @@ expController.playSubmit = async function(req, res){
                         clueResponseObj.result = "You've marked the location and are one step closer to the prize!";
                         clueResponseObj.huntUrl = "/play2/" + huntID;
                         clueResponseObj.userUrl = "/play/" + user.username;
+
+                        list = await getLeaders(huntID);
 
                         //render success page
                         if (err) res.send("an error occured updating the user");//throw and error if problem
@@ -518,12 +525,22 @@ getLeaders = async function(huntID){
     numberOfClues = huntInfo.clues.length;
     players = huntInfo.registeredPlayers;
 
+    console.log("--------------Players ---------------");
+    console.log(players);
+
     sortableList = [];
     for (var player in players){
-        sortableList.push([player, players[player].currentClue, parseFloat((players[player].currentClue) + "." + (players[player].timeFound))]);
+        sortableList.push([player, players[player].currentClue, parseFloat((players[player].currentClue) - (players[player].timeFound / 2000000000000) || 0 )]);  //converts epoch time to a decimal less than 1 to determine who leader is
     }
 
+    console.log("--------------Sortable List---------------");
+    console.log(sortableList);
+
     const sortedList = sortableList.sort((a,b) => a[2] > b[2] ? -1 : 1);
+
+    console.log("--------------Sorted List---------------");
+    console.log(sortedList);
+
     return sortedList.slice(0,5);
 }
 
@@ -572,7 +589,7 @@ huntUpdateClueFound = function(huntID, username, clueNumber, timeFound){
 
 responseGenerator = function(responseType){
     positiveHeader = ["You did it!", "WHAMMO!", "Great Scotts!", "Glory Hallelujah!", "What do you know!", "Hooray for you!", "Well I'll be switched!"];
-    negativeHeader = ["Sorry about your luck", "There's always next time", "Don't give up yet", "That burns my buscuits", "Ratsolfats"];
+    negativeHeader = ["Sorry about your luck", "There's always next time", "Don't give up yet", "That burns my buscuits", "Ratsolfats", "You win some, you lose some", ];
     positiveMessage = ["You've solved the clue and are one step closer to the prize.", "One clue down (some?) more to go.", "You are one giant leap closer to solving the puzzle."];
     negativeMessage = ["You didn't solve it this time, but don't let that get you down.", "It's true, you didn't get it.  But you are still in the game.", "Push through the hardship and you'll get there eventually."];
 
