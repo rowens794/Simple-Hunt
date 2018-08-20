@@ -30,7 +30,7 @@ html(lang='en')
                         img.img-fluid#toHomeIcon(src='/images/homeIcon.png')
             br
             h2.text-center.headerFont #{clue.clueShortName}
-            .container.bg-white.col-md-8.col-md-offset-2
+            .container.bg-white
                 p.text-center.tagline.clueFont #{clue.clueText}
 
             if clueResponseObj
@@ -48,7 +48,7 @@ html(lang='en')
                         .thermometerBottom
                             .mercuryBottom    
 
-            .container.bg-white.col-md-10.col-md-offset-2
+            .container.bg-white
                 if clueResponseObj
                     p.text-center.clueFont #{clueResponseObj.tempText}
 

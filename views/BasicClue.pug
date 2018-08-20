@@ -30,11 +30,11 @@ html(lang='en')
                         img.img-fluid#toHomeIcon(src='/images/homeIcon.png')
             br
             h2.text-center.headerFont #{clue.clueShortName}
-            .container.bg-white.col-md-8.col-md-offset-2
+            .container.bg-white.
                 p.text-center.clueFont #{clue.clueText}
             .bg-white.text-center
                 img.img-fluid(src=clue.clueIMG).clueHeight
-            .container.bg-white.col-md-10.col-md-offset-1
+            .container.bg-white.col-md-8.col-md-offset-2
                 button#markLocationButton.btn.btn-primary(onclick="getLocation()") Mark Location
         
         // jQuery and Bootstrap
