@@ -656,6 +656,7 @@ font-family: 'Reenie Beanie', cursive;
 
 #fixedWrapper{
     position: fixed;
+    margin-bottom: 20%;
 }
 
 #toHomeButton {
@@ -937,3 +938,14 @@ Expiramental
     color: red;
     
 }
+
+.successPic{
+    width: 100%;
+    max-width: 800px;
+    margin-top: 2vh;
+    padding-bottom: 0vh;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+

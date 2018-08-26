@@ -10,6 +10,13 @@ var ObjectId = mongoose.Types.ObjectId
 var expController = {};
 
 // new home page
+expController.test = async function(req, res) {
+    //get leader list
+    hunts = await getHunts();
+    res.render('ClueFound', { user : req.user, hunts: hunts });
+};
+
+// new home page
 expController.home = async function(req, res) {
     //get leader list
     hunts = await getHunts();
@@ -176,7 +183,7 @@ expController.playSubmit = async function(req, res){
             distanceInFeet = Math.round((latDist**2 + longDist**2)**(1/2) * feetInDegree);
 
             //if user is within margin of error -> success
-            if (distanceInFeet < currentClueDetails.marginOfError){
+            if (distanceInFeet < currentClueDetails.marginOfError + 1000000){
                 console.log("user Found clue");
 
                 //set response object
@@ -214,7 +221,9 @@ expController.playSubmit = async function(req, res){
 
                         //render success page
                         if (err) res.send("an error occured updating the user");//throw and error if problem
-                        res.render('xPressExp', {user: user, clueResponseObj: clueResponseObj, leaderList: list});  //else it worked fine
+
+                        console.log({user: user, clueResponseObj: clueResponseObj, leaderList: list});
+                        res.render('ClueFound', {user: user, clueResponseObj: clueResponseObj, leaderList: list});  //else it worked fine
                     });
 
             }else{
@@ -625,6 +634,7 @@ basicClue = function(resData, huntDetails){
     clue.clueLat = resData.xCord;
     clue.marginOfError = resData.marginOfError;
     clue.clueType = resData.clueType;
+    clue.successPic = resData.successPic;
 
     return clue;
 }
@@ -650,6 +660,7 @@ multiImgClue = function(resData, huntDetails){
     clue.clueLat = resData.xCord;
     clue.marginOfError = resData.marginOfError;
     clue.clueType = resData.clueType;
+    clue.successPic = resData.successPic;
 
     return clue;
 }
@@ -674,6 +685,7 @@ hotColdClue = function(resData, huntDetails){
     clue.maxCold = resData.maxCold;
     clue.marginOfError = resData.marginOfError;
     clue.clueType = resData.clueType;
+    clue.successPic = resData.successPic;
 
     return clue;
 }

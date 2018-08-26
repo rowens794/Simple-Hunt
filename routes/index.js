@@ -70,6 +70,8 @@ router.post('/play/:username', expiramental.feedback);  // post feedback to user
 router.get('/play2/:huntID', expiramental.play);  // play page for individual hunt
 router.post('/play2/:huntID', expiramental.playSubmit);  // post response to clue
 
+router.get('/test', expiramental.test);  // generates individual user dashboard of hunts and user info
+
 router.post('/resetpassword', expiramental.updatePassword);  // post updated password
 
 //404 error page --ALWAYS KEEP LAST--

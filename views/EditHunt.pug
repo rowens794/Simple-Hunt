@@ -196,8 +196,14 @@ html(lang='en')
                                     input.form-control.validate(type='text', name='yCord', id='yCord', placeholder='Longitude', required)
 
                         .md-form.mb-4
-                            label(for='marginOfError') Margin of Error (in feet from x/y coords):
-                            input.form-control.validate(type='text', name='marginOfError', id='marginOfError', placeholder='25')
+                            .row
+                                .col-lg-6
+                                    label(for='marginOfError') Margin of Error (in feet from x/y coords):
+                                    input.form-control.validate(type='text', name='marginOfError', id='marginOfError', placeholder='25')
+                                .col-lg-6
+                                    label(for='successPic') Link to Success Pic:
+                                    input.form-control.validate(type='text', name='successPic', id='successPic', placeholder='www.img.com/img')
+                        
 
                     .modal-footer.d-flex.justify-content-center
                         button.btn.btn-primary(type='submit') Create Clue
@@ -249,6 +255,9 @@ html(lang='en')
                                     input.form-control.validate(type='text', name='yCord', id='yCord', placeholder='Longitude', required)
                                 .col-lg-4
                                     input.form-control.validate(type='text', name='marginOfError', id='marginOfError', placeholder='Margin of Error (ft)', required)
+                        .md-form.mb-4
+                            label(for='successPic') Link to Success Pic:
+                            input.form-control.validate(type='text', name='successPic', id='successPic', placeholder='www.img.com/img')
                             
 
                     .modal-footer.d-flex.justify-content-center
@@ -267,25 +276,30 @@ html(lang='en')
                     
                     .modal-body.mx-3
                         .md-form.mb-4
-                        label(for='shortName') Create a short name:
-                        textarea.form-control.validate(cols="60", rows="1", type='text', name='shortName', id='shortName', placeholder='Short Name for Clue', required)
+                            label(for='shortName') Create a short name:
+                            textarea.form-control.validate(cols="60", rows="1", type='text', name='shortName', id='shortName', placeholder='Short Name for Clue', required)
                         
                         .md-form.mb-4
-                        label(for='textarea') Create the Clue text:
-                        textarea.form-control.validate(cols="60", rows="1", type='text', name='clue', id='clue', placeholder='full clue text', required)
+                            label(for='textarea') Create the Clue text:
+                            textarea.form-control.validate(cols="60", rows="1", type='text', name='clue', id='clue', placeholder='full clue text', required)
 
                         .md-form.mb-4
-                        label(for='xCord') Create the Clue Coordinates:
-                        input.form-control.validate(type='text', name='xCord', id='xCord', placeholder='Latitude', required)
-                        input.form-control.validate(type='text', name='yCord', id='yCord', placeholder='Longitude', required)
+                            label(for='xCord') Create the Clue Coordinates:
+                            input.form-control.validate(type='text', name='xCord', id='xCord', placeholder='Latitude', required)
+                            input.form-control.validate(type='text', name='yCord', id='yCord', placeholder='Longitude', required)
 
                         .md-form.mb-4
-                        label(for='maxCold') Max Cold Distance:
-                        input.form-control.validate(type='text', name='maxCold', id='maxCold', placeholder='2000', required)
+                            label(for='maxCold') Max Cold Distance:
+                            input.form-control.validate(type='text', name='maxCold', id='maxCold', placeholder='2000', required)
 
                         .md-form.mb-4
-                        label(for='marginOfError') Margin of Error (in feet from x/y coords):
-                        input.form-control.validate(type='text', name='marginOfError', id='marginOfError', placeholder='25')
+                            label(for='marginOfError') Margin of Error (in feet from x/y coords):
+                            input.form-control.validate(type='text', name='marginOfError', id='marginOfError', placeholder='25')
+                        
+                        .md-form.mb-4
+                            label(for='successPic') Link to Success Pic:
+                            input.form-control.validate(type='text', name='successPic', id='successPic', placeholder='www.img.com/img')
+
 
                     .modal-footer.d-flex.justify-content-center
                         button.btn.btn-primary(type='submit') Create Clue

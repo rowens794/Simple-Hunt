@@ -1,0 +1,53 @@
+doctype html
+html(lang='en')
+    head
+        title The Hunt - A Charleston Adventure
+        // Required meta tags
+        meta(charset='utf-8')
+        meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+        meta(name='description', content='Mobland - Mobile App Landing Page Template')
+        meta(name='keywords', content='HTML5, bootstrap, mobile, app, landing, ios, android, responsive')
+        // Font
+        link(rel='dns-prefetch', href='//fonts.googleapis.com')
+        link(href='https://fonts.googleapis.com/css?family=Rubik:300,400,500', rel='stylesheet')
+        // Bootstrap CSS
+        link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+        // Themify Icons
+        link(rel='stylesheet', href='/stylesheets/themify-icons.css')
+        // Owl carousel
+        link(rel='stylesheet', href='/stylesheets/owl.carousel.min.css')
+        // Main css
+        link(href='/stylesheets/styleD.css', rel='stylesheet')
+        link(rel='shortcut icon', type='image/ico', href='/images/fav.ico')
+
+    body(data-spy='scroll', data-target='#navbar', data-offset='30')
+        
+        .container.bg-white.col-md-6.col-md-offset-3
+            .picHolder
+                img(src='https://a99aad66d346f6aa10bc-05da09b96bdd02f43ab5c295722a0de6.ssl.cf5.rackcdn.com/Correct-Oakes.png').successPic
+            br
+            h2.text-center #{clueResponseObj.resultHeader}
+            br
+            p.text-center.tagline #{clueResponseObj.result}
+            br
+            .col-md-4.text-center
+              a.btn.btn-primary(href=clueResponseObj.huntUrl) Get Back to The Hunt
+            br
+            br
+            h4 Leaderboard
+  
+            for player, index in leaderList
+              span.font-weight-bold #{index+1}. 
+              span.font-weight-bold #{player[0]} 
+              | on clue ##{player[1]} 
+              br
+
+        
+        // jQuery and Bootstrap
+        script(src='/javascripts/jquery-3.2.1.min.js')
+        script(src='/javascripts/bootstrap.bundle.min.js')
+        // Plugins JS
+        script(src='/javascripts/owl.carousel.min.js')
+        // Custom JS
+        script(src='/javascripts/script.js')
+        script(src='/javascripts/huntExp.js')
