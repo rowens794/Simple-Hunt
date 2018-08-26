@@ -183,7 +183,7 @@ expController.playSubmit = async function(req, res){
             distanceInFeet = Math.round((latDist**2 + longDist**2)**(1/2) * feetInDegree);
 
             //if user is within margin of error -> success
-            if (distanceInFeet < currentClueDetails.marginOfError + 1000000){
+            if (distanceInFeet < currentClueDetails.marginOfError){
                 console.log("user Found clue");
 
                 //set response object
