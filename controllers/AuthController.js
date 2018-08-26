@@ -104,6 +104,10 @@ userController.doRegister = async function(req, res) {
         res.render("Register", {error: 'Your password does not match', body: req.body});
     }
 
+    else if(req.body.username.includes(".")){
+        res.render("Register", {error: 'Your username cannot contain a "  .  "', body: req.body});
+    }
+
     else{
         //store the user in the database and redirect back to home page
         User.register(new User(x), req.body.password, function(err, user) {
