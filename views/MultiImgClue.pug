@@ -26,8 +26,8 @@ html(lang='en')
         .container.bg-white.col-md-6.col-md-offset-3
             #fixedWrapper
                 #toHomeButton 
-                    a(href='/play/'+user.username)#toHomeArr <
-                        img.img-fluid#toHomeIcon(src='/images/homeIcon.png')
+                    a(href='/play/'+user.username)#toHomeArr.topLayer <
+                        img.img-fluid#toHomeIcon(src='/images/homeIcon.png').topLayer
             br
             h2.text-center.headerFont #{clue.clueShortName}
             

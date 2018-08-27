@@ -100,10 +100,11 @@ supportFunctions.hotColdClueCheck = async function(req, res, clue, pointMarkedTi
             clueResponseObj.result = "You've marked the location and are one step closer to the prize!";
             clueResponseObj.huntUrl = "/play2/" + huntID;
             clueResponseObj.userUrl = "/play/" + user.username;
+            clueResponseObj.successPic = currentClueDetails.successPic;
 
             //render success page
             if (err) res.send("an error occured updating the user");//throw and error if problem
-            res.render('xPressExp', {user: user, clueResponseObj: clueResponseObj, leaderList: list});  //else it worked fine
+            res.render('ClueFound', {user: user, clueResponseObj: clueResponseObj, leaderList: list});  //else it worked fine
         });
     }
     

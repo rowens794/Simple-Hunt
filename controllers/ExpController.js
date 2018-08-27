@@ -216,6 +216,8 @@ expController.playSubmit = async function(req, res){
                         clueResponseObj.result = "You've marked the location and are one step closer to the prize!";
                         clueResponseObj.huntUrl = "/play2/" + huntID;
                         clueResponseObj.userUrl = "/play/" + user.username;
+                        clueResponseObj.successPic = currentClueDetails.successPic;
+
 
                         list = await getLeaders(huntID);
 
